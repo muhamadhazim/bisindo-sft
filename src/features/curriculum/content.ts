@@ -1,8 +1,8 @@
 import type { ContentSource, ReferenceAsset, SignContent } from "@/types/content";
 import { contentSources } from "./sources";
-import provenance from "../../../public/assets/signs/sanjaya-v1/provenance.json";
+import provenance from "../../../public/assets/signs/rhio-clo/provenance.json";
 
-// Source comparison is recorded in public/assets/signs/sanjaya-v1/REVIEW.md.
+// Primary observation/practice references match the Rhio C/L/O classifier source.
 // This is not human-validator approval or recognition-model acceptance.
 export const referenceAssets: readonly ReferenceAsset[] = provenance.map((asset) => ({
   id: asset.id,
@@ -11,6 +11,7 @@ export const referenceAssets: readonly ReferenceAsset[] = provenance.map((asset)
   sourceId: asset.sourceId,
   license: asset.license,
   attribution: asset.attribution,
+  width: 640, height: 480,
 }));
 
 export const signContents: readonly SignContent[] = ["C", "L", "O"].map((symbol) => ({
@@ -18,12 +19,12 @@ export const signContents: readonly SignContent[] = ["C", "L", "O"].map((symbol)
   symbol,
   language: "BISINDO",
   region: null,
-  sourceId: "sanjaya-bisindo-alphabet-2024-v1",
+  sourceId: "rhio-bisindo-2024",
   validationStatus: "SOURCE_VERIFIED",
   requiredHands: "ONE",
   handednessPolicy: "UNSPECIFIED",
   motionType: "STATIC",
-  instruction: `Amati contoh huruf ${symbol} dari referensi Sanjaya. Perhatikan bentuk jari dan arah telapak pada beberapa contoh, lalu tirukan bentuk yang ditampilkan menggunakan satu tangan.`,
+  instruction: `Amati bentuk jari dan arah telapak pada foto huruf ${symbol} ini. Saat praktik, gunakan tangan kanan mengikuti contoh; pengenal awal C/L/O baru mendukung tangan kanan.`,
   commonMistakes: [],
   referenceAssetIds: provenance.filter((asset) => asset.symbol === symbol).map((asset) => asset.id),
 }));
@@ -55,3 +56,4 @@ export function getPublishableSigns(
     });
   });
 }
+

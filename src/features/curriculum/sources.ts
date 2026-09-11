@@ -32,4 +32,16 @@ export const contentSources: readonly ContentSource[] = [
       "with publisher files; the per-sign review records supporting hand-count " +
       "and static-motion literature separately. No human-validator approval is claimed.",
   },
+  {
+    id: "rhio-bisindo-2024",
+    title: "Indonesian Sign Language (BISINDO) Hand Sign Detection Dataset",
+    publisherOrAuthor: "Rhio Sutoyo dkk.",
+    url: "https://github.com/rhiosutoyo/Indonesian-Sign-Language-BISINDO-Hand-Sign-Detection-Dataset",
+    license: "MIT",
+    region: null,
+    notes: "User-selected C/L/O reference. XML labels and image checksums verified; primary photos visually checked. " +
+      "These same photos appear in observation and practice. Right-hand support describes the initial classifier, " +
+      "not a universal linguistic handedness rule. Source review is not human-validator approval.",
+  },
 ];
+

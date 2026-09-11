@@ -64,7 +64,8 @@ for (const [name, heading] of [
     await expect(page.getByRole("heading", { name: heading, exact: true })).toBeVisible();
     await expect(page.getByRole("button", { name: "Coba kamera lagi" })).toBeVisible();
     await page.getByRole("link", { name: "Amati lagi" }).click();
-    await expect(page.getByRole("img")).toHaveCount(3);
+    await expect(page.getByRole("img")).toHaveCount(1);
+    await expect(page.getByRole("img")).toHaveAttribute("src", /\/assets\/signs\/rhio-clo\/c\.jpg$/);
   });
 }
 

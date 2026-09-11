@@ -140,3 +140,6 @@ summary { min-height: 44px; display: list-item; cursor: pointer; padding-block: 
 .recognition-badge { position: absolute; inset: .75rem auto auto .75rem; z-index: 2; display: grid; min-width: 4.5rem; padding: .5rem .75rem; background: #fffc; color: #163d27; border-radius: .75rem; text-align: center; pointer-events: none; }
 .recognition-badge span { font-size: .75rem; }
 .recognition-badge strong { font-size: 2.5rem; line-height: 1.1; }
+.reference-grid.reference-single { grid-template-columns: minmax(0, 1fr); max-width: 640px; }
+.reference-single .reference-figure img { max-width: 640px; }
+.reference-figure figcaption a { text-decoration: underline; text-underline-offset: 3px; }

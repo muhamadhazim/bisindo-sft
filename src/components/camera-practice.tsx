@@ -2,7 +2,7 @@
 
 import { AssessmentFeedback } from "./assessment-feedback";
 import { ReferenceGallery } from "./reference-gallery";
-import detectorAssets from "../../public/assets/signs/rhio-clo/provenance.json";
+import { referenceAssets } from "@/features/curriculum/content";
 import { useState } from "react";
 import { useCamera } from "@/hooks/use-camera";
 import type { CameraStatus } from "@/lib/camera/controller";
@@ -54,11 +54,12 @@ export function CameraPractice({ sign }: { sign: SignContent }) {
 
       {assess && <p className="camera-note">Pengenal awal C/L/O aktif. Gunakan tangan kanan dan tahan pose sebentar. Model dari dataset BISINDO pilihan Anda; hasil masih perlu diuji langsung. Gambar tidak disimpan.</p>}
       {status === "READY" && assess && assessment && <AssessmentFeedback result={assessment} symbol={sign.symbol} />}
-      <details className="practice-references"><summary>Lihat contoh tangan kanan: {sign.symbol}</summary><ReferenceGallery symbol={sign.symbol} assets={detectorAssets.filter(asset => asset.symbol === sign.symbol).map(asset => ({...asset, kind: "IMAGE" as const}))} /></details>
+      <details className="practice-references"><summary>Lihat contoh tangan kanan: {sign.symbol}</summary><ReferenceGallery symbol={sign.symbol} assets={referenceAssets.filter(asset => sign.referenceAssetIds.includes(asset.id))} /></details>
       <p className="camera-note">Kamera berhenti saat Anda meninggalkan halaman atau menyembunyikan tab. Mulai kembali dengan tombol di atas.</p>
     </section>
   );
 }
+
 
 
 

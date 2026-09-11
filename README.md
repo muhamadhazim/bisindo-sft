@@ -47,8 +47,12 @@ Phases 5–8, 10 and 13 remain required and pending. Phase 9 learned-model work 
 conditional. Phase 11 (3D) and Phase 12 (dynamic gestures) are non-MVP stretch.
 Supabase/RLS, scoring, mastery and the full learning loop are not claimed complete.
 
-Initial alphabet reference: C, L, O, with 9 unchanged CC BY 4.0 publisher images.
-See [tracked content evidence](public/assets/signs/sanjaya-v1/REVIEW.md).
+Observe and Practice share the same three unchanged C/L/O reference photographs
+from the Rhio Sutoyo dataset (MIT), with full-size links and right-hand guidance.
+See [image provenance](public/assets/signs/rhio-clo/provenance.json).
+The nine earlier Sanjaya images remain archived with their CC BY 4.0 attribution
+and [content evidence](public/assets/signs/sanjaya-v1/REVIEW.md).
+Existing route IDs are retained for link compatibility; content source IDs identify Rhio.
 SOURCE_VERIFIED records reflect source comparison, not human-validator approval
 or verified realtime recognition accuracy.
 

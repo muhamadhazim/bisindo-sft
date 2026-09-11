@@ -4,7 +4,7 @@ import type { ContentSource, ReferenceAsset, SignContent } from "../../types/con
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
-import provenance from "../../../public/assets/signs/sanjaya-v1/provenance.json";
+import provenance from "../../../public/assets/signs/rhio-clo/provenance.json";
 
 // Synthetic structural fixtures only; these describe no real BISINDO gesture.
 const source: ContentSource = {
@@ -58,7 +58,8 @@ test("published references preserve publisher checksums and traceable letter lab
       if (!asset) throw new Error(`Missing source asset ${id}`);
       const bytes = readFileSync(resolve("public", asset.url.slice(1)));
       expect(createHash("sha256").update(bytes).digest("hex")).toBe(asset.sha256);
-      expect(asset.sourceUrl).toContain(asset.sourceFileId);
+      expect(asset.sourceUrl).toContain("/Indonesian-Sign-Language-BISINDO-Hand-Sign-Detection-Dataset/blob/");
     }
   }
 });
+

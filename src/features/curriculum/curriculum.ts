@@ -13,9 +13,10 @@ export const lessons: readonly Lesson[] = getPublishableSigns().map((sign) => ({
 export const units: readonly Unit[] = [{
   id: "alfabet-awal",
   title: "Kenali bentuk huruf",
-  description: "Amati C, L, dan O dari beberapa contoh referensi. Mulai perlahan, satu huruf setiap kali.",
+  description: "Amati C, L, dan O dari foto referensi yang sama dengan halaman praktik. Mulai perlahan, satu huruf setiap kali.",
   lessonIds: lessons.map((lesson) => lesson.id),
 }];
 
 export const findLesson = (id: string) => lessons.find((lesson) => lesson.id === id);
 export const findSign = (id: string) => getPublishableSigns().find((sign) => sign.id === id);
+

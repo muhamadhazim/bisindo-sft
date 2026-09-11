@@ -17,6 +17,8 @@ export type ReferenceAsset = {
   sourceId: string;
   license: string | null;
   attribution: string | null;
+  width?: number;
+  height?: number;
 };
 
 export type SignContent = {
@@ -33,3 +35,4 @@ export type SignContent = {
   commonMistakes: string[];
   referenceAssetIds: string[];
 };
+
