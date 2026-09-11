@@ -1,6 +1,10 @@
 import { expect, test } from "@playwright/test";
 import { getPublishableSigns } from "../../features/curriculum/content";
 import type { ContentSource, ReferenceAsset, SignContent } from "../../types/content";
+import { createHash } from "node:crypto";
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
+import provenance from "../../../public/assets/signs/sanjaya-v1/provenance.json";
 
 // Synthetic structural fixtures only; these describe no real BISINDO gesture.
 const source: ContentSource = {
@@ -40,4 +44,21 @@ test("source-verified and validator-verified records can pass without inventing 
   const reviewed = { ...sign, validationStatus: "VALIDATOR_VERIFIED" } as const;
   expect(getPublishableSigns([reviewed], [source], [asset])).toEqual([reviewed]);
   expect(sign.region).toBeNull();
+});
+
+test("published references preserve publisher checksums and traceable letter labels", () => {
+  const published = getPublishableSigns();
+  expect(published.length).toBeGreaterThanOrEqual(2);
+  expect(new Set(provenance.map((asset) => asset.id)).size).toBe(provenance.length);
+  for (const sign of published) {
+    expect(sign.referenceAssetIds.length).toBeGreaterThan(0);
+    for (const id of sign.referenceAssetIds) {
+      const asset = provenance.find((entry) => entry.id === id);
+      expect(asset?.symbol).toBe(sign.symbol);
+      if (!asset) throw new Error(`Missing source asset ${id}`);
+      const bytes = readFileSync(resolve("public", asset.url.slice(1)));
+      expect(createHash("sha256").update(bytes).digest("hex")).toBe(asset.sha256);
+      expect(asset.sourceUrl).toContain(asset.sourceFileId);
+    }
+  }
 });

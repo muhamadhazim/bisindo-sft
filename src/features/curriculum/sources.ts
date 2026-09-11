@@ -28,6 +28,8 @@ export const contentSources: readonly ContentSource[] = [
       "DOI: 10.17632/ywnjpbcz8m.1. Published 2024-10-18. Secondary research " +
       "candidate with varied participants, devices, and backgrounds. " +
       "Publisher metadata does not specify per-sign hand requirements, motion " +
-      "types, or a linguistic region. No teaching content is approved by this entry.",
+      "types, or a linguistic region. C/L/O image labels were compared directly " +
+      "with publisher files; the per-sign review records supporting hand-count " +
+      "and static-motion literature separately. No human-validator approval is claimed.",
   },
 ];
