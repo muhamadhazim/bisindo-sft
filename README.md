@@ -2,15 +2,17 @@
 
 ## Implementation status
 
-Phases 0 and 0A are complete for local development. Phase 1 learning-flow work is
-active. This is **not a completed MVP**.
-The home page is a responsive foundation shell with an explicit unavailable-content
-state; lessons, camera, recognition, challenge, and persistence are not enabled.
+Phases 0, 0A, and 1 are complete for local development. Phase 2 camera work is
+next. This is **not a completed MVP**.
+The learning map, C/L/O lesson introductions, observation pages, and source credits
+are available. Practice and challenge are explicitly labeled placeholders;
+camera, recognition, scoring, and persistence are not yet enabled.
 Vercel deployment is deferred at the user's request; development continues
 locally. See [task status](docs/TASKS.md) and ADR-017 in docs/DECISIONS.md.
 
-Verified: lint, typecheck, production build, and 16 tests; responsive shell at
-320–1440px with no horizontal overflow. See [verification record](docs/IMPLEMENTATION_STATUS.md).
+Verified: lint, typecheck, production build, and 22 tests; responsive shell and
+learning click-through at 320–1440px with no horizontal overflow. Tests also cover
+reference-image failure and unknown curriculum IDs. See [verification record](docs/IMPLEMENTATION_STATUS.md).
 
 Initial alphabet reference: C, L, O, with 9 unchanged CC BY 4.0 publisher images.
 See [tracked content evidence](public/assets/signs/sanjaya-v1/REVIEW.md).

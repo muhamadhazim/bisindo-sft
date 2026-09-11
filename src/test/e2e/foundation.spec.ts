@@ -10,8 +10,8 @@ for (const width of [320, 360, 390, 430, 768, 1024, 1440]) {
     if (width === 360 || width === 1440) {
       await page.screenshot({ path: `test-results/foundation-${width}.png`, fullPage: true });
     }
-    await page.getByRole("link", { name: "Lihat kesiapan materi" }).click();
-    await expect(page.getByRole("heading", { name: "Materi belum tersedia" })).toBeInViewport();
+    await page.getByRole("heading", { name: "Mulai dari alfabet" }).scrollIntoViewIfNeeded();
+    await expect(page.getByRole("heading", { name: "Mulai dari alfabet" })).toBeInViewport();
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
     const response = await page.goto("/halaman-tidak-ada");
     expect(response?.status()).toBe(404);

@@ -1,0 +1,17 @@
+import { LearningScreen } from "@/components/learning-screen";
+import { contentSources } from "@/features/curriculum/sources";
+import provenance from "../../../public/assets/signs/sanjaya-v1/provenance.json";
+
+export default function CreditsPage() {
+  return (
+    <LearningScreen eyebrow="SUMBER & LISENSI" title="Belajar dengan sumber yang jelas" description="Sumber materi, izin penggunaan, dan batasan prototype ini dapat ditelusuri di sini." back={{ href: "/learn", label: "Peta belajar" }}>
+      <div className="reading-flow">
+        <section><h2>Materi C, L, dan O</h2><p>Samuel Ady Sanjaya (2024), BISINDO Indonesian Sign Language: Alphabet Image Data, versi 1. DOI 10.17632/ywnjpbcz8m.1. Sembilan gambar dari versi resized milik penerbit disertakan tanpa perubahan.</p><p><a href="https://data.mendeley.com/datasets/ywnjpbcz8m/1" target="_blank" rel="noreferrer">Buka dataset ↗</a> · <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noreferrer">Lisensi CC BY 4.0 ↗</a></p><details><summary>Telusuri setiap gambar</summary><ul className="asset-list">{provenance.map((asset) => <li key={asset.id}><a href={asset.sourceUrl} target="_blank" rel="noreferrer">{asset.symbol} · {asset.sourceFilename} ↗</a></li>)}</ul></details></section>
+        <section><h2>Status pemeriksaan</h2><p>Contoh awal berstatus SOURCE_VERIFIED: sudah dicocokkan dengan sumber. Belum berstatus VALIDATOR_VERIFIED. Region dan kebijakan pertukaran tangan belum ditetapkan oleh sumber; kami tidak menganggap contohnya berlaku universal.</p><p><a href="/assets/signs/sanjaya-v1/REVIEW.md">Catatan pemeriksaan sumber</a> · <a href="/assets/signs/sanjaya-v1/provenance.json">Metadata dan checksum aset</a></p></section>
+        <section><h2>Referensi pendukung</h2><ul><li><a href="https://doi.org/10.1016/j.procs.2019.11.101" target="_blank" rel="noreferrer">Indra dkk. — pengelompokan jumlah tangan</a></li><li><a href="https://ojs.uajy.ac.id/index.php/jbi/article/view/12013" target="_blank" rel="noreferrer">Damatraseta dkk. — pembahasan alfabet statis dan dinamis</a></li><li><a href="https://www.pusbisindo.org/" target="_blank" rel="noreferrer">Pusbisindo — konteks komunitas dan variasi daerah</a></li></ul><p>Angka kinerja penelitian lain tidak menjadi angka kinerja aplikasi ini. Gambar, kode, dan model dari artikel tersebut tidak disalin.</p></section>
+        <section><h2>Sumber penelitian lain</h2><p>{contentSources[0]?.publisherOrAuthor} — <a href={contentSources[0]?.url}>{contentSources[0]?.title}</a>. Terdaftar untuk penelitian; asetnya belum digunakan di aplikasi.</p></section>
+        <section><h2>Perangkat lunak</h2><p>Next.js, React, dan Tailwind CSS menggunakan lisensi MIT. Dependency dan versi persis dicatat dalam package-lock.json. Tidak ada kode dari repository referensi yang disalin ke aplikasi ini.</p></section>
+      </div>
+    </LearningScreen>
+  );
+}

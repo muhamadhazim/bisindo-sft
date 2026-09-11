@@ -1,20 +1,22 @@
+import Link from "next/link";
+
 export default function HomePage() {
   return (
     <div className="shell">
       <section className="intro" aria-labelledby="welcome-heading">
         <p className="eyebrow">BISINDO LEARNING PLATFORM</p>
         <h1 id="welcome-heading">Ruang untuk belajar,<br /><span>selangkah demi selangkah.</span></h1>
-        <p className="intro-copy">Pengalaman belajar BISINDO melalui materi singkat dan praktik mandiri sedang disiapkan.</p>
-        <a href="#availability" className="button primary">Lihat kesiapan materi <span aria-hidden="true">↓</span></a>
+        <p className="intro-copy">Kenali alfabet BISINDO, amati bentuknya, lalu berlatih sedikit demi sedikit. Mulai dengan huruf C, L, dan O.</p>
+        <Link href="/about-bisindo" className="button primary">Mulai belajar <span aria-hidden="true">→</span></Link>
       </section>
 
       <section id="availability" className="availability" aria-labelledby="availability-heading">
         <div className="section-marker" aria-hidden="true">01</div>
         <div>
           <p className="eyebrow">MATERI PEMBELAJARAN</p>
-          <h2 id="availability-heading">Materi belum tersedia</h2>
-          <p>Materi akan dibuka setelah sumber, konteks referensi, dan status validasinya diperiksa. Latihan kamera belum tersedia pada tahap ini.</p>
-          <span className="content-status">Menunggu verifikasi konten</span>
+          <h2 id="availability-heading">Mulai dari alfabet</h2>
+          <p>Tiga huruf awal, masing-masing dengan beberapa contoh bersumber. Materi pengamatan sudah tersedia; latihan kamera realtime sedang disiapkan.</p>
+          <Link className="back-link" href="/learn">Lihat materi C, L, dan O →</Link>
         </div>
       </section>
 

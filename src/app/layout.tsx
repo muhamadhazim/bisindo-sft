@@ -4,7 +4,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: { default: "BISINDO — Belajar selangkah demi selangkah", template: "%s | BISINDO" },
-  description: "Platform belajar dan berlatih BISINDO. Fondasi aplikasi sedang disiapkan.",
+  description: "Belajar alfabet BISINDO melalui referensi yang dapat ditelusuri dan latihan mandiri.",
   robots: { index: false, follow: false },
 };
 
@@ -18,12 +18,15 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <span className="brand-mark" aria-hidden="true">bi.</span>
             <span>BISINDO<span className="brand-caption">Ruang belajar</span></span>
           </Link>
-          <span className="status-badge">Dalam pengembangan</span>
+          <nav className="top-nav" aria-label="Navigasi utama">
+            <Link href="/learn">Belajar</Link>
+            <Link href="/about-bisindo">Tentang BISINDO</Link>
+          </nav>
         </header>
         <main id="main" tabIndex={-1}>{children}</main>
         <footer className="site-footer">
           <span>Belajar. Berlatih. Bertumbuh.</span>
-          <span>Learning &amp; practice · Prototype</span>
+          <Link href="/credits">Sumber &amp; lisensi</Link>
         </footer>
       </body>
     </html>
