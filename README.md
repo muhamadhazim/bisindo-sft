@@ -2,8 +2,9 @@
 
 ## Implementation status
 
-Phases 0, 0A, 1, 2, and 3 are complete for local development. Phase 4 recognition is
-next. This is **not a completed MVP**.
+Phases 0, 0A, 1, 2, and 3 are complete for local development. Phase 4 recognition
+infrastructure is implemented, but accepted gesture rules and live acceptance
+remain blocked on correctness validation. This is **not a completed MVP**.
 The learning map, C/L/O lesson introductions, observation pages, and source credits
 are available. Practice uses a real local webcam with start/stop and recovery.
 MediaPipe hand tracking runs locally after camera startup. Letter recognition,
@@ -12,7 +13,7 @@ explicit placeholder.
 Vercel deployment is deferred at the user's request; development continues
 locally. See [task status](docs/TASKS.md) and ADR-017 in docs/DECISIONS.md.
 
-Verified: lint, typecheck, production build, and 41 tests; responsive shell and
+Verified: lint, typecheck, production build, and 49 tests; responsive shell and
 learning click-through at 320–1440px with no horizontal overflow. Tests also cover
 reference-image failure and unknown curriculum IDs. See [verification record](docs/IMPLEMENTATION_STATUS.md).
 
@@ -30,6 +31,18 @@ live letter-recognition accuracy test. Debug overlay was checked at 360px with a
 licensed reference fixture. A sampled inference took 81ms on this desktop/dev
 run; this is not a phone performance benchmark. Vendor usage telemetry is blocked
 by the enforced same-origin connection policy. See [runtime details](public/models/mediapipe/README.md).
+
+Phase 4 adds a shared 52-value geometry schema, source-linked profile contract,
+ambiguity handling, time-based stability, cooldown and release gating. It has no
+accepted C/L/O correctness thresholds and is not enabled on the production page.
+The reference audit found only six usable vectors among nine reviewed images,
+with sparse per-hand coverage. Acceptable variations/near-misses need BISINDO
+review and live testing before correctness feedback can be activated. See the
+[tracked recognition checkpoint](src/features/recognition/README.md).
+
+Phases 5–8, 10 and 13 remain required and pending. Phase 9 learned-model work is
+conditional. Phase 11 (3D) and Phase 12 (dynamic gestures) are non-MVP stretch.
+Supabase/RLS, scoring, mastery and the full learning loop are not claimed complete.
 
 Initial alphabet reference: C, L, O, with 9 unchanged CC BY 4.0 publisher images.
 See [tracked content evidence](public/assets/signs/sanjaya-v1/REVIEW.md).
