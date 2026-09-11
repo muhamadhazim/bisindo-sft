@@ -1,6 +1,7 @@
 import { RandomForestClassifier } from "ml-random-forest";
 import { extractFeatures, featureSchema } from "./features";
 import { RecognitionStabilizer, type RecognitionCandidate, type StabilizedResult } from "./stabilizer";
+import { LiveRecognitionFeedback } from "./live-feedback";
 import { checkRequiredHands } from "@/lib/mediapipe/canonicalize";
 import { trackingConfig } from "@/lib/config/tracking";
 import type { CanonicalResult } from "@/types/tracking";
@@ -26,7 +27,7 @@ const rms = (a: readonly number[], b: readonly number[]) => Math.sqrt(a.reduce((
 export class CloClassifier {
   private readonly forest: RandomForestClassifier;
   private readonly stabilizer = new RecognitionStabilizer();
-  private acceptedTarget: string | null = null;
+  private readonly feedback = new LiveRecognitionFeedback();
   constructor(private readonly model: CloModel) {
     if (model.id !== "rhio-clo-rf-v1" || model.labels.join(",") !== "C,L,O" || model.featureSchema.id !== featureSchema.id || model.featureSchema.normalizationVersion !== featureSchema.normalizationVersion || model.featureSchema.landmarkerAssetId !== featureSchema.landmarkerAssetId || model.featureSchema.length !== featureSchema.length || model.landmarker.packageVersion !== trackingConfig.packageVersion || model.landmarker.assetId !== trackingConfig.assetId || model.runtime.name !== "ml-random-forest" || model.runtime.version !== "2.1.0" || !Number.isFinite(model.threshold) || model.threshold <= 0 || model.threshold > 1) throw new Error("Classifier contract mismatch");
     if (model.envelopes.length !== 3 || model.envelopes.some((e,i)=>e.label!==model.labels[i] || !Number.isFinite(e.maxDistance) || e.maxDistance<=0 || !e.vectors.length || e.vectors.some(v=>v.length!==featureSchema.length || !v.every(Number.isFinite)))) throw new Error("Invalid classifier envelope");
@@ -60,10 +61,8 @@ export class CloClassifier {
       reason = input.frame.left ? "UNSUPPORTED_SIDE" : predictedLetter ? predictedLetter===target.symbol ? "MATCH" : "OTHER_REFERENCE" : "OUTSIDE_REFERENCES";
     }
     const result = this.stabilizer.update(target.id,input.frame.timestampMs,candidate);
-    if (result.accepted) this.acceptedTarget=target.id;
-    if (!result.waitingRelease) this.acceptedTarget=null;
-    const status = result.waitingRelease && this.acceptedTarget===target.id && candidate!=="NO_HAND" ? "CORRECT" : result.status;
-    return {...result,status,targetSignId:target.id,predictedLetter,reason,modelVersion:this.model.version};
+    const feedback = this.feedback.update(target.id,input.frame.timestampMs,candidate);
+    return {...result,...feedback,targetSignId:target.id,predictedLetter,reason,modelVersion:this.model.version};
   }
 }
 export async function loadCloClassifier(): Promise<CloClassifier> {

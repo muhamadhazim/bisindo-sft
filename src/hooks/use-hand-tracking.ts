@@ -29,6 +29,7 @@ export function useHandTracking(videoRef: RefObject<HTMLVideoElement | null>, en
     let cancelFrames: (() => void) | undefined;
     let lastPublished = -Infinity;
     let lastStatus: TrackingStatus = "LOADING";
+    let lastAssessment = "";
     // Async setup keeps the heavy runtime outside the landing and non-camera path.
     void (async () => {
       setSnapshot({ status: "LOADING", latencyMs: null, assessment: null });
@@ -42,10 +43,12 @@ export function useHandTracking(videoRef: RefObject<HTMLVideoElement | null>, en
         const { result, latencyMs } = tracker.detect(video, timestampMs);
         const status = checkRequiredHands(result, sign);
         const assessment = recognition?.evaluate(result, sign) ?? null;
+        const assessmentKey = `${assessment?.status}:${assessment?.predictedLetter}:${assessment?.reason}`;
         draw(result.frame);
-        if (assessment?.accepted || status !== lastStatus || timestampMs - lastPublished >= trackingConfig.statusIntervalMs) {
+        if (assessment?.accepted || assessmentKey !== lastAssessment || status !== lastStatus || timestampMs - lastPublished >= trackingConfig.statusIntervalMs) {
           lastPublished = timestampMs;
           lastStatus = status;
+          lastAssessment = assessmentKey;
           setSnapshot({ status, latencyMs, assessment });
         }
       }, () => { tracker.close(); if (active) setSnapshot({ status: "ERROR", latencyMs: null, assessment: null }); }, trackingConfig.minIntervalMs);

@@ -34,14 +34,16 @@ for (const symbol of ["C", "L", "O"]) {
     await page.addInitScript((letter) => {
       navigator.mediaDevices.getUserMedia = async () => {
         const image = new Image();image.src=`/assets/signs/rhio-clo/${letter.toLowerCase()}.jpg`;await image.decode();
+        const other = new Image(); other.src=`/assets/signs/rhio-clo/${letter === "C" ? "l" : "c"}.jpg`; await other.decode();
         const canvas=document.createElement("canvas");canvas.width=640;canvas.height=480;
         const ctx=canvas.getContext("2d")!;
-        let blank=false;
+        let blank=false; let changed=false;
+        const swap=()=>{changed=!changed;}; window.addEventListener("fixture-swap",swap);
         const clear=()=>{blank=true;};const restore=()=>{blank=false;};
         window.addEventListener("fixture-clear",clear);window.addEventListener("fixture-restore",restore);
-        const draw=()=>{ctx.fillStyle="#eee";ctx.fillRect(0,0,640,480);if(!blank)ctx.drawImage(image,0,0,640,480);};
+        const draw=()=>{ctx.fillStyle="#eee";ctx.fillRect(0,0,640,480);if(!blank)ctx.drawImage(changed ? other : image,0,0,640,480);};
         draw();const stream=canvas.captureStream(12);const timer=setInterval(draw,80);
-        for(const track of stream.getTracks()){const stop=track.stop.bind(track);track.stop=()=>{clearInterval(timer);window.removeEventListener("fixture-clear",clear);window.removeEventListener("fixture-restore",restore);stop();};}
+        for(const track of stream.getTracks()){const stop=track.stop.bind(track);track.stop=()=>{clearInterval(timer);window.removeEventListener("fixture-swap",swap);window.removeEventListener("fixture-clear",clear);window.removeEventListener("fixture-restore",restore);stop();};}
         return stream;
       };
     },symbol);
@@ -49,6 +51,10 @@ for (const symbol of ["C", "L", "O"]) {
     await page.getByRole("button",{name:"Mulai kamera",exact:true}).click();
     await expect(page.getByRole("heading",{name:`Sesuai target ${symbol}`,exact:true})).toBeVisible({timeout:20000});
     expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+    await page.evaluate(()=>window.dispatchEvent(new Event("fixture-swap")));
+    await expect(page.getByRole("heading",{name:"Coba lagi",exact:true})).toBeVisible({timeout:20000});
+    await page.evaluate(()=>window.dispatchEvent(new Event("fixture-swap")));
+    await expect(page.getByRole("heading",{name:`Sesuai target ${symbol}`,exact:true})).toBeVisible({timeout:20000});
     await page.evaluate(()=>window.dispatchEvent(new Event("fixture-clear")));
     await expect(page.getByRole("heading",{name:"Tampilkan tangan",exact:true})).toBeVisible({timeout:10000});
     await page.evaluate(()=>window.dispatchEvent(new Event("fixture-restore")));
@@ -88,3 +94,4 @@ test("classifier download failure is recoverable without leaving camera controls
   await page.getByRole("button",{name:"Hentikan kamera"}).click();
   await context.close();
 });
+

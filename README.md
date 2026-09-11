@@ -6,8 +6,8 @@ Phases 0, 0A, 1, 2, and 3 are complete for local development. Phase 4 now has
 an actual trained C/L/O Random Forest connected to realtime webcam practice.
 Open `/practice/bisindo-c-sanjaya-v1`, start the camera, and use the C/L/O buttons
 to select a target. Use your right hand. The UI shows the recognized letter,
-target match, retry, or uncertain; sustained matches require release before
-another attempt. Camera frames stay local. This is an explicitly labeled initial
+target match, retry, or uncertain continuously as the pose changes.
+Acceptance events remain one-shot until release. Camera frames stay local. This is an explicitly labeled initial
 user-trial model, not verified new-user accuracy or a completed MVP.
 
 The classifier was trained from 60 C/L/O photographs in the user-selected Rhio
@@ -241,4 +241,6 @@ measurements are retained outside the production path, with a reproducible
 methodologies were reviewed; no external code, ASL rules or model was copied.
 Technical evaluation can continue without waiting for mentor-provided numeric
 thresholds. Reliable new-person recognition is still unverified.
+
+
 

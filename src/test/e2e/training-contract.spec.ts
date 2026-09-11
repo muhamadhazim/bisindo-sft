@@ -50,3 +50,22 @@ test("trained recognition requires release when target changes and emits accepta
   for(const t of [1200,1300,1400,1500])expect(evaluate(lFrame,t,l).accepted).toBe(false);
   expect(evaluate(lFrame,1600,l).accepted).toBe(true);
 });
+
+test("current-pose feedback changes after acceptance without requiring release or awarding again", () => {
+  const engine=new CloClassifier(JSON.parse(readFileSync("public/models/rhio-clo-v1/model.json","utf8")) as CloModel);
+  const target=signContents.find(s=>s.symbol==="C")!;
+  const c=report.golden.find(r=>r.id.startsWith("test/C."))!.frame;
+  const l=report.golden.find(r=>r.id.startsWith("test/L."))!.frame;
+  const evaluate=(frame:HandFrame,t:number,ambiguous=false)=>engine.evaluate({frame:{...frame,timestampMs:t},ambiguous},target);
+  for(const t of [0,100,200,300])evaluate(c,t);
+  expect(evaluate(c,400)).toMatchObject({status:"CORRECT",accepted:true});
+  expect(evaluate(l,500)).toMatchObject({status:"RETRY",predictedLetter:"L",accepted:false,waitingRelease:true});
+  expect(evaluate(c,600)).toMatchObject({status:"TRACKING",accepted:false});
+  for(const t of [700,800,900])evaluate(c,t);
+  expect(evaluate(c,1000)).toMatchObject({status:"CORRECT",accepted:false,waitingRelease:true});
+  expect(evaluate(c,1100,true)).toMatchObject({status:"UNCERTAIN",predictedLetter:null,accepted:false});
+  expect(evaluate(c,1200)).toMatchObject({status:"TRACKING",accepted:false});
+  expect(evaluate(c,1200)).toMatchObject({status:"UNCERTAIN",accepted:false});
+  expect(evaluate(c,1600)).toMatchObject({status:"TRACKING",accepted:false});
+  expect(evaluate({timestampMs:1700,left:null,right:null},1700)).toMatchObject({status:"NO_HAND",accepted:false});
+});

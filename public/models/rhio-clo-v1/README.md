@@ -46,3 +46,11 @@ Manifest, checksums, partitions and evaluation: `ml/rhio/`. Images and extracted
 landmark rows remain in ignored `.tools/bisindo-dataset`. Browser fixtures use
 three unmodified, attributed publisher test photographs. They prove runtime
 integration, not new-user generalization. A user can now try their own hand.
+
+Live feedback update: current-pose status is independent of attempt acceptance.
+After a match, another recognized letter immediately yields RETRY; ambiguous or
+missing hands yield UNCERTAIN/NO_HAND. Returning to the target settles for 400ms
+and shows CORRECT again without requiring the hand to leave the camera. Only the
+one-shot acceptance event retains the no-hand release gate. Predicted-letter and
+status changes publish on the next processed frame, bypassing the 250ms heartbeat.
+No model weights, thresholds or dataset were changed by this UI/recognition fix.

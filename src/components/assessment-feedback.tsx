@@ -6,7 +6,7 @@ export function AssessmentFeedback({ result, symbol }: { result: Assessment; sym
     : result.status === "NO_HAND" ? "Tampilkan tangan"
     : result.reason === "UNSUPPORTED_SIDE" ? "Sisi tangan belum didukung"
     : result.status === "TRACKING" && result.reason === "MATCH" ? "Tahan sebentar" : "Belum yakin";
-  const detail = result.status === "CORRECT" ? "Percobaan diterima. Turunkan tangan sampai keluar kamera sebelum mencoba lagi."
+  const detail = result.status === "CORRECT" ? "Pose saat ini sesuai target. Penilaian terus mengikuti perubahan tangan Anda."
     : result.status === "RETRY" ? `Pola lebih dekat dengan contoh huruf lain. Amati kembali referensi ${symbol}.`
     : result.reason === "UNSUPPORTED_SIDE" ? "Gunakan tangan kanan. Model awal ini dilatih dari contoh tangan kanan; ini bukan aturan bahasa."
     : result.status === "NO_HAND" ? "Tampilkan satu tangan dengan semua jari terlihat."
