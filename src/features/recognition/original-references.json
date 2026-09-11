@@ -1,0 +1,101 @@
+[
+  {
+    "id": "sanjaya-v1-c-0",
+    "symbol": "C",
+    "sourceId": "sanjaya-bisindo-alphabet-2024-v1",
+    "sourceFilename": "20240509_183146.jpg",
+    "url": "/__originals/sanjaya-v1-c-0.jpg",
+    "file": ".tools/references/originals/sanjaya-v1-c-0.jpg",
+    "sourceUrl": "https://data.mendeley.com/public-files/datasets/ywnjpbcz8m/files/6b97bbd5-3a82-42be-9862-8e80211ff249/file_downloaded",
+    "sha256": "1d169a7553c56916940ab410351d9b25a552faa231887e4e033a0a41797e0c90",
+    "license": "CC-BY-4.0"
+  },
+  {
+    "id": "sanjaya-v1-c-60",
+    "symbol": "C",
+    "sourceId": "sanjaya-bisindo-alphabet-2024-v1",
+    "sourceFilename": "C_BEBAS_Apple_Iphone 12.JPG",
+    "url": "/__originals/sanjaya-v1-c-60.jpg",
+    "file": ".tools/references/originals/sanjaya-v1-c-60.jpg",
+    "sourceUrl": "https://data.mendeley.com/public-files/datasets/ywnjpbcz8m/files/c5297be2-cf68-4b15-a8a0-9faefa90cabd/file_downloaded",
+    "sha256": "cfd98b12dbb82fbfb5065fb582b56fc15dbee160ab9550a5f5589fbe7728ea3d",
+    "license": "CC-BY-4.0"
+  },
+  {
+    "id": "sanjaya-v1-c-120",
+    "symbol": "C",
+    "sourceId": "sanjaya-bisindo-alphabet-2024-v1",
+    "sourceFilename": "C_Polos Gelap_Samsung_Galaxy A32 5G.jpg",
+    "url": "/__originals/sanjaya-v1-c-120.jpg",
+    "file": ".tools/references/originals/sanjaya-v1-c-120.jpg",
+    "sourceUrl": "https://data.mendeley.com/public-files/datasets/ywnjpbcz8m/files/29113402-2703-4a7a-905b-ae5b85713b7b/file_downloaded",
+    "sha256": "3428fa57d914c6043eb2a2a43a7f406f75d6dc66eb150c9026197ca0a81a7998",
+    "license": "CC-BY-4.0"
+  },
+  {
+    "id": "sanjaya-v1-l-0",
+    "symbol": "L",
+    "sourceId": "sanjaya-bisindo-alphabet-2024-v1",
+    "sourceFilename": "20240509_184658.jpg",
+    "url": "/__originals/sanjaya-v1-l-0.jpg",
+    "file": ".tools/references/originals/sanjaya-v1-l-0.jpg",
+    "sourceUrl": "https://data.mendeley.com/public-files/datasets/ywnjpbcz8m/files/92bc290c-cf82-42a6-bd81-0d5218dd691d/file_downloaded",
+    "sha256": "cb82f9fd47d3169e197e857d24ec86745070c610327b9c003a6e1c4bd3911749",
+    "license": "CC-BY-4.0"
+  },
+  {
+    "id": "sanjaya-v1-l-60",
+    "symbol": "L",
+    "sourceId": "sanjaya-bisindo-alphabet-2024-v1",
+    "sourceFilename": "L_Baju_Xiaomi_Redmi Note 11.jpg",
+    "url": "/__originals/sanjaya-v1-l-60.jpg",
+    "file": ".tools/references/originals/sanjaya-v1-l-60.jpg",
+    "sourceUrl": "https://data.mendeley.com/public-files/datasets/ywnjpbcz8m/files/b4d5f4b4-02b2-4a70-8f70-c0a5f38df7bd/file_downloaded",
+    "sha256": "7512baf61c8c625957498ddd6b31baf43b8ed6c81dfb33b1553a9c453292881b",
+    "license": "CC-BY-4.0"
+  },
+  {
+    "id": "sanjaya-v1-l-120",
+    "symbol": "L",
+    "sourceId": "sanjaya-bisindo-alphabet-2024-v1",
+    "sourceFilename": "L_Polos Gelap_Samsung_A51.jpg",
+    "url": "/__originals/sanjaya-v1-l-120.jpg",
+    "file": ".tools/references/originals/sanjaya-v1-l-120.jpg",
+    "sourceUrl": "https://data.mendeley.com/public-files/datasets/ywnjpbcz8m/files/75cca844-4086-4410-a8bf-a59afa5922dd/file_downloaded",
+    "sha256": "c3d7aec7c8db78610efa8ac0f84b10323c76d67b2b3ff64a8165fcf7e62bd71a",
+    "license": "CC-BY-4.0"
+  },
+  {
+    "id": "sanjaya-v1-o-0",
+    "symbol": "O",
+    "sourceId": "sanjaya-bisindo-alphabet-2024-v1",
+    "sourceFilename": "0_BEBAS_Apple_Iphone 12.JPG",
+    "url": "/__originals/sanjaya-v1-o-0.jpg",
+    "file": ".tools/references/originals/sanjaya-v1-o-0.jpg",
+    "sourceUrl": "https://data.mendeley.com/public-files/datasets/ywnjpbcz8m/files/4f10ea8f-f3b1-4f82-83b3-42c76804bb6d/file_downloaded",
+    "sha256": "ebbcb0254daed297e56ebc98c0545258dbeebacabac2ee738546462663cb5bac",
+    "license": "CC-BY-4.0"
+  },
+  {
+    "id": "sanjaya-v1-o-60",
+    "symbol": "O",
+    "sourceId": "sanjaya-bisindo-alphabet-2024-v1",
+    "sourceFilename": "O_Baju_Xiaomi _Note 8 Pro.jpg",
+    "url": "/__originals/sanjaya-v1-o-60.jpg",
+    "file": ".tools/references/originals/sanjaya-v1-o-60.jpg",
+    "sourceUrl": "https://data.mendeley.com/public-files/datasets/ywnjpbcz8m/files/2ed8d918-94e0-4ff1-8e25-82a41b5735d9/file_downloaded",
+    "sha256": "4078d5a73837554fe31f26035857ec92975e4c83423ec8309423a2c25d6c0da0",
+    "license": "CC-BY-4.0"
+  },
+  {
+    "id": "sanjaya-v1-o-120",
+    "symbol": "O",
+    "sourceId": "sanjaya-bisindo-alphabet-2024-v1",
+    "sourceFilename": "O_Polos Gelap_Samsung_A32.jpg",
+    "url": "/__originals/sanjaya-v1-o-120.jpg",
+    "file": ".tools/references/originals/sanjaya-v1-o-120.jpg",
+    "sourceUrl": "https://data.mendeley.com/public-files/datasets/ywnjpbcz8m/files/68a39fd4-4659-497c-b4f6-fb37cd3e4adf/file_downloaded",
+    "sha256": "879667c521515f16d7fd61b1c4a434bf3b61c7946ac249a953a72b8068b7a85a",
+    "license": "CC-BY-4.0"
+  }
+]

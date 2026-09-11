@@ -58,6 +58,18 @@ In the 2026-09-11 run, after aspect-preserving placement on a 640x480 canvas:
 
 These are detector observations, not human handedness annotations or accuracy
 metrics. No horizontal flipping was used to invent missing reference coverage.
+
+The original-resolution versions were then fetched by exact publisher filename
+and verified against the publisher's SHA256. Repeating the identical VIDEO and
+feature pipeline still produced the same six usable samples and three missing
+detections. The original/resized versions are the same source observations; they
+must not be counted as separate subjects or split between training and test.
+Run `node scripts/inspect-reference-landmarks.mjs --originals` to repeat this
+check. It downloads missing originals to the ignored `.tools/references/originals`
+folder, verifies checksums, and writes `.tools/references/landmark-analysis-originals.json`.
+Original source URLs/license/checksums are tracked
+in `original-references.json`. The production reference images are unchanged.
+
 Only one useful sample exists for each observed L/O side in this reviewed set.
 It cannot establish acceptable pose ranges, invalid near-misses, or regional
 hand-exchange semantics. Higher-resolution or additional source-reviewed samples

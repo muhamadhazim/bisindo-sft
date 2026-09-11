@@ -1,10 +1,27 @@
 import { chromium } from "@playwright/test";
 import { readFile, mkdir, writeFile } from "node:fs/promises";
+import { createHash } from "node:crypto";
 import ts from "typescript";
 
 // Offline reference analysis only. Uses licensed public images, never a webcam.
 // Start the production server on localhost:3000. Generated report stays in .tools.
-const references = JSON.parse(await readFile("public/assets/signs/sanjaya-v1/provenance.json", "utf8"));
+const useOriginals = process.argv.includes("--originals");
+const references = JSON.parse(await readFile(useOriginals ? "src/features/recognition/original-references.json" : "public/assets/signs/sanjaya-v1/provenance.json", "utf8"));
+if (useOriginals) {
+  await mkdir(".tools/references/originals", { recursive: true });
+  for (const reference of references) {
+    let data;
+    try { data = await readFile(reference.file); }
+    catch (error) {
+      if (error.code !== "ENOENT") throw error;
+      const response = await fetch(reference.sourceUrl);
+      if (!response.ok) throw new Error(`Original reference download failed: ${reference.id}`);
+      data = Buffer.from(await response.arrayBuffer());
+    }
+    if (createHash("sha256").update(data).digest("hex") !== reference.sha256) throw new Error(`Original reference checksum mismatch: ${reference.id}`);
+    await writeFile(reference.file, data);
+  }
+}
 const modules = {
   "/__analysis/vision.mjs": "node_modules/@mediapipe/tasks-vision/vision_bundle.mjs",
   "/__analysis/config.mjs": "src/lib/config/tracking.ts",
@@ -14,6 +31,11 @@ const modules = {
 const browser = await chromium.launch({ channel: "chrome" });
 try {
   const page = await browser.newPage();
+  if (useOriginals) await page.route("**/__originals/*.jpg", async (route) => {
+    const reference = references.find((reference) => reference.url === new URL(route.request().url()).pathname);
+    if (!reference) return route.abort();
+    await route.fulfill({ contentType: "image/jpeg", body: await readFile(reference.file) });
+  });
   await page.route("**/__analysis/*.mjs", async (route) => {
     const file = modules[new URL(route.request().url()).pathname];
     if (!file) return route.abort();
@@ -49,6 +71,6 @@ try {
     return samples;
   }, references);
   await mkdir(".tools/references", { recursive: true });
-  await writeFile(".tools/references/landmark-analysis.json", JSON.stringify({ purpose: "Reference investigation, not live validation or classifier acceptance", input: "9 licensed publisher images, aspect preserved within 440px on 640x480 light-gray canvas; no mirroring or camera input", samples }, null, 2));
+  await writeFile(useOriginals ? ".tools/references/landmark-analysis-originals.json" : ".tools/references/landmark-analysis.json", JSON.stringify({ purpose: "Reference investigation, not live validation or classifier acceptance", input: `${useOriginals ? "Original" : "Publisher resized"} licensed images, aspect preserved within 440px on 640x480 light-gray canvas; no mirroring or camera input`, samples }, null, 2));
   console.log(JSON.stringify(samples.map(({ id, ambiguous, handedness, vector, latencyMs }) => ({ id, ambiguous, handedness, usableFeatures: !!vector, latencyMs })), null, 2));
 } finally { await browser.close(); }
