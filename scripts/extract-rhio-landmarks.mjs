@@ -1,7 +1,12 @@
 import { chromium } from '@playwright/test';
 import { readFile, writeFile } from 'node:fs/promises';
 import ts from 'typescript';
+import { createHash } from 'node:crypto';
 const manifest = JSON.parse(await readFile('ml/rhio/manifest.json','utf8'));
+for (const sample of manifest.samples) {
+  const bytes = await readFile('.tools/bisindo-dataset/' + sample.id);
+  if (createHash('sha256').update(bytes).digest('hex') !== sample.sha256) throw new Error('Dataset image checksum mismatch: ' + sample.id);
+}
 const modules = { '/__train/vision.mjs': 'node_modules/@mediapipe/tasks-vision/vision_bundle.mjs', '/__train/config.mjs': 'src/lib/config/tracking.ts', '/__train/canonicalize.mjs': 'src/lib/mediapipe/canonicalize.ts', '/__train/features.mjs': 'src/features/recognition/features.ts' };
 const browser = await chromium.launch({ channel: 'chrome' });
 try {
@@ -46,3 +51,4 @@ try {
   await writeFile('.tools/bisindo-dataset/features.json',JSON.stringify(result));
   console.log(JSON.stringify({usable:result.rows.filter(r=>r.vector).length,total:result.rows.length}));
 }finally{await browser.close();}
+

@@ -1,9 +1,12 @@
 import {readFile,writeFile,mkdir} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import {RandomForestClassifier} from 'ml-random-forest';
+import {loadTrainingContract} from './load-training-contract.mjs';
 const read=async p=>JSON.parse(await readFile(p,'utf8'));
 const dataset=await read('.tools/bisindo-dataset/features.json');
 const manifest=await read('ml/rhio/manifest.json');
+const {validateTrainingData,featureSchema,extractFeatures}=await loadTrainingContract();
+validateTrainingData(manifest,dataset,featureSchema,extractFeatures);
 const labels=['C','L','O'];
 const usable=dataset.rows.filter(r=>r.vector);
 const train=usable.filter(r=>r.split==='train');const validation=usable.filter(r=>r.split==='validation');const test=usable.filter(r=>r.split==='test');
@@ -34,4 +37,5 @@ const modelText=JSON.stringify(payload);await writeFile('public/models/rhio-clo-
 const report={modelSha256:createHash('sha256').update(modelText).digest('hex'),options,sourceImages:manifest.samples.length,usableImages:new Set(usable.map(r=>r.id)).size,counts:{train:train.length,validation:validation.length,test:test.length,rejected:dataset.rows.length-usable.length},calibration,testConfusion:{rows:labels,columns:[...labels,'UNCERTAIN'],values:confusion},limitations:['Three frames per source image are correlated, not independent samples.','Parent-image groups only; signer/session independence unknown.','No real-user or unknown-pose accuracy claim.'],golden:labels.flatMap(label=>test.filter(r=>r.label===label).slice(0,2)).map(r=>({id:r.id,frame:r.frame,vector:r.vector,votes:votes(r.vector),predicted:classify(r.vector)}))};
 await writeFile('ml/rhio/evaluation.json',JSON.stringify(report,null,2)+'\n');
 console.log(JSON.stringify({...report,golden:undefined},null,2));
+
 
