@@ -34,6 +34,7 @@ export function CameraPractice({ sign }: { sign: SignContent }) {
   const { videoRef, status, start, stop } = useCamera();
   const assess = true;
   const [mirrored, setMirrored] = useState(true);
+  const [showLandmarks, setShowLandmarks] = useState(true);
   const { status: trackingStatus, latencyMs, overlayRef, retry, assessment } = useHandTracking(videoRef, status === "READY", sign, mirrored, assess);
   const busy = status === "REQUESTING" || status === "READY";
   const message = messages[status];
@@ -42,7 +43,7 @@ export function CameraPractice({ sign }: { sign: SignContent }) {
       <div className="camera-viewport">
         <video ref={videoRef} autoPlay muted playsInline aria-label="Preview kamera langsung" className={mirrored ? "camera-video mirrored" : "camera-video"} hidden={status !== "READY"} />
         {status === "READY" && assessment && <div className="recognition-badge" aria-hidden="true"><span>Terbaca</span><strong>{assessment.predictedLetter ?? "—"}</strong></div>}
-        {features.ENABLE_DEBUG_PANEL && status === "READY" && <canvas ref={overlayRef} className="camera-overlay" aria-hidden="true" />}
+        {status === "READY" && trackingStatus !== "ERROR" && showLandmarks && <canvas ref={overlayRef} className="camera-overlay" aria-hidden="true" />}
         {status !== "READY" && <span className="camera-cover">Kamera {status === "REQUESTING" ? "sedang disiapkan" : "tidak aktif"}</span>}
       </div>
       <div role="status" aria-live="polite" aria-atomic="true"><h2 id="camera-title">{message.title}</h2><p>{message.detail}</p></div>
@@ -50,6 +51,7 @@ export function CameraPractice({ sign }: { sign: SignContent }) {
       <div className="actions">
         {busy ? <button className="button secondary" onClick={stop}>{status === "REQUESTING" ? "Batalkan" : "Hentikan kamera"}</button> : <button className="button primary" onClick={() => void start()}>{status === "IDLE" ? "Mulai kamera" : "Coba kamera lagi"}</button>}
         <label className="mirror-toggle"><input type="checkbox" checked={mirrored} onChange={(event) => setMirrored(event.target.checked)} /> Tampilan cermin</label>
+        <label className="mirror-toggle"><input type="checkbox" checked={showLandmarks} onChange={(event) => setShowLandmarks(event.target.checked)} /> Titik dan garis tangan</label>
       </div>
 
       {assess && <p className="camera-note">Pengenal awal C/L/O aktif. Gunakan tangan kanan dan tahan pose sebentar. Model dari dataset BISINDO pilihan Anda; hasil masih perlu diuji langsung. Gambar tidak disimpan.</p>}

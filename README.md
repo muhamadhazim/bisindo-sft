@@ -248,3 +248,8 @@ thresholds. Reliable new-person recognition is still unverified.
 
 
 
+
+The camera preview displays live hand landmarks and finger connections by default.
+Use **Titik dan garis tangan** to toggle the overlay. Rendering follows the mirror
+setting without changing classifier coordinates; this skeleton indicates tracking,
+not a correctness score.

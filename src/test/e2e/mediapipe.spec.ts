@@ -47,6 +47,20 @@ test("VIDEO tracker detects a hand from a licensed reference stream fixture", as
   await page.goto("/practice/bisindo-l-sanjaya-v1");
   await page.getByRole("button", { name: "Mulai kamera", exact: true }).click();
   await expect(page.getByText("Tangan terlihat.", { exact: true })).toBeVisible({ timeout: 20000 });
+  const overlay = page.locator("canvas.camera-overlay");
+  await expect(overlay).toBeVisible();
+  await expect.poll(() => overlay.evaluate((canvas: HTMLCanvasElement) => {
+    const pixels = canvas.getContext("2d")!.getImageData(0, 0, canvas.width, canvas.height).data;
+    return pixels.some((value, index) => index % 4 === 3 && value > 0);
+  })).toBe(true);
+  await page.setViewportSize({ width: 360, height: 800 });
+  await page.screenshot({ path: "test-results/hand-overlay-360.png", fullPage: true });
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await page.getByRole("checkbox", { name: "Titik dan garis tangan" }).uncheck();
+  await expect(overlay).toHaveCount(0);
+  await page.getByRole("checkbox", { name: "Titik dan garis tangan" }).check();
+  await expect(overlay).toBeVisible();
   await page.getByRole("button", { name: "Hentikan kamera" }).click();
+  await expect(overlay).toHaveCount(0);
 });
 
