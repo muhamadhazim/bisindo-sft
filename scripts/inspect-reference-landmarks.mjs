@@ -6,6 +6,7 @@ import ts from "typescript";
 // Offline reference analysis only. Uses licensed public images, never a webcam.
 // Start the production server on localhost:3000. Generated report stays in .tools.
 const useOriginals = process.argv.includes("--originals");
+const sequence = process.argv.includes("--sequence");
 const references = JSON.parse(await readFile(useOriginals ? "src/features/recognition/original-references.json" : "public/assets/signs/sanjaya-v1/provenance.json", "utf8"));
 if (useOriginals) {
   await mkdir(".tools/references/originals", { recursive: true });
@@ -44,7 +45,7 @@ try {
     await route.fulfill({ contentType: "text/javascript", body });
   });
   await page.goto("http://127.0.0.1:3000/credits");
-  const samples = await page.evaluate(async (references) => {
+  const samples = await page.evaluate(async ({ references, sequence }) => {
     const { FilesetResolver, HandLandmarker } = await import("/__analysis/vision.mjs");
     const { trackingConfig } = await import("/__analysis/config.mjs");
     const { canonicalizeHands } = await import("/__analysis/canonicalize.mjs");
@@ -59,18 +60,22 @@ try {
         const context = canvas.getContext("2d");
         if (!context) throw new Error("Reference analysis canvas unavailable");
         context.fillStyle = "#eee"; context.fillRect(0, 0, 640, 480);
-        const scale = Math.min(440 / image.width, 440 / image.height);
+        const size = sequence ? 480 : 440;
+        const scale = Math.min(size / image.width, size / image.height);
         context.drawImage(image, (640 - image.width * scale) / 2, (480 - image.height * scale) / 2, image.width * scale, image.height * scale);
-        const start = performance.now();
-        const raw = model.detectForVideo(canvas, 1000);
-        const result = canonicalizeHands(raw, 1000);
-        const vector = result.ambiguous || !result.frame.left && !result.frame.right ? null : extractFeatures(result.frame);
-        samples.push({ id: reference.id, symbol: reference.symbol, sourceId: reference.sourceId, assetSha256: reference.sha256, featureSchema, frame: result.frame, ambiguous: result.ambiguous, handedness: raw.handedness.map((categories) => categories.map(({ categoryName, score }) => ({ categoryName, score }))), vector, latencyMs: performance.now() - start });
+        for (let tick = 0; tick < (sequence ? 12 : 1); tick++) {
+          const timestamp = 1000 + tick * 100;
+          const start = performance.now();
+          const raw = model.detectForVideo(canvas, timestamp);
+          const result = canonicalizeHands(raw, timestamp);
+          const vector = result.ambiguous || !result.frame.left && !result.frame.right ? null : extractFeatures(result.frame);
+          samples.push({ id: reference.id, symbol: reference.symbol, sourceId: reference.sourceId, assetSha256: reference.sha256, featureSchema, frame: result.frame, ambiguous: result.ambiguous, handedness: raw.handedness.map((categories) => categories.map(({ categoryName, score }) => ({ categoryName, score }))), vector, latencyMs: performance.now() - start });
+        }
       } finally { model.close(); }
     }
     return samples;
-  }, references);
+  }, { references, sequence });
   await mkdir(".tools/references", { recursive: true });
-  await writeFile(useOriginals ? ".tools/references/landmark-analysis-originals.json" : ".tools/references/landmark-analysis.json", JSON.stringify({ purpose: "Reference investigation, not live validation or classifier acceptance", input: `${useOriginals ? "Original" : "Publisher resized"} licensed images, aspect preserved within 440px on 640x480 light-gray canvas; no mirroring or camera input`, samples }, null, 2));
+  await writeFile(`.tools/references/landmark-analysis${useOriginals ? "-originals" : ""}${sequence ? "-sequence" : ""}.json`, JSON.stringify({ purpose: "Reference investigation, not live validation or classifier acceptance", input: `${useOriginals ? "Original" : "Publisher resized"} licensed images, aspect preserved within ${sequence ? 480 : 440}px on 640x480 light-gray canvas; no mirroring or camera input; ${sequence ? "12 repeated frames, 100ms timestamps" : "one frame"}`, samples }, null, 2));
   console.log(JSON.stringify(samples.map(({ id, ambiguous, handedness, vector, latencyMs }) => ({ id, ambiguous, handedness, usableFeatures: !!vector, latencyMs })), null, 2));
 } finally { await browser.close(); }

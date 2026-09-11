@@ -227,3 +227,14 @@ Install later only when needed:
 - React Three Fiber + Drei + Three.js — only after camera/recognition stable
 
 Lihat `docs/SETUP.md`.
+
+### Phase 4 technical experiment — 2026-09-11
+
+A source-derived reference matcher was evaluated and rejected for production:
+L-0 remained uncertain in the integrated VIDEO acceptance test, and the repeated
+frame/framing probe showed unstable coverage. The experimental code and source
+measurements are retained outside the production path, with a reproducible
+[reference audit](src/features/recognition/REFERENCE_AUDIT.md). Existing project
+methodologies were reviewed; no external code, ASL rules or model was copied.
+Technical evaluation can continue without waiting for mentor-provided numeric
+thresholds. Reliable new-person recognition is still unverified.

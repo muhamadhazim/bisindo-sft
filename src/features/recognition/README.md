@@ -81,3 +81,13 @@ forms, followed by live C/L/O acceptance and false-positive tests. Alphabet scop
 is already settled and is not being asked again. No uploaded/prerecorded-video
 practice flow is being introduced. This is the unresolved Phase 4 gate; later
 phases have not been skipped.
+
+## 2026-09-11 experiment update
+
+A nearest-reference candidate was implemented and tested but failed the integrated
+L-0 acceptance check and a repeated-frame/framing probe. It is not wired into the
+production practice page. See [reference audit](REFERENCE_AUDIT.md) for measured
+results, comparisons with existing projects, and reproducible commands. The
+candidate remains experimental; source-vector self-matches are not an accuracy
+benchmark. Technical dataset and classifier evaluation can continue without
+requiring a mentor to invent numerical thresholds first.
