@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+:root {
+  --background: #faf9f6;
+  --foreground: #173c32;
+  --muted: #51665d;
+  --accent: #d6eb77;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: Arial, Helvetica, sans-serif;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--background); color: var(--foreground); font-family: Arial, Helvetica, sans-serif; line-height: 1.6; }
+a { color: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+button { font: inherit; cursor: pointer; }
+:focus-visible { outline: 3px solid #356bdf; outline-offset: 5px; }
+h1, h2, p { margin: 0; }
+h1, h2 { line-height: 1.15; letter-spacing: -0.035em; text-wrap: balance; overflow-wrap: anywhere; }
+p { overflow-wrap: anywhere; }
+.site-header, .site-footer, .shell { width: min(1120px, calc(100% - 40px)); margin-inline: auto; }
+.site-header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; padding-block: 24px; border-bottom: 1px solid #d9ded4; }
+.brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 800; letter-spacing: 0.04em; line-height: 1.2; }
+.brand-mark { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 14px; background: var(--foreground); color: var(--accent); font-size: 25px; letter-spacing: -0.06em; }
+.brand-caption { display: block; font-size: 11px; font-weight: 400; letter-spacing: 0.02em; margin-top: 5px; }
+.status-badge, .content-status { display: inline-block; font-size: 12px; font-weight: 600; border: 1px solid #ced7c9; border-radius: 30px; padding: 7px 12px; }
+.skip-link { position: absolute; top: -100px; left: 20px; padding: 12px; z-index: 10; background: white; }
+.skip-link:focus { top: 12px; }
+.intro { padding-block: 64px 56px; max-width: 850px; }
+.eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.15em; margin-bottom: 20px; }
+.intro h1 { font-size: clamp(36px, 5.3vw, 64px); font-weight: 600; }
+.intro h1 span { color: #607857; }
+.intro-copy { max-width: 490px; margin-top: 24px; color: var(--muted); font-size: 17px; }
+.button { display: inline-flex; justify-content: center; align-items: center; gap: 24px; min-height: 48px; border-radius: 10px; padding: 13px 20px; text-decoration: none; font-weight: 600; font-size: 14px; border: 1px solid transparent; text-align: center; }
+.primary { background: var(--foreground); color: white; }
+.primary:hover { background: #285648; }
+.secondary { border-color: var(--foreground); }
+.intro .button { margin-top: 28px; }
+.availability { scroll-margin-top: 24px; background: #edf1e4; border: 1px solid #dce3d2; border-radius: 18px; padding: 28px; display: flex; gap: 24px; align-items: flex-start; }
+.section-marker { flex-shrink: 0; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: var(--accent); font-weight: 700; }
+.availability .eyebrow { margin-bottom: 10px; }
+.availability h2 { font-size: 25px; font-weight: 600; }
+.availability p:not(.eyebrow) { max-width: 630px; margin-top: 12px; color: var(--muted); }
+.content-status { margin-top: 18px; background: var(--background); }
+.principles { display: grid; grid-template-columns: 1fr; gap: 28px; padding-block: 40px 60px; }
+.principle-number { font-size: 12px; color: var(--muted); }
+.principles h2 { font-size: 18px; font-weight: 600; margin-top: 12px; }
+.principles p { color: var(--muted); font-size: 14px; margin-top: 10px; max-width: 350px; }
+.site-footer { border-top: 1px solid #d9ded4; padding-block: 24px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; font-size: 12px; color: var(--muted); }
+.message-state { width: min(650px, calc(100% - 40px)); margin: 64px auto; }
+.message-state h1 { font-size: clamp(30px, 5vw, 44px); }
+.message-state p:not(.eyebrow) { color: var(--muted); margin-block: 20px; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; }
+@media (max-width: 399px) {
+  .status-badge { font-size: 10px; padding: 6px 9px; }
+  .intro { padding-top: 44px; }
+  .availability { padding: 22px; gap: 16px; flex-direction: column; }
+}
+@media (min-width: 768px) {
+  .site-header, .site-footer, .shell { width: min(1120px, calc(100% - 80px)); }
+  .intro { padding-block: 88px 64px; }
+  .availability { padding: 36px; }
+  .principles { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; padding-block: 48px 72px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}

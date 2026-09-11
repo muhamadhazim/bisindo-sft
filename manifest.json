@@ -1,0 +1,32 @@
+{
+  "project": "BISINDO Learning Platform",
+  "version": "v2-audited",
+  "purpose": "Audited Codex source-of-truth documentation pack",
+  "markdown_files": [
+    "AGENTS.md",
+    "README.md",
+    "docs/AI_RECOGNITION.md",
+    "docs/ARCHITECTURE.md",
+    "docs/AUDIT_REPORT.md",
+    "docs/CODEX_START_PROMPT.md",
+    "docs/CONTENT_SCHEMA.md",
+    "docs/CONTRACTS.md",
+    "docs/CURRICULUM.md",
+    "docs/DATABASE.md",
+    "docs/DATASET.md",
+    "docs/DECISIONS.md",
+    "docs/DEPLOYMENT.md",
+    "docs/DESIGN.md",
+    "docs/GAMIFICATION.md",
+    "docs/LICENSES.md",
+    "docs/MODEL_TRAINING.md",
+    "docs/PERFORMANCE.md",
+    "docs/PRD.md",
+    "docs/REFERENCES.md",
+    "docs/ROADMAP.md",
+    "docs/SECURITY_PRIVACY.md",
+    "docs/SETUP.md",
+    "docs/TASKS.md",
+    "docs/TESTING.md"
+  ]
+}
