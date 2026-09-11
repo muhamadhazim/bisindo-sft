@@ -1,5 +1,15 @@
 @import "tailwindcss";
 
+.camera-practice { display: grid; gap: 20px; max-width: 760px; }
+.camera-viewport { position: relative; aspect-ratio: 4 / 3; background: #152a24; border-radius: 18px; overflow: hidden; }
+.camera-video { width: 100%; height: 100%; object-fit: contain; }
+.camera-video.mirrored { transform: scaleX(-1); }
+.camera-cover { position: absolute; inset: 0; display: grid; place-items: center; padding: 20px; color: #f3f7e9; text-align: center; }
+.camera-practice h2 { font-size: 24px; margin-bottom: 12px; }
+.mirror-toggle { display: flex; align-items: center; gap: 10px; min-height: 48px; cursor: pointer; }
+.mirror-toggle input { width: 20px; height: 20px; accent-color: #173c32; }
+.camera-note { font-size: 13px; color: #51665d; }
+
 :root {
   --background: #faf9f6;
   --foreground: #173c32;

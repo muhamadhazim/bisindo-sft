@@ -11,6 +11,7 @@
     "lint": "eslint . --max-warnings=0",
     "typecheck": "next typegen && tsc --noEmit",
     "test": "playwright test",
+    "test:camera:local": "node scripts/check-local-camera.mjs",
     "test:report": "playwright show-report"
   },
   "dependencies": {

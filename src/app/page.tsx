@@ -15,7 +15,7 @@ export default function HomePage() {
         <div>
           <p className="eyebrow">MATERI PEMBELAJARAN</p>
           <h2 id="availability-heading">Mulai dari alfabet</h2>
-          <p>Tiga huruf awal, masing-masing dengan beberapa contoh bersumber. Materi pengamatan sudah tersedia; latihan kamera realtime sedang disiapkan.</p>
+          <p>Tiga huruf awal, masing-masing dengan beberapa contoh bersumber. Amati referensi, lalu coba langsung dengan kamera. Penilaian gerakan sedang dikembangkan.</p>
           <Link className="back-link" href="/learn">Lihat materi C, L, dan O →</Link>
         </div>
       </section>

@@ -2,17 +2,25 @@
 
 ## Implementation status
 
-Phases 0, 0A, and 1 are complete for local development. Phase 2 camera work is
+Phases 0, 0A, 1, and 2 are complete for local development. Phase 3 hand tracking is
 next. This is **not a completed MVP**.
 The learning map, C/L/O lesson introductions, observation pages, and source credits
-are available. Practice and challenge are explicitly labeled placeholders;
-camera, recognition, scoring, and persistence are not yet enabled.
+are available. Practice uses a real local webcam with start/stop and recovery.
+Recognition, scoring, and persistence are not yet enabled; the challenge is an
+explicit placeholder.
 Vercel deployment is deferred at the user's request; development continues
 locally. See [task status](docs/TASKS.md) and ADR-017 in docs/DECISIONS.md.
 
-Verified: lint, typecheck, production build, and 22 tests; responsive shell and
+Verified: lint, typecheck, production build, and 33 tests; responsive shell and
 learning click-through at 320–1440px with no horizontal overflow. Tests also cover
 reference-image failure and unknown curriculum IDs. See [verification record](docs/IMPLEMENTATION_STATUS.md).
+
+Camera tests cover denied/missing/busy/unsupported devices, late permission after
+cancel/navigation, track cleanup, mirror display, and frame scheduling. Automated
+tests use synthetic camera input only in the test browser. A separate real-device
+check passed on local Chrome 152.0.7977.83: 640×480 video and all tracks ended after
+route exit. No frames were saved. Physical phone behavior and camera-light visual
+inspection remain unverified.
 
 Initial alphabet reference: C, L, O, with 9 unchanged CC BY 4.0 publisher images.
 See [tracked content evidence](public/assets/signs/sanjaya-v1/REVIEW.md).
@@ -53,6 +61,10 @@ Production locally:
 ```bash
 npm run start
 ```
+
+Optional real-camera check (briefly activates the webcam; requires installed
+Google Chrome and the production server above): `npm run test:camera:local`.
+This checks live decoded video and track cleanup without recording pixels.
 
 Vercel: import this repository, select Next.js and Node 24.x, use `npm ci` /
 `npm run build`, then verify the generated HTTPS URL. Account/project access is
