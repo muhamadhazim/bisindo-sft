@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "packageManager": "npm@10.9.4",
-  "engines": { "node": ">=24.21.0 <25" },
+  "engines": {
+    "node": ">=24.21.0 <25"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -15,6 +17,7 @@
     "test:report": "playwright show-report"
   },
   "dependencies": {
+    "@mediapipe/tasks-vision": "1.0.1",
     "next": "16.3.4",
     "react": "19.3.0",
     "react-dom": "19.3.0"

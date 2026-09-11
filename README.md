@@ -2,16 +2,17 @@
 
 ## Implementation status
 
-Phases 0, 0A, 1, and 2 are complete for local development. Phase 3 hand tracking is
+Phases 0, 0A, 1, 2, and 3 are complete for local development. Phase 4 recognition is
 next. This is **not a completed MVP**.
 The learning map, C/L/O lesson introductions, observation pages, and source credits
 are available. Practice uses a real local webcam with start/stop and recovery.
-Recognition, scoring, and persistence are not yet enabled; the challenge is an
+MediaPipe hand tracking runs locally after camera startup. Letter recognition,
+scoring, and persistence are not yet enabled; the challenge is an
 explicit placeholder.
 Vercel deployment is deferred at the user's request; development continues
 locally. See [task status](docs/TASKS.md) and ADR-017 in docs/DECISIONS.md.
 
-Verified: lint, typecheck, production build, and 33 tests; responsive shell and
+Verified: lint, typecheck, production build, and 41 tests; responsive shell and
 learning click-through at 320–1440px with no horizontal overflow. Tests also cover
 reference-image failure and unknown curriculum IDs. See [verification record](docs/IMPLEMENTATION_STATUS.md).
 
@@ -21,6 +22,14 @@ tests use synthetic camera input only in the test browser. A separate real-devic
 check passed on local Chrome 152.0.7977.83: 640×480 video and all tracks ended after
 route exit. No frames were saved. Physical phone behavior and camera-light visual
 inspection remain unverified.
+
+Tracking uses pinned MediaPipe Tasks Vision 1.0.1 and an official Apache-2.0 model,
+with locally hosted WASM, traceable checksums, ambiguous-hand rejection, and model
+failure/retry. Camera and tracking started on actual local Chrome; this is not a
+live letter-recognition accuracy test. Debug overlay was checked at 360px with a
+licensed reference fixture. A sampled inference took 81ms on this desktop/dev
+run; this is not a phone performance benchmark. Vendor usage telemetry is blocked
+by the enforced same-origin connection policy. See [runtime details](public/models/mediapipe/README.md).
 
 Initial alphabet reference: C, L, O, with 9 unchanged CC BY 4.0 publisher images.
 See [tracked content evidence](public/assets/signs/sanjaya-v1/REVIEW.md).

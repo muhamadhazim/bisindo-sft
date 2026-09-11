@@ -3,6 +3,18 @@
 import { useState } from "react";
 import { useCamera } from "@/hooks/use-camera";
 import type { CameraStatus } from "@/lib/camera/controller";
+import { useHandTracking, type TrackingStatus } from "@/hooks/use-hand-tracking";
+import { features } from "@/lib/config/features";
+import type { SignContent } from "@/types/content";
+
+const trackingMessages: Record<TrackingStatus, string> = {
+  LOADING: "Menyiapkan pelacakan tangan…",
+  ERROR: "Pelacakan tangan gagal dimuat. Kamera tetap bisa dihentikan dan referensi tetap tersedia.",
+  NO_HAND: "Belum ada tangan terlihat. Tampilkan tangan di dalam area kamera.",
+  INSUFFICIENT_HANDS: "Materi ini membutuhkan dua tangan yang terlihat.",
+  TRACKING: "Tangan terlihat. Penilaian bentuk huruf belum aktif.",
+  UNCERTAIN: "Tangan belum terbaca dengan jelas. Pastikan jumlah tangan sesuai materi dan semua jari terlihat.",
+};
 
 const messages: Record<CameraStatus, { title: string; detail: string }> = {
   IDLE: { title: "Siap berlatih langsung?", detail: "Kamera hanya dipakai di perangkat ini. Gambar tidak direkam atau dikirim; mikrofon tidak digunakan." },
@@ -15,18 +27,21 @@ const messages: Record<CameraStatus, { title: string; detail: string }> = {
   ERROR: { title: "Kamera gagal dimulai", detail: "Coba mulai ulang kamera atau muat ulang halaman. Anda tetap bisa membuka referensi." },
 };
 
-export function CameraPractice() {
+export function CameraPractice({ sign }: { sign: Pick<SignContent, "requiredHands" | "handednessPolicy"> }) {
   const { videoRef, status, start, stop } = useCamera();
   const [mirrored, setMirrored] = useState(true);
+  const { status: trackingStatus, latencyMs, overlayRef, retry } = useHandTracking(videoRef, status === "READY", sign, mirrored);
   const busy = status === "REQUESTING" || status === "READY";
   const message = messages[status];
   return (
     <section className="camera-practice" aria-labelledby="camera-title">
       <div className="camera-viewport">
         <video ref={videoRef} autoPlay muted playsInline aria-label="Preview kamera langsung" className={mirrored ? "camera-video mirrored" : "camera-video"} hidden={status !== "READY"} />
+        {features.ENABLE_DEBUG_PANEL && status === "READY" && <canvas ref={overlayRef} className="camera-overlay" aria-hidden="true" />}
         {status !== "READY" && <span className="camera-cover">Kamera {status === "REQUESTING" ? "sedang disiapkan" : "tidak aktif"}</span>}
       </div>
       <div role="status" aria-live="polite" aria-atomic="true"><h2 id="camera-title">{message.title}</h2><p>{message.detail}</p></div>
+      {status === "READY" && <div className="notice"><p role="status" aria-live="polite">{trackingMessages[trackingStatus]}</p>{trackingStatus === "ERROR" && <button className="button secondary" onClick={retry}>Coba pelacakan lagi</button>}{features.ENABLE_DEBUG_PANEL && latencyMs !== null && <p>Pelacakan: {latencyMs.toFixed(0)} ms · tidak disimpan</p>}</div>}
       <div className="actions">
         {busy ? <button className="button secondary" onClick={stop}>{status === "REQUESTING" ? "Batalkan" : "Hentikan kamera"}</button> : <button className="button primary" onClick={() => void start()}>{status === "IDLE" ? "Mulai kamera" : "Coba kamera lagi"}</button>}
         <label className="mirror-toggle"><input type="checkbox" checked={mirrored} onChange={(event) => setMirrored(event.target.checked)} /> Tampilan cermin</label>

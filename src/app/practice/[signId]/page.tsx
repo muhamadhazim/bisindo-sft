@@ -15,7 +15,7 @@ export default async function PracticePage({ params }: { params: Promise<{ signI
   if (!sign) notFound();
   return (
     <LearningScreen eyebrow="PRAKTIK ALFABET" title={`Latihan huruf ${sign.symbol}`} back={{ href: `/lesson/huruf-${sign.symbol.toLowerCase()}/observe`, label: "Lihat referensi" }}>
-      <CameraPractice key={sign.id} />
+      <CameraPractice key={sign.id} sign={{ requiredHands: sign.requiredHands, handednessPolicy: sign.handednessPolicy }} />
       <div className="actions"><Link className="button primary" href="/challenge/alfabet-awal">Lihat alur tantangan →</Link><Link className="button secondary" href={`/lesson/huruf-${sign.symbol.toLowerCase()}/observe`}>Amati lagi</Link></div>
     </LearningScreen>
   );

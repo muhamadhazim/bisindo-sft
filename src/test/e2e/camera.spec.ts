@@ -25,8 +25,9 @@ test.beforeEach(async ({ page }) => {
 test("realtime stream starts by action, fits mobile, mirrors only display, stops and restarts", async ({ page }) => {
   await page.setViewportSize({ width: 360, height: 800 });
   const uploads: string[] = [];
-  page.on("request", (request) => { if (request.method() !== "GET") uploads.push(request.url()); });
-  await page.goto("/practice/bisindo-c-sanjaya-v1");
+  page.on("requestfinished", (request) => { if (request.method() !== "GET") uploads.push(request.url()); });
+  const response = await page.goto("/practice/bisindo-c-sanjaya-v1");
+  expect(response?.headers()["content-security-policy"]).toBe("connect-src 'self'");
   expect(await page.evaluate(() => (window as unknown as CameraTestWindow).cameraStreams.length)).toBe(0);
   await page.getByRole("button", { name: "Mulai kamera", exact: true }).click();
   await expect(page.getByRole("heading", { name: "Kamera aktif", exact: true })).toBeVisible();

@@ -1,0 +1,3 @@
+# Preserve vendor asset checksums on Windows and on fresh clones.
+public/models/** -text
+public/assets/signs/**/*.jpg -text

@@ -21,11 +21,12 @@ try {
   await page.getByRole("heading", { name: "Kamera aktif", exact: true }).waitFor({ timeout: 15000 });
   const dimensions = await page.locator("video").evaluate((video) => ({ width: video.videoWidth, height: video.videoHeight }));
   assert(dimensions.width > 0 && dimensions.height > 0, "Camera must deliver decoded frames");
+  await page.getByText(/Belum ada tangan terlihat\.|Tangan terlihat\.|Tangan belum terbaca dengan jelas\./).waitFor({ timeout: 20000 });
   await page.getByRole("link", { name: "Amati lagi" }).click();
   await page.getByRole("heading", { name: "Bentuk huruf C", exact: true }).waitFor();
   const stopped = await page.evaluate(() => window.checkedStreams.length > 0 && window.checkedStreams.every((stream) => stream.getTracks().every((track) => track.readyState === "ended")));
   assert(stopped, "Every camera track must stop after route exit");
-  console.log(JSON.stringify({ realDevice: true, dimensions, stoppedAfterRouteExit: stopped, framesRecorded: false }));
+  console.log(JSON.stringify({ realDevice: true, dimensions, trackingStarted: true, stoppedAfterRouteExit: stopped, framesRecorded: false }));
 } finally {
   await browser.close();
 }
