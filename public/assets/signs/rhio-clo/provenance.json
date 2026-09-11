@@ -1,0 +1,32 @@
+[
+  {
+    "id": "rhio-clo-c",
+    "symbol": "C",
+    "url": "/assets/signs/rhio-clo/c.jpg",
+    "sourceId": "rhio-bisindo-2024",
+    "sourceUrl": "https://github.com/rhiosutoyo/Indonesian-Sign-Language-BISINDO-Hand-Sign-Detection-Dataset/blob/e1a48c6caa9d12318c8561e9962da845ab50226e/test/C.db3672a4-e263-11ed-bf21-001a7dda7115.jpg",
+    "sha256": "eb4cd2ef37510d4e2f1e3a9138abdbc82115b11e91ed2a41bd8151829a0e6b72",
+    "license": "MIT",
+    "attribution": "Rhio Sutoyo et al., BISINDO Hand-Sign Detection dataset. MIT. Unmodified publisher image."
+  },
+  {
+    "id": "rhio-clo-l",
+    "symbol": "L",
+    "url": "/assets/signs/rhio-clo/l.jpg",
+    "sourceId": "rhio-bisindo-2024",
+    "sourceUrl": "https://github.com/rhiosutoyo/Indonesian-Sign-Language-BISINDO-Hand-Sign-Detection-Dataset/blob/e1a48c6caa9d12318c8561e9962da845ab50226e/test/L.17370d62-e266-11ed-be57-001a7dda7115.jpg",
+    "sha256": "54f824d1f31a66f26b839e3b08c047ea4bf5b565a7b2846fb4a22896b3d4b809",
+    "license": "MIT",
+    "attribution": "Rhio Sutoyo et al., BISINDO Hand-Sign Detection dataset. MIT. Unmodified publisher image."
+  },
+  {
+    "id": "rhio-clo-o",
+    "symbol": "O",
+    "url": "/assets/signs/rhio-clo/o.jpg",
+    "sourceId": "rhio-bisindo-2024",
+    "sourceUrl": "https://github.com/rhiosutoyo/Indonesian-Sign-Language-BISINDO-Hand-Sign-Detection-Dataset/blob/e1a48c6caa9d12318c8561e9962da845ab50226e/test/O.f6b846bb-e266-11ed-bae6-001a7dda7115.jpg",
+    "sha256": "8389400c10ac10bab78cd002b3e63fa8f01bc8cd5248ca178d6ef4eddd1856fb",
+    "license": "MIT",
+    "attribution": "Rhio Sutoyo et al., BISINDO Hand-Sign Detection dataset. MIT. Unmodified publisher image."
+  }
+]

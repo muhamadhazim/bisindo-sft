@@ -91,3 +91,12 @@ results, comparisons with existing projects, and reproducible commands. The
 candidate remains experimental; source-vector self-matches are not an accuracy
 benchmark. Technical dataset and classifier evaluation can continue without
 requiring a mentor to invent numerical thresholds first.
+
+## Current classifier (supersedes tracking-only status above)
+
+The user explicitly authorized training from the Rhio Sutoyo dataset and trying
+the initial classifier themselves, narrowed to C/L/O only. `clo-classifier.ts`
+now serves the realtime practice path using a genuinely trained Random Forest;
+`reference-matcher.ts` remains an archived experiment used only by its tests.
+See `public/models/rhio-clo-v1/README.md` and `ml/rhio/` for source, model, metrics,
+reproduction and limitations. Actual live user acceptance is still pending.

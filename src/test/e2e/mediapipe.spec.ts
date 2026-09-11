@@ -46,6 +46,7 @@ test("VIDEO tracker detects a hand from a licensed reference stream fixture", as
   });
   await page.goto("/practice/bisindo-l-sanjaya-v1");
   await page.getByRole("button", { name: "Mulai kamera", exact: true }).click();
-  await expect(page.getByText("Tangan terlihat. Penilaian bentuk huruf belum aktif.", { exact: true })).toBeVisible({ timeout: 20000 });
+  await expect(page.getByText("Tangan terlihat.", { exact: true })).toBeVisible({ timeout: 20000 });
   await page.getByRole("button", { name: "Hentikan kamera" }).click();
 });
+

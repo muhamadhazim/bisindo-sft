@@ -2,18 +2,23 @@
 
 ## Implementation status
 
-Phases 0, 0A, 1, 2, and 3 are complete for local development. Phase 4 recognition
-infrastructure is implemented, but accepted gesture rules and live acceptance
-remain blocked on correctness validation. This is **not a completed MVP**.
-The learning map, C/L/O lesson introductions, observation pages, and source credits
-are available. Practice uses a real local webcam with start/stop and recovery.
-MediaPipe hand tracking runs locally after camera startup. Letter recognition,
-scoring, and persistence are not yet enabled; the challenge is an
-explicit placeholder.
+Phases 0, 0A, 1, 2, and 3 are complete for local development. Phase 4 now has
+an actual trained C/L/O Random Forest connected to realtime webcam practice.
+Open `/practice/bisindo-c-sanjaya-v1`, start the camera, and use the C/L/O buttons
+to select a target. Use your right hand. The UI shows the recognized letter,
+target match, retry, or uncertain; sustained matches require release before
+another attempt. Camera frames stay local. This is an explicitly labeled initial
+user-trial model, not verified new-user accuracy or a completed MVP.
+
+The classifier was trained from 60 C/L/O photographs in the user-selected Rhio
+Sutoyo BISINDO dataset. It uses the same pinned Tasks model and 52-value extractor
+at training and runtime. See the [model card](public/models/rhio-clo-v1/README.md)
+and [reproducible training](ml/rhio/README.md). No extra alphabet classes are used.
+Scoring, coaching and persistence remain pending; the challenge is a placeholder.
 Vercel deployment is deferred at the user's request; development continues
 locally. See [task status](docs/TASKS.md) and ADR-017 in docs/DECISIONS.md.
 
-Verified: lint, typecheck, production build, and 49 tests; responsive shell and
+Verification includes lint, typecheck, production build, responsive flows, and browser classifier tests; responsive shell and
 learning click-through at 320–1440px with no horizontal overflow. Tests also cover
 reference-image failure and unknown curriculum IDs. See [verification record](docs/IMPLEMENTATION_STATUS.md).
 
@@ -32,14 +37,12 @@ licensed reference fixture. A sampled inference took 81ms on this desktop/dev
 run; this is not a phone performance benchmark. Vendor usage telemetry is blocked
 by the enforced same-origin connection policy. See [runtime details](public/models/mediapipe/README.md).
 
-Phase 4 adds a shared 52-value geometry schema, source-linked profile contract,
-ambiguity handling, time-based stability, cooldown and release gating. It has no
-accepted C/L/O correctness thresholds and is not enabled on the production page.
-The reference audit found only six usable vectors among nine reviewed images,
-with sparse per-hand coverage. Acceptable variations/near-misses need BISINDO
-review and live testing before correctness feedback can be activated. See the
-[tracked recognition checkpoint](src/features/recognition/README.md).
-
+Phase 4 includes ambiguous-hand rejection, time-based stability, release gating,
+and recovery from failed model downloads. The earlier six-observation reference
+matcher was rejected and is no longer the production inference path. The current
+Random Forest uses its native browser JSON format through ml-random-forest 2.1.0.
+Live user validation is pending; the user explicitly chose to try the classifier
+themselves rather than block its implementation on prior live approval.
 Phases 5–8, 10 and 13 remain required and pending. Phase 9 learned-model work is
 conditional. Phase 11 (3D) and Phase 12 (dynamic gestures) are non-MVP stretch.
 Supabase/RLS, scoring, mastery and the full learning loop are not claimed complete.
@@ -238,3 +241,4 @@ measurements are retained outside the production path, with a reproducible
 methodologies were reviewed; no external code, ASL rules or model was copied.
 Technical evaluation can continue without waiting for mentor-provided numeric
 thresholds. Reliable new-person recognition is still unverified.
+
