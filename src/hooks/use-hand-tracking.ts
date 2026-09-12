@@ -10,7 +10,7 @@ import type { HandRequirementStatus, HandFrame } from "@/types/tracking";
 import type { Assessment, GestureClassifier } from "@/features/recognition/types";
 
 export type TrackingStatus = "LOADING" | "ERROR" | HandRequirementStatus;
-type Snapshot = { status: TrackingStatus; latencyMs: number | null; assessment: Assessment | null; modelError: boolean };
+type Snapshot = { status: TrackingStatus; latencyMs: number | null; assessment: Assessment | null; modelError: boolean; sourceKey?: string };
 type Options = { attemptKey?: string; onAssessment?: (result: Assessment) => void };
 
 export function useHandTracking(videoRef: RefObject<HTMLVideoElement | null>, enabled: boolean, sign: SignContent, mirrored: boolean, assess = false, options: Options = {}) {
@@ -60,12 +60,12 @@ export function useHandTracking(videoRef: RefObject<HTMLVideoElement | null>, en
         const key = `${status}:${assessment?.status}:${assessment?.predictedLetter}:${assessment?.reason}:${modelError}`;
         if (assessment?.accepted || key !== lastAssessment || timestampMs - lastPublished >= trackingConfig.statusIntervalMs) {
           lastPublished = timestampMs; lastAssessment = key;
-          setSnapshot({ status, latencyMs, assessment, modelError });
+          setSnapshot({ status, latencyMs, assessment, modelError, sourceKey: target.key });
         }
       }, () => { tracker.close(); if (active) setSnapshot({ status: "ERROR", latencyMs: null, assessment: null, modelError }); }, trackingConfig.minIntervalMs);
     })().catch(() => { closeTracker?.(); void recognition?.close(); if (active) setSnapshot({ status: "ERROR", latencyMs: null, assessment: null, modelError }); });
     return () => { active = false; cancelFrames?.(); closeTracker?.(); void recognition?.close(); };
   }, [videoRef, enabled, assess, attempt]);
-  const visibleAssessment = snapshot.assessment?.targetSignId === sign.id ? snapshot.assessment : null;
+  const visibleAssessment = snapshot.sourceKey === `${sign.id}:${options.attemptKey ?? "0"}` ? snapshot.assessment : null;
   return { ...snapshot, assessment: visibleAssessment, overlayRef, retry: () => setAttempt(value => value + 1) };
 }

@@ -3,7 +3,8 @@
 import { AssessmentFeedback } from "./assessment-feedback";
 import { ReferenceGallery } from "./reference-gallery";
 import { referenceAssets } from "@/features/curriculum/content";
-import { useState } from "react";
+import { useEffect, useEffectEvent, useRef, useState, type ReactNode } from "react";
+import type { Assessment } from "@/features/recognition/types";
 import { useCamera } from "@/hooks/use-camera";
 import type { CameraStatus } from "@/lib/camera/controller";
 import { useHandTracking, type TrackingStatus } from "@/hooks/use-hand-tracking";
@@ -32,21 +33,27 @@ const messages: Record<CameraStatus, { title: string; detail: string }> = {
   ERROR: { title: "Kamera gagal dimulai", detail: "Coba mulai ulang kamera atau muat ulang halaman. Anda tetap bisa membuka referensi." },
 };
 
-export function CameraPractice({ sign }: { sign: SignContent }) {
+export function CameraPractice({ sign, attemptKey, onAssessment, onStopped, feedback }: { sign: SignContent; attemptKey?: string; onAssessment?: (result: Assessment) => void; onStopped?: () => void; feedback?: ReactNode }) {
   const { videoRef, status, start, stop } = useCamera();
   const assess = true;
   const [mirrored, setMirrored] = useState(true);
   const [showLandmarks, setShowLandmarks] = useState(true);
-  const { status: trackingStatus, latencyMs, overlayRef, retry, assessment } = useHandTracking(videoRef, status === "READY", sign, mirrored, assess);
+  const { status: trackingStatus, latencyMs, overlayRef, retry, assessment, modelError } = useHandTracking(videoRef, status === "READY", sign, mirrored, assess, { attemptKey, onAssessment });
+  const wasReady = useRef(false);
+  const notifyStopped = useEffectEvent(() => onStopped?.());
+  useEffect(() => {
+    if (wasReady.current && status !== "READY") notifyStopped();
+    wasReady.current = status === "READY";
+  }, [status]);
   const busy = status === "REQUESTING" || status === "READY";
   const message = messages[status];
   return (
     <section className="camera-practice" aria-labelledby="camera-title">
       <aside className="practice-reference" aria-label="Referensi latihan">
         <div className="practice-panel-heading"><Icon name="book" size={19} /><strong>Contoh gerakan</strong><span className="reference-target">{sign.symbol}</span></div>
-        <details className="practice-references" open><summary>Lihat contoh tangan kanan: {sign.symbol}</summary><ReferenceGallery symbol={sign.symbol} assets={referenceAssets.filter(asset => sign.referenceAssetIds.includes(asset.id))} /></details>
+        <details className="practice-references" open><summary>Lihat contoh karakter: {sign.symbol}</summary><ReferenceGallery symbol={sign.symbol} assets={referenceAssets.filter(asset => sign.referenceAssetIds.includes(asset.id))} /></details>
         <p className="reference-instruction">{sign.instruction}</p>
-        <div className="reference-reminder"><Icon name="leaf" size={16} /><p>Amati bentuk dan arah tangan pada foto. Coba perlahan, sesuai ritmemu.</p></div>
+        <div className="reference-reminder"><Icon name="leaf" size={16} /><p>Amati bentuk dan arah tangan pada karakter. Coba perlahan, sesuai ritmemu.</p></div>
       </aside>
       <div className="practice-camera-main">
       <div className="practice-panel-heading"><Icon name="camera" size={19} /><strong>Kamera kamu</strong><span className={`camera-state-chip ${status === "READY" ? "is-live" : ""}`}>{status === "READY" ? "● Langsung" : "Privat di perangkatmu"}</span></div>
@@ -68,9 +75,10 @@ export function CameraPractice({ sign }: { sign: SignContent }) {
       </div>
       <aside className="practice-feedback" aria-label="Feedback latihan">
         <div className="practice-panel-heading"><Icon name="spark" size={19} /><strong>Teman latihanmu</strong></div>
-        {status === "READY" && assess && assessment ? <AssessmentFeedback result={assessment} symbol={sign.symbol} /> : <div className="feedback-idle"><span className="feedback-letter">{sign.symbol}</span><h2>Yuk, coba huruf {sign.symbol}!</h2><p>Nyalakan kamera ketika kamu siap. Hasil pengenalan akan muncul di sini.</p></div>}
+        {feedback ? feedback : status === "READY" && assess && assessment && !modelError ? <AssessmentFeedback result={assessment} symbol={sign.symbol} /> : <div className="feedback-idle"><span className="feedback-letter">{sign.symbol}</span><h2>Yuk, coba huruf {sign.symbol}!</h2><p>Nyalakan kamera ketika kamu siap. Hasil pengenalan akan muncul di sini.</p></div>}
         <div className="practice-encouragement"><MascotSticker /><p>Tak perlu terburu-buru.<br /><strong>Terus mencoba, ya!</strong><span>♡</span></p></div>
-        {assess && <p className="camera-note model-note">Pengenal awal C/L/O aktif. Gunakan tangan kanan dan tahan pose sebentar. Model dari dataset BISINDO pilihan Anda; hasil masih perlu diuji langsung. Gambar tidak disimpan.</p>}
+        {status === "READY" && modelError && <div role="alert"><p>Pengenal huruf gagal dimuat atau dijalankan. Referensi dan kamera tetap tersedia.</p><button className="button secondary" onClick={retry}>Coba pengenal lagi</button></div>}
+        {assess && <p className="camera-note model-note">Pengenal A–Z eksperimental · bentuk diam saja. Tahan pose sebentar mengikuti contoh. Hasil belum merupakan validasi bahasa. Gambar tidak disimpan.</p>}
       </aside>
     </section>
   );
