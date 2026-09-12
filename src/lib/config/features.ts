@@ -1,5 +1,6 @@
 // Heavy capabilities stay off until their phase passes its acceptance gates.
 export const features = {
+  ENABLE_3D_DECORATION: true,
   ENABLE_3D_REFERENCE: false,
   ENABLE_DYNAMIC_RECOGNITION: false,
   ENABLE_NUMERIC_SIMILARITY: false,

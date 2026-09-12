@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { Icon, type IconName } from "@/components/ui/icon";
-import { MascotSticker } from "@/components/mascot-sticker";
+import { DecorativeScene } from "@/features/scenery/decorative-scene";
+import { ReferencePreview } from "@/components/reference-preview";
+import { lessons, findSign } from "@/features/curriculum/curriculum";
+import { referenceAssets } from "@/features/curriculum/content";
 
 const benefits: { icon: IconName; title: string; description: string; color: string }[] = [
   { icon: "book", title: "Langkah kecil, makna besar", description: "Kenali satu huruf setiap kali. Belajar dengan ritmemu sendiri.", color: "mint" },
@@ -22,15 +25,15 @@ export default function HomePage() {
       <div className="hero-art">
         <div className="hero-orbit" />
         <span className="speech-bubble hero-speech">Halo, teman baru!<br /><strong>Ayo belajar bersama.</strong><span>♡</span></span>
-        <MascotSticker className="hero-mascot-static" />
+        <DecorativeScene variant="hero" />
         <div className="wooden-signs" aria-hidden="true"><span>Belajar ↗</span><span>Berlatih ↗</span><span>Bertumbuh ♡</span></div>
         <span className="art-caption"><Icon name="leaf" size={17} /> Tumbuh dari satu langkah kecil</span>
       </div>
     </section>
-    <section className="welcome-strip" aria-label="Semangat belajar"><span className="welcome-icon"><Icon name="hand" size={26} /></span><p><strong>Lebih dekat, lewat bahasa isyarat.</strong><br />Sebuah ruang untuk belajar, mencoba, dan saling memahami.</p><span className="handwritten">Bersama, tanpa batas ♡</span></section>
+    <section className="welcome-strip" aria-label="Semangat belajar"><span className="welcome-icon"><Icon name="hand" size={26} /></span><p><strong>Lebih dekat, lewat bahasa isyarat.</strong><br />Sebuah ruang untuk belajar, mencoba, dan saling memahami.</p><Link className="intro-media" href="/about-bisindo">{referenceAssets[0]&&<ReferencePreview asset={referenceAssets[0]} />}<span><strong>Apa itu BISINDO?</strong><small>Kenali bahasa, buka cerita baru.</small><span>Kenalan dulu <Icon name="arrow" size={14} /></span></span></Link></section>
     <section id="availability" className="home-learning" aria-labelledby="availability-heading">
       <div><p className="eyebrow">PETUALANGANMU DIMULAI DI SINI</p><h2 id="availability-heading">Mulai dari alfabet</h2><p>Tiga huruf untuk langkah pertamamu.<br />Kenali bentuknya, amati referensinya, lalu coba sendiri.</p><Link className="back-link" href="/learn">Jelajahi peta belajar <Icon name="arrow" size={18} /></Link></div>
-      <div className="alphabet-preview" aria-label="Materi tersedia">{["C", "L", "O"].map((letter, index) => <Link href={`/lesson/huruf-${letter.toLowerCase()}`} key={letter} className={`preview-letter preview-${index}`}><span>{letter}</span><small>Kenali huruf {letter} <Icon name="arrow" size={14} /></small></Link>)}</div>
+      <div className="alphabet-preview" aria-label="Materi tersedia">{lessons.map((lesson, index) => <Link href={`/lesson/${lesson.id}`} key={lesson.id} className={`preview-letter preview-${index}`}><span>{findSign(lesson.signId)?.symbol}</span><small>Kenali huruf {findSign(lesson.signId)?.symbol} <Icon name="arrow" size={14} /></small></Link>)}</div>
     </section>
     <section className="benefits" aria-label="Cara belajar di Sinyal">{benefits.map((item) => <article key={item.title}><span className={`feature-icon ${item.color}`}><Icon name={item.icon} size={25} /></span><h2>{item.title}</h2><p>{item.description}</p></article>)}</section>
     <section className="home-invitation"><Icon name="heart" size={27} /><h2>Tak perlu sempurna untuk memulai.</h2><p>Satu huruf hari ini, satu langkah lebih dekat untuk saling mengerti.</p><Link href="/learn" className="button secondary">Temukan langkah pertamamu <Icon name="arrow" size={18} /></Link></section>
