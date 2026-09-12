@@ -3,10 +3,11 @@ export const dynamicParams = false;
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { LessonScreen } from "@/components/lesson-screen";
-import { ReferenceGallery } from "@/components/reference-gallery";
+import { ReferenceViewer } from "@/features/gesture-reference/reference-viewer";
+import { getGestureReference } from "@/features/gesture-reference/references";
 import { lessons, findLesson, findSign } from "@/features/curriculum/curriculum";
 import { contentSources } from "@/features/curriculum/sources";
-import { referenceAssets } from "@/features/curriculum/content";
+
 
 export function generateStaticParams() { return lessons.map((lesson) => ({ lessonId: lesson.id })); }
 
@@ -15,14 +16,14 @@ export default async function ObservePage({ params }: { params: Promise<{ lesson
   const lesson = findLesson(lessonId);
   const sign = lesson && findSign(lesson.signId);
   if (!lesson || !sign) notFound();
-  const assets = referenceAssets.filter((asset) => sign.referenceAssetIds.includes(asset.id));
+  const pose = getGestureReference(sign.symbol);
   const source = contentSources.find(source => source.id === sign.sourceId);
   return (
     <LessonScreen eyebrow="AMATI REFERENSI" title={`Bentuk huruf ${sign.symbol}`} description={sign.instruction} back={{ href: `/lesson/${lesson.id}`, label: "Pengantar materi" }}>
-      <p className="notice">Foto ini juga tersedia di halaman praktik. Ikuti contoh yang sama saat menyalakan kamera.</p>
-      <ReferenceGallery assets={assets} symbol={sign.symbol} />
-      <div className="source-note"><p><strong>Sumber:</strong> {source?.publisherOrAuthor} · {source?.license}. Foto asli dari dataset pengenal C/L/O, tanpa perubahan.</p><p>Sudah dicocokkan dengan sumber · region belum diketahui · belum diperiksa validator manusia untuk aplikasi ini. Dukungan tangan kanan adalah batas pengenal awal, bukan aturan universal BISINDO.</p><Link href="/credits">Lihat sumber, lisensi, dan batasan →</Link></div>
-      <Link className="button primary" href={`/practice/${sign.id}`}>Lanjut ke praktik {sign.symbol} →</Link>
+      <p className="notice">Karakter ini juga tersedia sebagai gambar ringan di halaman praktik. Amati sudut depan sebelum mencoba.</p>
+      {pose ? <ReferenceViewer pose={pose} /> : <p role="status">Contoh karakter belum tersedia untuk huruf ini.</p>}
+      <div className="source-note"><p><strong>Sumber:</strong> {source?.publisherOrAuthor} Â· {source?.license}. Acuan pose; karakter dibuat orisinal tanpa memakai piksel foto sumber.</p><p>Sudah dicocokkan dengan sumber Â· region belum diketahui Â· belum diperiksa validator manusia untuk aplikasi ini. Contoh bentuk diam tidak membuktikan gerakan lengkap atau variasi regional.</p><Link href="/credits">Lihat sumber, lisensi, dan batasan â†’</Link></div>
+      <Link className="button primary" href={`/practice/${sign.id}`}>Lanjut ke praktik {sign.symbol} â†’</Link>
     </LessonScreen>
   );
 }

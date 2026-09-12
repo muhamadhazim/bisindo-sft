@@ -1,0 +1,23 @@
+{
+  "C": {
+    "sourceSampleId": "rhio/test/C.db3672a4-e263-11ed-bf21-001a7dda7115.jpg",
+    "handCount": 1,
+    "motionType": "STATIC",
+    "status": "SOURCE_VERIFIED",
+    "limitation": "Contoh bentuk diam dari foto sumber; bukan penilaian bahasa atau gerakan lengkap."
+  },
+  "L": {
+    "sourceSampleId": "rhio/test/L.17370d62-e266-11ed-be57-001a7dda7115.jpg",
+    "handCount": 1,
+    "motionType": "STATIC",
+    "status": "SOURCE_VERIFIED",
+    "limitation": "Contoh bentuk diam dari foto sumber; bukan penilaian bahasa atau gerakan lengkap."
+  },
+  "O": {
+    "sourceSampleId": "rhio/test/O.f6b846bb-e266-11ed-bae6-001a7dda7115.jpg",
+    "handCount": 1,
+    "motionType": "STATIC",
+    "status": "SOURCE_VERIFIED",
+    "limitation": "Contoh bentuk diam dari foto sumber; bukan penilaian bahasa atau gerakan lengkap."
+  }
+}
