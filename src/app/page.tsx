@@ -1,30 +1,38 @@
 import Link from "next/link";
+import { Icon, type IconName } from "@/components/ui/icon";
+import { MascotSticker } from "@/components/mascot-sticker";
+
+const benefits: { icon: IconName; title: string; description: string; color: string }[] = [
+  { icon: "book", title: "Langkah kecil, makna besar", description: "Kenali satu huruf setiap kali. Belajar dengan ritmemu sendiri.", color: "mint" },
+  { icon: "camera", title: "Langsung coba, langsung belajar", description: "Amati contoh, nyalakan kamera, dan latih bentuk tanganmu.", color: "sky" },
+  { icon: "shield", title: "Ruang aman untuk mencoba", description: "Kamera diproses di perangkatmu. Gambar tidak direkam atau dikirim.", color: "peach" },
+];
 
 export default function HomePage() {
-  return (
-    <div className="shell">
-      <section className="intro" aria-labelledby="welcome-heading">
-        <p className="eyebrow">BISINDO LEARNING PLATFORM</p>
-        <h1 id="welcome-heading">Ruang untuk belajar,<br /><span>selangkah demi selangkah.</span></h1>
-        <p className="intro-copy">Kenali alfabet BISINDO, amati bentuknya, lalu berlatih sedikit demi sedikit. Mulai dengan huruf C, L, dan O.</p>
-        <Link href="/about-bisindo" className="button primary">Mulai belajar <span aria-hidden="true">→</span></Link>
-      </section>
-
-      <section id="availability" className="availability" aria-labelledby="availability-heading">
-        <div className="section-marker" aria-hidden="true">01</div>
-        <div>
-          <p className="eyebrow">MATERI PEMBELAJARAN</p>
-          <h2 id="availability-heading">Mulai dari alfabet</h2>
-          <p>Tiga huruf awal, masing-masing dengan beberapa contoh bersumber. Amati referensi, lalu coba langsung dengan kamera. Penilaian gerakan sedang dikembangkan.</p>
-          <Link className="back-link" href="/learn">Lihat materi C, L, dan O →</Link>
-        </div>
-      </section>
-
-      <aside className="principles" aria-label="Prinsip platform">
-        <div><span className="principle-number">01 /</span><h2>Belajar bertahap</h2><p>Materi, praktik, dan tantangan menjadi bagian dari perjalanan belajar.</p></div>
-        <div><span className="principle-number">02 /</span><h2>Referensi yang jelas</h2><p>Setiap materi perlu memiliki sumber dan status validasi yang dapat ditelusuri.</p></div>
-        <div><span className="principle-number">03 /</span><h2>Privasi sejak awal</h2><p>Rancangan latihan memproses kamera di perangkat. Kamera hanya diminta saat Anda memilih berlatih.</p></div>
-      </aside>
-    </div>
-  );
+  return <div className="shell home-shell">
+    <section className="hero" aria-labelledby="welcome-heading">
+      <div className="hero-copy">
+        <p className="hero-kicker"><Icon name="spark" size={16} /> Satu gerakan, lebih banyak cerita</p>
+        <h1 id="welcome-heading">Bahasa<br /><span>Tanpa Batas.</span></h1>
+        <p className="hero-description">Setiap isyarat membuka percakapan baru. Yuk, mulai belajar alfabet BISINDO dengan cara yang seru dan bermakna.</p>
+        <Link href="/about-bisindo" className="button primary hero-cta">Mulai belajar <Icon name="arrow" /></Link>
+        <span className="hero-caption"><span className="small-check"><Icon name="check" size={12} /></span> Gratis dipelajari · Tanpa perlu akun</span>
+        <div className="hero-perks"><span><Icon name="book" />Belajar bertahap</span><span><Icon name="camera" />Latihan kamera</span><span><Icon name="heart" />Lebih inklusif</span></div>
+      </div>
+      <div className="hero-art">
+        <div className="hero-orbit" />
+        <span className="speech-bubble hero-speech">Halo, teman baru!<br /><strong>Ayo belajar bersama.</strong><span>♡</span></span>
+        <MascotSticker className="hero-mascot-static" />
+        <div className="wooden-signs" aria-hidden="true"><span>Belajar ↗</span><span>Berlatih ↗</span><span>Bertumbuh ♡</span></div>
+        <span className="art-caption"><Icon name="leaf" size={17} /> Tumbuh dari satu langkah kecil</span>
+      </div>
+    </section>
+    <section className="welcome-strip" aria-label="Semangat belajar"><span className="welcome-icon"><Icon name="hand" size={26} /></span><p><strong>Lebih dekat, lewat bahasa isyarat.</strong><br />Sebuah ruang untuk belajar, mencoba, dan saling memahami.</p><span className="handwritten">Bersama, tanpa batas ♡</span></section>
+    <section id="availability" className="home-learning" aria-labelledby="availability-heading">
+      <div><p className="eyebrow">PETUALANGANMU DIMULAI DI SINI</p><h2 id="availability-heading">Mulai dari alfabet</h2><p>Tiga huruf untuk langkah pertamamu.<br />Kenali bentuknya, amati referensinya, lalu coba sendiri.</p><Link className="back-link" href="/learn">Jelajahi peta belajar <Icon name="arrow" size={18} /></Link></div>
+      <div className="alphabet-preview" aria-label="Materi tersedia">{["C", "L", "O"].map((letter, index) => <Link href={`/lesson/huruf-${letter.toLowerCase()}`} key={letter} className={`preview-letter preview-${index}`}><span>{letter}</span><small>Kenali huruf {letter} <Icon name="arrow" size={14} /></small></Link>)}</div>
+    </section>
+    <section className="benefits" aria-label="Cara belajar di Sinyal">{benefits.map((item) => <article key={item.title}><span className={`feature-icon ${item.color}`}><Icon name={item.icon} size={25} /></span><h2>{item.title}</h2><p>{item.description}</p></article>)}</section>
+    <section className="home-invitation"><Icon name="heart" size={27} /><h2>Tak perlu sempurna untuk memulai.</h2><p>Satu huruf hari ini, satu langkah lebih dekat untuk saling mengerti.</p><Link href="/learn" className="button secondary">Temukan langkah pertamamu <Icon name="arrow" size={18} /></Link></section>
+  </div>;
 }

@@ -18,7 +18,7 @@ for (const width of [320, 360, 390, 430, 768, 1024, 1440]) {
     await expect(page.getByRole("heading", { name: "Sepertinya Anda tersesat" })).toBeVisible();
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
     await page.getByRole("link", { name: "Kembali ke beranda" }).click();
-    await expect(page.getByRole("heading", { name: "Ruang untuk belajar," })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Bahasa Tanpa Batas." })).toBeVisible();
     expect(errors).toEqual([]);
   });
 }

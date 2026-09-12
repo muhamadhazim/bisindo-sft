@@ -7,7 +7,7 @@ for (const width of [320, 360, 768, 1440]) {
     page.on("pageerror", (error) => errors.push(error.message));
     const fits = async () => expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     await page.goto("/");
-    await page.getByRole("link", { name: "Mulai belajar" }).click();
+    await page.getByRole("main").getByRole("link", { name: "Mulai belajar", exact: true }).click();
     await expect(page.getByRole("heading", { name: "Kenalan dengan BISINDO" })).toBeVisible();
     await fits();
     await page.getByRole("link", { name: "Lihat peta belajar" }).click();
