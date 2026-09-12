@@ -253,3 +253,15 @@ The camera preview displays live hand landmarks and finger connections by defaul
 Use **Titik dan garis tangan** to toggle the overlay. Rendering follows the mirror
 setting without changing classifier coordinates; this skeleton indicates tracking,
 not a correctness score.
+
+## Current experimental A–Z implementation
+
+The user-approved alphabet extension uses the unchanged MLP via local ONNX WASM,
+26 source-linked original hand characters, four lesson groups, and manual practice
+sessions with a Sinyal success celebration. Source photographs and human webcam
+validation are kept distinct; no mastery/accuracy percentage or persistence.
+See [implementation and verification](ALPHABET_IMPLEMENTATION.md),
+[model reproduction](ml/alphabet-v2/README.md), and
+[reference audit](public/assets/signs/sinyal-v2/REVIEW.md).
+Earlier C/L/O and tracking-only descriptions above document the implementation
+history; ADR-027 supersedes that scope for this local experimental extension.

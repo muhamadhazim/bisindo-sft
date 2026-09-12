@@ -1,4 +1,6 @@
 import { expect, test } from "@playwright/test";
+import { createHash } from "node:crypto";
+import ortProvenance from "../../../public/models/onnxruntime-1.29.0/provenance.json";
 import { readFileSync } from "node:fs";
 import replay from "../../../ml/alphabet-v2/replay.json";
 import metadata from "../../../public/models/alphabet-mlp-v2/metadata.json";
@@ -55,4 +57,30 @@ test("browser rejects modified metadata before creating a model session", async 
     try { await (await import(p)).loadAlphabetClassifier(); return false; } catch { return true; }
   });
   expect(rejected).toBe(true);
+});
+
+test("contract rejects drift, valid tied scores, absent masks and invalid probabilities", () => {
+  for (const override of [
+    { runtime: { name: "onnxruntime-web", version: "0.0.0" } },
+    { featureSchema: { ...metadata.featureSchema, id: "wrong" } },
+    { input: { ...metadata.input, shape: [1, 53] } },
+    { output: { ...metadata.output, shape: [1, 25] } },
+    { landmarker: { ...metadata.landmarker, minIntervalMs: 999 } },
+  ]) expect(() => validateMetadata({ ...metadata, ...override })).toThrow();
+  const vector = replay[0]!.vector;
+  expect(decideAlphabet(vector, [.5, .5, ...Array(24).fill(0)], envelopes)).toBeNull();
+  expect(decideAlphabet(vector, [NaN, ...Array(25).fill(0)], envelopes)).toBeNull();
+  const opposite = vector.slice(); opposite[50] = vector[50] ? 0 : 1; opposite[51] = vector[51] ? 0 : 1;
+  expect(decideAlphabet(vector, [1, ...Array(25).fill(0)], [{ label: "A", maxDistance: 100, vectors: [opposite] }])).toBeNull();
+});
+
+test("local ONNX WASM assets match pinned package checksums", () => {
+  expect(ortProvenance.version).toBe("1.29.0");
+  for (const asset of ortProvenance.assets) {
+    const local = readFileSync(`public/models/onnxruntime-1.29.0/${asset.name}`);
+    const installed = readFileSync(`node_modules/onnxruntime-web/dist/${asset.name}`);
+    expect(local.length).toBe(asset.bytes);
+    expect(createHash("sha256").update(local).digest("hex")).toBe(asset.sha256);
+    expect(local.equals(installed)).toBe(true);
+  }
 });

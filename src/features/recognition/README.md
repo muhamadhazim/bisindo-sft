@@ -1,3 +1,11 @@
+# Recognition contracts and experiment history
+
+Current default (2026-09-12): experimental AlphabetClassifier, local ONNX 1.29.0
+WASM for all 26 photo-form targets. See ml/alphabet-v2/README.md and
+ALPHABET_IMPLEMENTATION.md. The sections below retain the earlier experiment
+history and feature contract; their tracking-only/CLO restrictions are superseded
+by the user-approved ADR-027. Live human and phone validation remain pending.
+
 # Phase 4 recognition spike — incomplete
 
 The production page currently offers hand tracking only. It does not instantiate

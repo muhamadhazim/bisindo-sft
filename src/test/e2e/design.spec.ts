@@ -38,8 +38,8 @@ test("2D map preserves links and handles unavailable WebGL",async({page})=>{
   await page.goto("/learn");
   await expect(page.locator(".decorative-scene")).toHaveAttribute("data-scene-state","fallback");
   await expect(page.locator(".scene-poster")).toBeVisible();
-  await page.getByRole("navigation",{name:"Pilih huruf di peta"}).getByRole("link",{name:/Huruf L/}).click();
-  await expect(page).toHaveURL(/\/lesson\/huruf-l$/);
+  await page.getByRole("navigation",{name:"Pilih huruf di peta"}).getByRole("link",{name:/Huruf G–L/}).click();
+  await expect(page).toHaveURL(/\/learn\/alfabet-g-l$/);
 });
 
 test("practice does not download Three.js; map remains keyboard usable with zoom",async({page})=>{
@@ -56,9 +56,9 @@ test("practice does not download Three.js; map remains keyboard usable with zoom
   await page.goto("/learn");
   await page.addStyleTag({content:"body {zoom:2}"});
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
-  const link=page.getByRole("navigation",{name:"Pilih huruf di peta"}).getByRole("link",{name:/Huruf C/});
+  const link=page.getByRole("navigation",{name:"Pilih huruf di peta"}).getByRole("link",{name:/Huruf A–F/});
   await link.focus();await page.keyboard.press("Enter");
-  await expect(page).toHaveURL(/\/lesson\/huruf-c$/);
+  await expect(page).toHaveURL(/\/learn\/alfabet-a-f$/);
 });
 
 test("scene toggle and context loss keep the learning map usable",async({page})=>{
@@ -72,5 +72,5 @@ test("scene toggle and context loss keep the learning map usable",async({page})=
   await expect(scene).toHaveAttribute("data-scene-state","ready");
   await scene.locator("canvas").evaluate(canvas=>canvas.dispatchEvent(new Event("webglcontextlost")));
   await expect(scene).toHaveAttribute("data-scene-state","fallback");
-  await expect(page.getByRole("navigation",{name:"Pilih huruf di peta"}).getByRole("link")).toHaveCount(3);
+  await expect(page.getByRole("navigation",{name:"Pilih huruf di peta"}).getByRole("link")).toHaveCount(4);
 });

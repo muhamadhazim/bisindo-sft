@@ -65,7 +65,7 @@ for (const [name, heading] of [
     await expect(page.getByRole("button", { name: "Coba kamera lagi" })).toBeVisible();
     await page.getByRole("link", { name: "Amati lagi" }).click();
     await expect(page.getByRole("img")).toHaveCount(1);
-    await expect(page.getByRole("img")).toHaveAttribute("src", /\/assets\/signs\/rhio-clo\/c\.jpg$/);
+    await expect(page.getByRole("img")).toHaveAttribute("src", /\/assets\/signs\/sinyal-v2\/c\.svg$/);
   });
 }
 
