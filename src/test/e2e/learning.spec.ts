@@ -24,7 +24,7 @@ for (const width of [320, 360, 768, 1440]) {
     if (width === 360) await page.screenshot({ path: "test-results/observe-360.png", fullPage: true });
     await page.getByRole("link", { name: "Lanjut ke praktik C" }).click();
     await expect(page.getByRole("heading", { name: "Siap berlatih langsung?" })).toBeVisible();
-    await page.getByText("Lihat contoh tangan kanan: C", {exact:true}).click();
+    await expect(page.getByText("Lihat contoh tangan kanan: C", {exact:true})).toBeVisible();
     await expect(page.getByRole("img")).toHaveAttribute("src", observedImage!);
     await fits();
     await page.getByRole("link", { name: "Lihat alur tantangan" }).click();

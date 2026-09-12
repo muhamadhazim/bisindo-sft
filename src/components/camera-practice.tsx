@@ -9,6 +9,8 @@ import type { CameraStatus } from "@/lib/camera/controller";
 import { useHandTracking, type TrackingStatus } from "@/hooks/use-hand-tracking";
 import { features } from "@/lib/config/features";
 import type { SignContent } from "@/types/content";
+import { Icon } from "./ui/icon";
+import { MascotSticker } from "./mascot-sticker";
 
 const trackingMessages: Record<TrackingStatus, string> = {
   LOADING: "Menyiapkan pelacakan tangan…",
@@ -40,24 +42,36 @@ export function CameraPractice({ sign }: { sign: SignContent }) {
   const message = messages[status];
   return (
     <section className="camera-practice" aria-labelledby="camera-title">
+      <aside className="practice-reference" aria-label="Referensi latihan">
+        <div className="practice-panel-heading"><Icon name="book" size={19} /><strong>Contoh gerakan</strong><span className="reference-target">{sign.symbol}</span></div>
+        <details className="practice-references" open><summary>Lihat contoh tangan kanan: {sign.symbol}</summary><ReferenceGallery symbol={sign.symbol} assets={referenceAssets.filter(asset => sign.referenceAssetIds.includes(asset.id))} /></details>
+        <p className="reference-instruction">{sign.instruction}</p>
+        <div className="reference-reminder"><Icon name="leaf" size={16} /><p>Amati bentuk dan arah tangan pada foto. Coba perlahan, sesuai ritmemu.</p></div>
+      </aside>
+      <div className="practice-camera-main">
+      <div className="practice-panel-heading"><Icon name="camera" size={19} /><strong>Kamera kamu</strong><span className={`camera-state-chip ${status === "READY" ? "is-live" : ""}`}>{status === "READY" ? "● Langsung" : "Privat di perangkatmu"}</span></div>
       <div className="camera-viewport">
         <video ref={videoRef} autoPlay muted playsInline aria-label="Preview kamera langsung" className={mirrored ? "camera-video mirrored" : "camera-video"} hidden={status !== "READY"} />
         {status === "READY" && assessment && <div className="recognition-badge" aria-hidden="true"><span>Terbaca</span><strong>{assessment.predictedLetter ?? "—"}</strong></div>}
         {status === "READY" && trackingStatus !== "ERROR" && showLandmarks && <canvas ref={overlayRef} className="camera-overlay" aria-hidden="true" />}
-        {status !== "READY" && <span className="camera-cover">Kamera {status === "REQUESTING" ? "sedang disiapkan" : "tidak aktif"}</span>}
+        {status !== "READY" && <div className="camera-cover"><span className="camera-empty-icon"><Icon name="camera" size={35} /></span><strong>Kamera {status === "REQUESTING" ? "sedang disiapkan" : "tidak aktif"}</strong><span>Ruang kecil untuk langkah besarmu.</span><span className="camera-framing" aria-hidden="true" /></div>}
       </div>
       <div role="status" aria-live="polite" aria-atomic="true"><h2 id="camera-title">{message.title}</h2><p>{message.detail}</p></div>
       {status === "READY" && <div className="notice"><p role="status" aria-live="polite">{trackingMessages[trackingStatus]}</p>{trackingStatus === "ERROR" && <button className="button secondary" onClick={retry}>Coba pelacakan lagi</button>}{features.ENABLE_DEBUG_PANEL && latencyMs !== null && <p>Pelacakan: {latencyMs.toFixed(0)} ms · tidak disimpan</p>}</div>}
-      <div className="actions">
+      </div>
+      <div className="practice-controls"><div className="actions">
         {busy ? <button className="button secondary" onClick={stop}>{status === "REQUESTING" ? "Batalkan" : "Hentikan kamera"}</button> : <button className="button primary" onClick={() => void start()}>{status === "IDLE" ? "Mulai kamera" : "Coba kamera lagi"}</button>}
         <label className="mirror-toggle"><input type="checkbox" checked={mirrored} onChange={(event) => setMirrored(event.target.checked)} /> Tampilan cermin</label>
         <label className="mirror-toggle"><input type="checkbox" checked={showLandmarks} onChange={(event) => setShowLandmarks(event.target.checked)} /> Titik dan garis tangan</label>
       </div>
-
-      {assess && <p className="camera-note">Pengenal awal C/L/O aktif. Gunakan tangan kanan dan tahan pose sebentar. Model dari dataset BISINDO pilihan Anda; hasil masih perlu diuji langsung. Gambar tidak disimpan.</p>}
-      {status === "READY" && assess && assessment && <AssessmentFeedback result={assessment} symbol={sign.symbol} />}
-      <details className="practice-references"><summary>Lihat contoh tangan kanan: {sign.symbol}</summary><ReferenceGallery symbol={sign.symbol} assets={referenceAssets.filter(asset => sign.referenceAssetIds.includes(asset.id))} /></details>
       <p className="camera-note">Kamera berhenti saat Anda meninggalkan halaman atau menyembunyikan tab. Mulai kembali dengan tombol di atas.</p>
+      </div>
+      <aside className="practice-feedback" aria-label="Feedback latihan">
+        <div className="practice-panel-heading"><Icon name="spark" size={19} /><strong>Teman latihanmu</strong></div>
+        {status === "READY" && assess && assessment ? <AssessmentFeedback result={assessment} symbol={sign.symbol} /> : <div className="feedback-idle"><span className="feedback-letter">{sign.symbol}</span><h2>Yuk, coba huruf {sign.symbol}!</h2><p>Nyalakan kamera ketika kamu siap. Hasil pengenalan akan muncul di sini.</p></div>}
+        <div className="practice-encouragement"><MascotSticker /><p>Tak perlu terburu-buru.<br /><strong>Terus mencoba, ya!</strong><span>♡</span></p></div>
+        {assess && <p className="camera-note model-note">Pengenal awal C/L/O aktif. Gunakan tangan kanan dan tahan pose sebentar. Model dari dataset BISINDO pilihan Anda; hasil masih perlu diuji langsung. Gambar tidak disimpan.</p>}
+      </aside>
     </section>
   );
 }
