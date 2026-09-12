@@ -38,3 +38,23 @@ actual renderer startup, 320/360/768/1440px layouts, WebGL unavailable/context l
 2D navigation and absence of decorative scenes on lessons/practice. Existing
 camera/MediaPipe/classifier tests cover tracking alignment and lifecycle.
 Viewport emulation is not a physical-phone performance benchmark.
+
+## Completion audit (2026-09-12)
+
+The tracked redesign was checked against the approved plan: shared Sinyal branding,
+home/map/lesson/camera layouts, original lazy 3D decoration, 2D fallback, source
+preservation, responsive navigation, camera cleanup and renderer isolation.
+The full 68-test regression suite passed. The audit then found low-contrast text
+that functional checks had not covered. Green gradients and muted labels were
+darkened while preserving the visual theme.
+
+Added pinned @axe-core/playwright 4.13.0 as a development-only check. Eighteen
+WCAG A/AA audits cover nine routes at 360/1440px; a separate test checks all
+primary-button gradient stops, including hover, against the 4.5:1 contrast
+threshold. These 19 checks and seven scene/layout checks passed after correction.
+TypeScript, lint and production build passed. Automated audits supplement the
+keyboard, zoom, fallback and screenshot review; they are not certification.
+
+Local implementation checkpoints are committed. Deployment, physical-phone
+performance measurements and human recognition acceptance remain explicitly
+deferred; this redesign does not close the full alphabet MVP or Phase 4.
