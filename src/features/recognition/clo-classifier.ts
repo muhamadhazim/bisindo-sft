@@ -28,7 +28,7 @@ export class CloClassifier {
   private readonly forest: RandomForestClassifier;
   private readonly stabilizer = new RecognitionStabilizer();
   private readonly feedback = new LiveRecognitionFeedback();
-  constructor(private readonly model: CloModel) {
+  constructor(readonly model: CloModel) {
     if (model.id !== "rhio-clo-rf-v1" || model.labels.join(",") !== "C,L,O" || model.featureSchema.id !== featureSchema.id || model.featureSchema.normalizationVersion !== featureSchema.normalizationVersion || model.featureSchema.landmarkerAssetId !== featureSchema.landmarkerAssetId || model.featureSchema.length !== featureSchema.length || model.landmarker.packageVersion !== trackingConfig.packageVersion || model.landmarker.assetId !== trackingConfig.assetId || model.runtime.name !== "ml-random-forest" || model.runtime.version !== "2.1.0" || !Number.isFinite(model.threshold) || model.threshold <= 0 || model.threshold > 1) throw new Error("Classifier contract mismatch");
     if (model.envelopes.length !== 3 || model.envelopes.some((e,i)=>e.label!==model.labels[i] || !Number.isFinite(e.maxDistance) || e.maxDistance<=0 || !e.vectors.length || e.vectors.some(v=>v.length!==featureSchema.length || !v.every(Number.isFinite)))) throw new Error("Invalid classifier envelope");
     this.forest = RandomForestClassifier.load(model.forest);

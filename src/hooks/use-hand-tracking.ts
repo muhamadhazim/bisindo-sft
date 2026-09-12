@@ -7,16 +7,18 @@ import { checkRequiredHands } from "@/lib/mediapipe/canonicalize";
 import { drawHandOverlay } from "@/lib/mediapipe/overlay";
 import type { SignContent } from "@/types/content";
 import type { HandRequirementStatus, HandFrame } from "@/types/tracking";
-
-import type { Assessment } from "@/features/recognition/clo-classifier";
+import type { Assessment, GestureClassifier } from "@/features/recognition/types";
 
 export type TrackingStatus = "LOADING" | "ERROR" | HandRequirementStatus;
-type TrackingSnapshot = { status: TrackingStatus; latencyMs: number | null; assessment: Assessment | null };
+type Snapshot = { status: TrackingStatus; latencyMs: number | null; assessment: Assessment | null; modelError: boolean };
+type Options = { attemptKey?: string; onAssessment?: (result: Assessment) => void };
 
-export function useHandTracking(videoRef: RefObject<HTMLVideoElement | null>, enabled: boolean, sign: SignContent, mirrored: boolean, assess = false) {
+export function useHandTracking(videoRef: RefObject<HTMLVideoElement | null>, enabled: boolean, sign: SignContent, mirrored: boolean, assess = false, options: Options = {}) {
   const overlayRef = useRef<HTMLCanvasElement>(null);
-  const [snapshot, setSnapshot] = useState<TrackingSnapshot>({ status: "LOADING", latencyMs: null, assessment: null });
+  const [snapshot, setSnapshot] = useState<Snapshot>({ status: "LOADING", latencyMs: null, assessment: null, modelError: false });
   const [attempt, setAttempt] = useState(0);
+  const current = useEffectEvent(() => ({ sign, key: `${sign.id}:${options.attemptKey ?? "0"}` }));
+  const publish = useEffectEvent((assessment: Assessment) => options.onAssessment?.(assessment));
   const draw = useEffectEvent((frame: HandFrame) => {
     if (overlayRef.current && videoRef.current) drawHandOverlay(overlayRef.current, videoRef.current, frame, mirrored);
   });
@@ -27,35 +29,43 @@ export function useHandTracking(videoRef: RefObject<HTMLVideoElement | null>, en
     let active = true;
     let closeTracker: (() => void) | undefined;
     let cancelFrames: (() => void) | undefined;
+    let recognition: GestureClassifier | null = null;
     let lastPublished = -Infinity;
-    let lastStatus: TrackingStatus = "LOADING";
+    let lastKey = "";
     let lastAssessment = "";
-    // Async setup keeps the heavy runtime outside the landing and non-camera path.
+    let modelError = false;
     void (async () => {
-      setSnapshot({ status: "LOADING", latencyMs: null, assessment: null });
+      setSnapshot({ status: "LOADING", latencyMs: null, assessment: null, modelError: false });
       const { createHandTracker } = await import("@/lib/mediapipe/hand-tracker");
-      const recognition = assess ? await (await import("@/features/recognition/clo-classifier")).loadCloClassifier() : null;
       if (!active) return;
       const tracker = await createHandTracker();
       if (!active) { tracker.close(); return; }
       closeTracker = () => tracker.close();
-      cancelFrames = scheduleVideoFrames(video, ({ timestampMs }) => {
+      if (assess) {
+        try { recognition = await (await import("@/features/recognition/load-classifier")).loadClassifier(); }
+        catch { modelError = true; }
+      }
+      if (!active) { tracker.close(); await recognition?.close(); return; }
+      cancelFrames = scheduleVideoFrames(video, async ({ timestampMs }) => {
+        const target = current();
+        if (target.key !== lastKey) { recognition?.reset(); lastKey = target.key; }
         const { result, latencyMs } = tracker.detect(video, timestampMs);
-        const status = checkRequiredHands(result, sign);
-        const assessment = recognition?.evaluate(result, sign) ?? null;
-        const assessmentKey = `${assessment?.status}:${assessment?.predictedLetter}:${assessment?.reason}`;
+        const status = checkRequiredHands(result, target.sign);
         draw(result.frame);
-        if (assessment?.accepted || assessmentKey !== lastAssessment || status !== lastStatus || timestampMs - lastPublished >= trackingConfig.statusIntervalMs) {
-          lastPublished = timestampMs;
-          lastStatus = status;
-          lastAssessment = assessmentKey;
-          setSnapshot({ status, latencyMs, assessment });
+        let assessment: Assessment | null = null;
+        try { assessment = recognition && !modelError ? await recognition.evaluate(result, target.sign) : null; }
+        catch { modelError = true; }
+        if (!active || current().key !== target.key) return;
+        if (assessment) publish({ ...assessment, timestampMs });
+        const key = `${status}:${assessment?.status}:${assessment?.predictedLetter}:${assessment?.reason}:${modelError}`;
+        if (assessment?.accepted || key !== lastAssessment || timestampMs - lastPublished >= trackingConfig.statusIntervalMs) {
+          lastPublished = timestampMs; lastAssessment = key;
+          setSnapshot({ status, latencyMs, assessment, modelError });
         }
-      }, () => { tracker.close(); if (active) setSnapshot({ status: "ERROR", latencyMs: null, assessment: null }); }, trackingConfig.minIntervalMs);
-    })().catch(() => { if (active) setSnapshot({ status: "ERROR", latencyMs: null, assessment: null }); });
-    return () => { active = false; cancelFrames?.(); closeTracker?.(); };
-  }, [videoRef, enabled, sign, assess, attempt]);
-  return { ...snapshot, overlayRef, retry: () => setAttempt((value) => value + 1) };
+      }, () => { tracker.close(); if (active) setSnapshot({ status: "ERROR", latencyMs: null, assessment: null, modelError }); }, trackingConfig.minIntervalMs);
+    })().catch(() => { closeTracker?.(); void recognition?.close(); if (active) setSnapshot({ status: "ERROR", latencyMs: null, assessment: null, modelError }); });
+    return () => { active = false; cancelFrames?.(); closeTracker?.(); void recognition?.close(); };
+  }, [videoRef, enabled, assess, attempt]);
+  const visibleAssessment = snapshot.assessment?.targetSignId === sign.id ? snapshot.assessment : null;
+  return { ...snapshot, assessment: visibleAssessment, overlayRef, retry: () => setAttempt(value => value + 1) };
 }
-
-

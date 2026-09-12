@@ -1,4 +1,4 @@
-import type { Assessment } from "@/features/recognition/clo-classifier";
+import type { Assessment } from "@/features/recognition/types";
 
 export function AssessmentFeedback({ result, symbol }: { result: Assessment; symbol: string }) {
   const title = result.status === "CORRECT" ? `Sesuai target ${symbol}`
