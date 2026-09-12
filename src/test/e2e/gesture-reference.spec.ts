@@ -4,10 +4,14 @@ import { gestureReferences } from "../../features/gesture-reference/references";
 
 test("every published character links reviewed evidence and one shared valid pose", () => {
   for (const pose of gestureReferences) {
+    expect(pose.viewpoint).toBe("SOURCE_CAMERA_FRONT");
+    expect(pose.review).toBe("PHOTO_SOURCE_ONLY");
     expect(pose.sourceSha256).toMatch(/^[a-f0-9]{64}$/);
     expect(pose.sourceUrl).toContain("githubusercontent.com");
     expect(pose.hands.length).toBe(pose.requiredHands === "TWO" ? 2 : 1);
     for (const hand of pose.hands) {
+      expect(hand.radius).toBeGreaterThanOrEqual(.06);
+      expect(hand.radius).toBeLessThanOrEqual(.3);
       expect(hand.joints).toHaveLength(21);
       expect(hand.joints.every(p => p.length === 3 && p.every(Number.isFinite))).toBe(true);
     }

@@ -1,23 +1,236 @@
 {
+  "A": {
+    "sourceSampleId": "rhio/test/A.394490ad-e263-11ed-b56c-001a7dda7115.jpg",
+    "comparisonSampleId": "sanjaya/35fd69a4-b2e6-495c-9144-ac0d09e79890.jpg",
+    "comparisonUrl": "https://data.mendeley.com/public-files/datasets/ywnjpbcz8m/files/35fd69a4-b2e6-495c-9144-ac0d09e79890/file_downloaded",
+    "handCount": 2,
+    "motionType": "STATIC",
+    "status": "SOURCE_VERIFIED",
+    "limitation": "Latihan ini hanya menilai kemiripan bentuk diam pada contoh; belum merupakan validasi bahasa atau gerakan lengkap."
+  },
+  "B": {
+    "sourceSampleId": "rhio/test/B.91b36460-e263-11ed-b290-001a7dda7115.jpg",
+    "comparisonSampleId": "sanjaya/1ae3250a-c14c-4104-9ac5-cb150234bde7.jpg",
+    "comparisonUrl": "https://data.mendeley.com/public-files/datasets/ywnjpbcz8m/files/1ae3250a-c14c-4104-9ac5-cb150234bde7/file_downloaded",
+    "handCount": 2,
+    "motionType": "STATIC",
+    "status": "SOURCE_VERIFIED",
+    "limitation": "Latihan ini hanya menilai kemiripan bentuk diam pada contoh; belum merupakan validasi bahasa atau gerakan lengkap."
+  },
   "C": {
     "sourceSampleId": "rhio/test/C.db3672a4-e263-11ed-bf21-001a7dda7115.jpg",
+    "comparisonSampleId": "sanjaya/6b97bbd5-3a82-42be-9862-8e80211ff249.jpg",
+    "comparisonUrl": "https://data.mendeley.com/public-files/datasets/ywnjpbcz8m/files/6b97bbd5-3a82-42be-9862-8e80211ff249/file_downloaded",
     "handCount": 1,
     "motionType": "STATIC",
     "status": "SOURCE_VERIFIED",
-    "limitation": "Contoh bentuk diam dari foto sumber; bukan penilaian bahasa atau gerakan lengkap."
+    "limitation": "Latihan ini hanya menilai kemiripan bentuk diam pada contoh; belum merupakan validasi bahasa atau gerakan lengkap."
+  },
+  "D": {
+    "sourceSampleId": "rhio/test/D.f4f4b3ae-e263-11ed-9476-001a7dda7115.jpg",
+    "comparisonSampleId": "sanjaya/0b562565-bc54-4552-b756-748b07843af7.jpg",
+    "comparisonUrl": "https://data.mendeley.com/public-files/datasets/ywnjpbcz8m/files/0b562565-bc54-4552-b756-748b07843af7/file_downloaded",
+    "handCount": 2,
+    "motionType": "STATIC",
+    "status": "SOURCE_VERIFIED",
+    "limitation": "Latihan ini hanya menilai kemiripan bentuk diam pada contoh; belum merupakan validasi bahasa atau gerakan lengkap."
+  },
+  "E": {
+    "sourceSampleId": "rhio/test/E.41713e95-e264-11ed-b714-001a7dda7115.jpg",
+    "comparisonSampleId": "sanjaya/b4f3cb53-defb-430b-9b50-9993b5bf887c.jpg",
+    "comparisonUrl": "https://data.mendeley.com/public-files/datasets/ywnjpbcz8m/files/b4f3cb53-defb-430b-9b50-9993b5bf887c/file_downloaded",
+    "handCount": 1,
+    "motionType": "STATIC",
+    "status": "SOURCE_VERIFIED",
+    "limitation": "Latihan ini hanya menilai kemiripan bentuk diam pada contoh; belum merupakan validasi bahasa atau gerakan lengkap."
+  },
+  "F": {
+    "sourceSampleId": "rhio/test/F.a5ce31fd-e264-11ed-9afb-001a7dda7115.jpg",
+    "comparisonSampleId": "sanjaya/ee5ca08a-02ac-4fbd-8d76-2a5153ffdc8d.jpg",
+    "comparisonUrl": "https://data.mendeley.com/public-files/datasets/ywnjpbcz8m/files/ee5ca08a-02ac-4fbd-8d76-2a5153ffdc8d/file_downloaded",
+    "handCount": 2,
+    "motionType": "STATIC",
+    "status": "SOURCE_VERIFIED",
+    "limitation": "Latihan ini hanya menilai kemiripan bentuk diam pada contoh; belum merupakan validasi bahasa atau gerakan lengkap."
+  },
+  "G": {
+    "sourceSampleId": "rhio/test/G.e9575530-e264-11ed-a905-001a7dda7115.jpg",
+    "comparisonSampleId": "sanjaya/5bcb110f-8f34-44c1-a8d9-5405ca11fe51.jpg",
+    "comparisonUrl": "https://data.mendeley.com/public-files/datasets/ywnjpbcz8m/files/5bcb110f-8f34-44c1-a8d9-5405ca11fe51/file_downloaded",
+    "handCount": 2,
+    "motionType": "STATIC",
+    "status": "SOURCE_VERIFIED",
+    "limitation": "Latihan ini hanya menilai kemiripan bentuk diam pada contoh; belum merupakan validasi bahasa atau gerakan lengkap."
+  },
+  "H": {
+    "sourceSampleId": "rhio/test/H.0315ca55-e265-11ed-aa0a-001a7dda7115.jpg",
+    "comparisonSampleId": "sanjaya/1cdae21d-b02f-4321-9930-917d2849278d.jpg",
+    "comparisonUrl": "https://data.mendeley.com/public-files/datasets/ywnjpbcz8m/files/1cdae21d-b02f-4321-9930-917d2849278d/file_downloaded",
+    "handCount": 2,
+    "motionType": "STATIC",
+    "status": "SOURCE_VERIFIED",
+    "limitation": "Latihan ini hanya menilai kemiripan bentuk diam pada contoh; belum merupakan validasi bahasa atau gerakan lengkap."
+  },
+  "I": {
+    "sourceSampleId": "rhio/test/I.52911950-e265-11ed-b677-001a7dda7115.jpg",
+    "comparisonSampleId": "sanjaya/161e096a-462d-472e-8e0b-eff91df1f957.jpg",
+    "comparisonUrl": "https://data.mendeley.com/public-files/datasets/ywnjpbcz8m/files/161e096a-462d-472e-8e0b-eff91df1f957/file_downloaded",
+    "handCount": 1,
+    "motionType": "STATIC",
+    "status": "SOURCE_VERIFIED",
+    "limitation": "Latihan ini hanya menilai kemiripan bentuk diam pada contoh; belum merupakan validasi bahasa atau gerakan lengkap."
+  },
+  "J": {
+    "sourceSampleId": "rhio/test/J.b3f5b265-e265-11ed-be9a-001a7dda7115.jpg",
+    "comparisonSampleId": "sanjaya/db4a5a6c-f91d-481a-bbb6-3c6ce7da5f9d.jpg",
+    "comparisonUrl": "https://data.mendeley.com/public-files/datasets/ywnjpbcz8m/files/db4a5a6c-f91d-481a-bbb6-3c6ce7da5f9d/file_downloaded",
+    "handCount": 1,
+    "motionType": "DYNAMIC",
+    "status": "SOURCE_VERIFIED",
+    "limitation": "Huruf ini memiliki unsur gerak pada referensi penelitian. Di sini hanya bentuk diam yang dicoba; geraknya belum dinilai."
+  },
+  "K": {
+    "sourceSampleId": "rhio/test/K.f484b39c-e265-11ed-a62d-001a7dda7115.jpg",
+    "comparisonSampleId": "sanjaya/61d55958-2f9d-4efb-adad-c5250ebdc20b.jpg",
+    "comparisonUrl": "https://data.mendeley.com/public-files/datasets/ywnjpbcz8m/files/61d55958-2f9d-4efb-adad-c5250ebdc20b/file_downloaded",
+    "handCount": 2,
+    "motionType": "STATIC",
+    "status": "SOURCE_VERIFIED",
+    "limitation": "Latihan ini hanya menilai kemiripan bentuk diam pada contoh; belum merupakan validasi bahasa atau gerakan lengkap."
   },
   "L": {
     "sourceSampleId": "rhio/test/L.17370d62-e266-11ed-be57-001a7dda7115.jpg",
+    "comparisonSampleId": "sanjaya/92bc290c-cf82-42a6-bd81-0d5218dd691d.jpg",
+    "comparisonUrl": "https://data.mendeley.com/public-files/datasets/ywnjpbcz8m/files/92bc290c-cf82-42a6-bd81-0d5218dd691d/file_downloaded",
     "handCount": 1,
     "motionType": "STATIC",
     "status": "SOURCE_VERIFIED",
-    "limitation": "Contoh bentuk diam dari foto sumber; bukan penilaian bahasa atau gerakan lengkap."
+    "limitation": "Latihan ini hanya menilai kemiripan bentuk diam pada contoh; belum merupakan validasi bahasa atau gerakan lengkap."
+  },
+  "M": {
+    "sourceSampleId": "rhio/test/M.7899c794-e266-11ed-b8ac-001a7dda7115.jpg",
+    "comparisonSampleId": "sanjaya/ca0bc4cc-8c76-4a78-8b0e-145ca13d50c6.jpg",
+    "comparisonUrl": "https://data.mendeley.com/public-files/datasets/ywnjpbcz8m/files/ca0bc4cc-8c76-4a78-8b0e-145ca13d50c6/file_downloaded",
+    "handCount": 2,
+    "motionType": "STATIC",
+    "status": "SOURCE_VERIFIED",
+    "limitation": "Latihan ini hanya menilai kemiripan bentuk diam pada contoh; belum merupakan validasi bahasa atau gerakan lengkap."
+  },
+  "N": {
+    "sourceSampleId": "rhio/test/N.c21cf425-e266-11ed-98b0-001a7dda7115.jpg",
+    "comparisonSampleId": "sanjaya/da4e0ac1-535e-4a86-a9da-f0e0af509a56.jpg",
+    "comparisonUrl": "https://data.mendeley.com/public-files/datasets/ywnjpbcz8m/files/da4e0ac1-535e-4a86-a9da-f0e0af509a56/file_downloaded",
+    "handCount": 2,
+    "motionType": "STATIC",
+    "status": "SOURCE_VERIFIED",
+    "limitation": "Latihan ini hanya menilai kemiripan bentuk diam pada contoh; belum merupakan validasi bahasa atau gerakan lengkap."
   },
   "O": {
     "sourceSampleId": "rhio/test/O.f6b846bb-e266-11ed-bae6-001a7dda7115.jpg",
+    "comparisonSampleId": "sanjaya/bbfa22c7-a6b4-491a-b704-934f65937aae.jpg",
+    "comparisonUrl": "https://data.mendeley.com/public-files/datasets/ywnjpbcz8m/files/bbfa22c7-a6b4-491a-b704-934f65937aae/file_downloaded",
     "handCount": 1,
     "motionType": "STATIC",
     "status": "SOURCE_VERIFIED",
-    "limitation": "Contoh bentuk diam dari foto sumber; bukan penilaian bahasa atau gerakan lengkap."
+    "limitation": "Latihan ini hanya menilai kemiripan bentuk diam pada contoh; belum merupakan validasi bahasa atau gerakan lengkap. Contoh O antarsumber bervariasi; karakter mengikuti foto Rhio yang dicatat."
+  },
+  "P": {
+    "sourceSampleId": "rhio/test/P.37445bf0-e267-11ed-869d-001a7dda7115.jpg",
+    "comparisonSampleId": "sanjaya/c25d751e-2f89-47b4-9ca9-e40632c4b042.jpg",
+    "comparisonUrl": "https://data.mendeley.com/public-files/datasets/ywnjpbcz8m/files/c25d751e-2f89-47b4-9ca9-e40632c4b042/file_downloaded",
+    "handCount": 2,
+    "motionType": "STATIC",
+    "status": "SOURCE_VERIFIED",
+    "limitation": "Latihan ini hanya menilai kemiripan bentuk diam pada contoh; belum merupakan validasi bahasa atau gerakan lengkap."
+  },
+  "Q": {
+    "sourceSampleId": "rhio/test/Q.86bc5924-e267-11ed-baff-001a7dda7115.jpg",
+    "comparisonSampleId": "sanjaya/c18710ae-e76c-48ad-bf67-59b2acba15d4.jpg",
+    "comparisonUrl": "https://data.mendeley.com/public-files/datasets/ywnjpbcz8m/files/c18710ae-e76c-48ad-bf67-59b2acba15d4/file_downloaded",
+    "handCount": 2,
+    "motionType": "STATIC",
+    "status": "SOURCE_VERIFIED",
+    "limitation": "Latihan ini hanya menilai kemiripan bentuk diam pada contoh; belum merupakan validasi bahasa atau gerakan lengkap."
+  },
+  "R": {
+    "sourceSampleId": "rhio/test/R.d03f4e80-e267-11ed-89bc-001a7dda7115.jpg",
+    "comparisonSampleId": "sanjaya/8b6bf7d0-aab6-4019-8923-514578ce0b18.jpg",
+    "comparisonUrl": "https://data.mendeley.com/public-files/datasets/ywnjpbcz8m/files/8b6bf7d0-aab6-4019-8923-514578ce0b18/file_downloaded",
+    "handCount": 1,
+    "motionType": "DYNAMIC",
+    "status": "SOURCE_VERIFIED",
+    "limitation": "Huruf ini memiliki unsur gerak pada referensi penelitian. Di sini hanya bentuk diam yang dicoba; geraknya belum dinilai."
+  },
+  "S": {
+    "sourceSampleId": "rhio/test/S.f5f1bc02-e267-11ed-9ff6-001a7dda7115.jpg",
+    "comparisonSampleId": "sanjaya/71de7741-b65d-42d7-84b9-66dee7822f57.jpg",
+    "comparisonUrl": "https://data.mendeley.com/public-files/datasets/ywnjpbcz8m/files/71de7741-b65d-42d7-84b9-66dee7822f57/file_downloaded",
+    "handCount": 2,
+    "motionType": "STATIC",
+    "status": "SOURCE_VERIFIED",
+    "limitation": "Latihan ini hanya menilai kemiripan bentuk diam pada contoh; belum merupakan validasi bahasa atau gerakan lengkap."
+  },
+  "T": {
+    "sourceSampleId": "rhio/test/T.279154d2-e268-11ed-b8c0-001a7dda7115.jpg",
+    "comparisonSampleId": "sanjaya/eae76b2b-35bf-4dc5-b4ff-3b0e445c10f3.jpg",
+    "comparisonUrl": "https://data.mendeley.com/public-files/datasets/ywnjpbcz8m/files/eae76b2b-35bf-4dc5-b4ff-3b0e445c10f3/file_downloaded",
+    "handCount": 2,
+    "motionType": "STATIC",
+    "status": "SOURCE_VERIFIED",
+    "limitation": "Latihan ini hanya menilai kemiripan bentuk diam pada contoh; belum merupakan validasi bahasa atau gerakan lengkap."
+  },
+  "U": {
+    "sourceSampleId": "rhio/test/U.71136c52-e268-11ed-a31e-001a7dda7115.jpg",
+    "comparisonSampleId": "sanjaya/492d09bc-1820-458b-94a9-d234a2fbbac0.jpg",
+    "comparisonUrl": "https://data.mendeley.com/public-files/datasets/ywnjpbcz8m/files/492d09bc-1820-458b-94a9-d234a2fbbac0/file_downloaded",
+    "handCount": 1,
+    "motionType": "STATIC",
+    "status": "SOURCE_VERIFIED",
+    "limitation": "Latihan ini hanya menilai kemiripan bentuk diam pada contoh; belum merupakan validasi bahasa atau gerakan lengkap."
+  },
+  "V": {
+    "sourceSampleId": "rhio/test/V.de6657f7-e268-11ed-9150-001a7dda7115.jpg",
+    "comparisonSampleId": "sanjaya/630d8855-bd58-49d9-831e-2c8436a13890.jpg",
+    "comparisonUrl": "https://data.mendeley.com/public-files/datasets/ywnjpbcz8m/files/630d8855-bd58-49d9-831e-2c8436a13890/file_downloaded",
+    "handCount": 1,
+    "motionType": "STATIC",
+    "status": "SOURCE_VERIFIED",
+    "limitation": "Latihan ini hanya menilai kemiripan bentuk diam pada contoh; belum merupakan validasi bahasa atau gerakan lengkap."
+  },
+  "W": {
+    "sourceSampleId": "rhio/test/W.f529852e-e268-11ed-9b53-001a7dda7115.jpg",
+    "comparisonSampleId": "sanjaya/34a50034-ee4c-4bbe-a64d-97d70591fb16.jpg",
+    "comparisonUrl": "https://data.mendeley.com/public-files/datasets/ywnjpbcz8m/files/34a50034-ee4c-4bbe-a64d-97d70591fb16/file_downloaded",
+    "handCount": 2,
+    "motionType": "STATIC",
+    "status": "SOURCE_VERIFIED",
+    "limitation": "Latihan ini hanya menilai kemiripan bentuk diam pada contoh; belum merupakan validasi bahasa atau gerakan lengkap."
+  },
+  "X": {
+    "sourceSampleId": "rhio/test/X.5987cc63-e269-11ed-976a-001a7dda7115.jpg",
+    "comparisonSampleId": "sanjaya/526dce1f-9ede-4235-9964-0c4a0411aea3.jpg",
+    "comparisonUrl": "https://data.mendeley.com/public-files/datasets/ywnjpbcz8m/files/526dce1f-9ede-4235-9964-0c4a0411aea3/file_downloaded",
+    "handCount": 2,
+    "motionType": "STATIC",
+    "status": "SOURCE_VERIFIED",
+    "limitation": "Latihan ini hanya menilai kemiripan bentuk diam pada contoh; belum merupakan validasi bahasa atau gerakan lengkap."
+  },
+  "Y": {
+    "sourceSampleId": "rhio/test/Y.aefac02b-e269-11ed-b833-001a7dda7115.jpg",
+    "comparisonSampleId": "sanjaya/85e6b20a-73ce-4d23-92d3-0887c4da146e.jpg",
+    "comparisonUrl": "https://data.mendeley.com/public-files/datasets/ywnjpbcz8m/files/85e6b20a-73ce-4d23-92d3-0887c4da146e/file_downloaded",
+    "handCount": 2,
+    "motionType": "STATIC",
+    "status": "SOURCE_VERIFIED",
+    "limitation": "Latihan ini hanya menilai kemiripan bentuk diam pada contoh; belum merupakan validasi bahasa atau gerakan lengkap."
+  },
+  "Z": {
+    "sourceSampleId": "rhio/test/Z.ec8da845-e269-11ed-86d6-001a7dda7115.jpg",
+    "comparisonSampleId": "sanjaya/a2776089-fddf-4bce-bafb-7b6c31ed543f.jpg",
+    "comparisonUrl": "https://data.mendeley.com/public-files/datasets/ywnjpbcz8m/files/a2776089-fddf-4bce-bafb-7b6c31ed543f/file_downloaded",
+    "handCount": 1,
+    "motionType": "UNKNOWN",
+    "status": "SOURCE_VERIFIED",
+    "limitation": "Gerakan lengkap huruf Z belum diverifikasi untuk varian ini. Model hanya mencoba bentuk diam dari foto sumber."
   }
 }

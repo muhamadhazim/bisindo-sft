@@ -1,5 +1,6 @@
 import { expect, test } from "@playwright/test";
-import { getPublishableSigns } from "../../features/curriculum/content";
+import { gestureReferences } from "../../features/gesture-reference/references";
+import { getPublishableSigns, referenceAssets } from "../../features/curriculum/content";
 import type { ContentSource, ReferenceAsset, SignContent } from "../../types/content";
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
@@ -46,20 +47,26 @@ test("source-verified and validator-verified records can pass without inventing 
   expect(sign.region).toBeNull();
 });
 
-test("published references preserve publisher checksums and traceable letter labels", () => {
-  const published = getPublishableSigns();
-  expect(published.length).toBeGreaterThanOrEqual(2);
-  expect(new Set(provenance.map((asset) => asset.id)).size).toBe(provenance.length);
-  for (const sign of published) {
-    expect(sign.referenceAssetIds.length).toBeGreaterThan(0);
-    for (const id of sign.referenceAssetIds) {
-      const asset = provenance.find((entry) => entry.id === id);
-      expect(asset?.symbol).toBe(sign.symbol);
-      if (!asset) throw new Error(`Missing source asset ${id}`);
-      const bytes = readFileSync(resolve("public", asset.url.slice(1)));
-      expect(createHash("sha256").update(bytes).digest("hex")).toBe(asset.sha256);
-      expect(asset.sourceUrl).toContain("/Indonesian-Sign-Language-BISINDO-Hand-Sign-Detection-Dataset/blob/");
-    }
+test("historical source photos preserve publisher checksums", () => {
+  for (const asset of provenance) {
+    const bytes = readFileSync(resolve("public", asset.url.slice(1)));
+    expect(createHash("sha256").update(bytes).digest("hex")).toBe(asset.sha256);
   }
 });
 
+test("all published alphabet characters have matching source-linked reviewed poses", () => {
+  const published = getPublishableSigns();
+  expect(published).toHaveLength(26);
+  for (const sign of published) {
+    const pose = gestureReferences.find(p => p.symbol === sign.symbol)!;
+    expect(pose.status).toBe("SOURCE_VERIFIED");
+    expect(pose.sourceSha256).toMatch(/^[a-f0-9]{64}$/);
+    expect(pose.sourceUrl).toContain("githubusercontent.com");
+    expect(pose.requiredHands).toBe(sign.requiredHands);
+    expect(pose.motionType).toBe(sign.motionType);
+    expect(sign.region).toBeNull();
+    const asset = referenceAssets.find(a => a.id === sign.referenceAssetIds[0])!;
+    expect(asset.url).toBe(pose.posterUrl);
+    expect(readFileSync(resolve("public", asset.url.slice(1)), "utf8")).toContain("<svg");
+  }
+});

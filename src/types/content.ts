@@ -30,7 +30,8 @@ export type SignContent = {
   validationStatus: ValidationStatus;
   requiredHands: "ONE" | "TWO";
   handednessPolicy: "UNSPECIFIED" | "EITHER" | "LEFT" | "RIGHT" | "VALIDATOR_DEFINED";
-  motionType: "STATIC" | "DYNAMIC";
+  motionType: "STATIC" | "DYNAMIC" | "UNKNOWN";
+  practiceMode?: "POSE_SNAPSHOT";
   instruction: string;
   commonMistakes: string[];
   referenceAssetIds: string[];

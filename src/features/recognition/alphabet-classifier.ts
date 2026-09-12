@@ -46,7 +46,7 @@ export class AlphabetClassifier implements GestureClassifier {
     let predictedLetter: Assessment["predictedLetter"] = null;
     let reason: Assessment["reason"] = "TRACKING";
     if (hands === "TRACKING") {
-      const supported = target.validationStatus !== "DRAFT" && target.motionType === "STATIC" && isAlphabetLetter(target.symbol);
+      const supported = target.validationStatus !== "DRAFT" && (target.motionType === "STATIC" || target.practiceMode === "POSE_SNAPSHOT") && isAlphabetLetter(target.symbol);
       const vector = extractFeatures(input.frame);
       predictedLetter = supported && vector ? decideAlphabet(vector, await this.probabilities(vector), this.envelopes) : null;
       candidate = predictedLetter ? predictedLetter === target.symbol ? "MATCH" : "NON_MATCH" : "UNCERTAIN";

@@ -1,27 +1,21 @@
 "use client";
 
 import { Canvas, useThree } from "@react-three/fiber";
-import { OrthographicCamera } from "three";
-import { OrbitControls } from "@react-three/drei";
+
+import { OrbitControls, OrthographicCamera } from "@react-three/drei";
 import { useEffect } from "react";
 import { HandRig } from "./hand-rig";
 import type { GestureReference } from "./types";
 
 function SceneEvents({ fail }: { fail: () => void }) {
-  const { gl, camera, size, invalidate } = useThree();
-  useEffect(() => {
-    if (camera instanceof OrthographicCamera) {
-      camera.zoom = Math.min(size.width / 4.8, size.height / 4.1);
-      camera.updateProjectionMatrix(); invalidate();
-    }
-  }, [camera, size, invalidate]);
+  const { gl, size } = useThree();
   useEffect(() => {
     const canvas = gl.domElement;
     canvas.addEventListener("webglcontextlost", fail);
-    canvas.dataset.referenceReady = "true";
-    return () => { canvas.removeEventListener("webglcontextlost", fail); delete canvas.dataset.referenceReady; };
+    canvas.setAttribute("data-reference-ready", "true");
+    return () => { canvas.removeEventListener("webglcontextlost", fail); canvas.removeAttribute("data-reference-ready"); };
   }, [gl, fail]);
-  return null;
+  return <OrthographicCamera makeDefault position={[0, 0, 8]} zoom={Math.min(size.width / 4.8, size.height / 4.1)} near={.1} far={30} />;
 }
 
 export default function ReferenceScene({ pose, angle, fail }: { pose: GestureReference; angle: number; fail: () => void }) {

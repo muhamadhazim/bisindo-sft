@@ -39,9 +39,9 @@ export const contentSources: readonly ContentSource[] = [
     url: "https://github.com/rhiosutoyo/Indonesian-Sign-Language-BISINDO-Hand-Sign-Detection-Dataset",
     license: "MIT",
     region: null,
-    notes: "User-selected C/L/O reference. XML labels and image checksums verified; primary photos visually checked. " +
-      "These same photos appear in observation and practice. Right-hand support describes the initial classifier, " +
-      "not a universal linguistic handedness rule. Source review is not human-validator approval.",
+    notes: "User-selected alphabet reference. Source photos and label provenance reviewed for original character poses. " +
+      "Source pixels are not used in the character assets. References are variant-specific, " +
+      "not a universal linguistic rule. Source review is not human-validator approval.",
   },
 ];
 

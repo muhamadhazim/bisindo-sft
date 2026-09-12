@@ -15,3 +15,10 @@ the review records before expanding the catalogue.
 3D loads on request only on observation pages. Local SVG is default and fallback.
 Camera practice never imports the renderer. Bounded DPR, demand rendering,
 context-loss fallback, route disposal and hidden-tab shutdown protect resources.
+
+A–Z extension: all 26 photo-form references are now source-linked, with four
+curriculum groups. GestureHand.radius scales visual finger thickness with the
+source-projected palm length; both renderers use it. Viewpoint and PHOTO_SOURCE_ONLY
+review are explicit. illustration-landmarks.json preserves X crop extraction and
+S visible photo-point corrections independently from all model features. Consult
+public/assets/signs/sinyal-v2/REVIEW.md for evidence and rendering limits.

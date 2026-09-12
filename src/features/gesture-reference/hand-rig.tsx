@@ -25,7 +25,7 @@ export function HandRig({ hand }: { hand: GestureHand }) {
   const wrist = hand.joints[0]!;
   return <group>
     <mesh geometry={palm}><meshStandardMaterial color={color} roughness={.8} /></mesh>
-    {chains.flatMap(chain => chain.slice(1).map((end, i) => <Bone key={end} from={hand.joints[chain[i]!]!} to={hand.joints[end]!} radius={i === 0 ? .105 : .085} color={color} />))}
+    {chains.flatMap(chain => chain.slice(1).map((end, i) => <Bone key={end} from={hand.joints[chain[i]!]!} to={hand.joints[end]!} radius={hand.radius * (i === 0 ? 1 : .85)} color={color} />))}
     <group position={[wrist[0], wrist[1] - .12, wrist[2] + .03]}>
       <mesh><boxGeometry args={[.38, .26, .17]} /><meshStandardMaterial color="#007857" /></mesh>
       {[-.075, .075].map(x => <mesh key={x} position={[x, .03, .095]}><sphereGeometry args={[.024, 10, 8]} /><meshBasicMaterial color="white" /></mesh>)}

@@ -13,8 +13,8 @@ export default async function LessonPage({ params }: { params: Promise<{ lessonI
   const sign = lesson && findSign(lesson.signId);
   if (!lesson || !sign) notFound();
   return (
-    <LessonScreen eyebrow="MATERI ALFABET" title={`Mari kenali huruf ${sign.symbol}`} description="Mulai dengan mengamati. Gunakan foto referensi yang sama saat berlatih dengan kamera." back={{ href: "/learn/alfabet-awal", label: "Daftar huruf" }}>
-      <div className="lesson-intro"><span className="letter-hero" aria-hidden="true">{sign.symbol}</span><div><h2>Perjalanan materi ini</h2><ol className="step-list"><li>Amati foto referensi huruf ini.</li><li>Coba tirukan perlahan.</li><li>Lanjutkan ke halaman praktik dan tantangan.</li></ol><p className="notice">Pengenal C/L/O sudah tersedia lewat kamera realtime. Gunakan tangan kanan seperti pada contoh. Tantangan belum aktif.</p></div></div>
+    <LessonScreen eyebrow="MATERI ALFABET" title={`Mari kenali huruf ${sign.symbol}`} description="Mulai dengan mengamati. Gunakan contoh karakter yang sama saat berlatih dengan kamera." back={{ href: "/learn/alfabet-awal", label: "Daftar huruf" }}>
+      <div className="lesson-intro"><span className="letter-hero" aria-hidden="true">{sign.symbol}</span><div><h2>Perjalanan materi ini</h2><ol className="step-list"><li>Amati karakter tangan dari sudut depan.</li><li>Coba tirukan perlahan.</li><li>Coba pose, rayakan, lalu tekan Lanjut.</li></ol><p className="notice">Latihan A–Z bersifat eksperimental. Model mencoba bentuk diam pada contoh; gerakan lengkap belum dinilai.</p></div></div>
       <Link className="button primary" href={`/lesson/${lesson.id}/observe`}>Amati huruf {sign.symbol} →</Link>
     </LessonScreen>
   );

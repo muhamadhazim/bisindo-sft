@@ -1,32 +1,19 @@
 import type { ContentSource, ReferenceAsset, SignContent } from "@/types/content";
 import { contentSources } from "./sources";
-import provenance from "../../../public/assets/signs/rhio-clo/provenance.json";
+import { gestureReferences } from "@/features/gesture-reference/references";
 
-// Primary observation/practice references match the Rhio C/L/O classifier source.
-// This is not human-validator approval or recognition-model acceptance.
-export const referenceAssets: readonly ReferenceAsset[] = provenance.map((asset) => ({
-  id: asset.id,
-  kind: "IMAGE",
-  url: asset.url,
-  sourceId: asset.sourceId,
-  license: asset.license,
-  attribution: asset.attribution,
-  width: 640, height: 480,
+export const referenceAssets: readonly ReferenceAsset[] = gestureReferences.map(pose => ({
+  id: pose.id, kind: "SVG", url: pose.posterUrl, sourceId: pose.sourceId,
+  license: pose.license, attribution: pose.attribution, width: 480, height: 390,
 }));
 
-export const signContents: readonly SignContent[] = ["C", "L", "O"].map((symbol) => ({
-  id: `bisindo-${symbol.toLowerCase()}-sanjaya-v1`,
-  symbol,
-  language: "BISINDO",
-  region: null,
-  sourceId: "rhio-bisindo-2024",
-  validationStatus: "SOURCE_VERIFIED",
-  requiredHands: "ONE",
-  handednessPolicy: "UNSPECIFIED",
-  motionType: "STATIC",
-  instruction: `Amati bentuk jari dan arah telapak pada foto huruf ${symbol} ini. Saat praktik, gunakan tangan kanan mengikuti contoh; pengenal awal C/L/O baru mendukung tangan kanan.`,
-  commonMistakes: [],
-  referenceAssetIds: provenance.filter((asset) => asset.symbol === symbol).map((asset) => asset.id),
+export const signContents: readonly SignContent[] = gestureReferences.map(pose => ({
+  id: pose.signId,
+  symbol: pose.symbol, language: "BISINDO", region: null, sourceId: pose.sourceId,
+  validationStatus: pose.status, requiredHands: pose.requiredHands,
+  handednessPolicy: "UNSPECIFIED", motionType: pose.motionType, practiceMode: "POSE_SNAPSHOT",
+  instruction: `Amati contoh karakter ${pose.symbol} dari sudut depan. Tampilkan ${pose.requiredHands === "TWO" ? "kedua tangan" : "satu tangan"} dengan bentuk dan arah sesuai contoh. ${pose.limitation}`,
+  commonMistakes: [], referenceAssetIds: [pose.id],
 }));
 
 /** Structural publication gate; linguistic review still happens before promotion. */

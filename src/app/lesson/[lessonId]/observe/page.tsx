@@ -22,8 +22,8 @@ export default async function ObservePage({ params }: { params: Promise<{ lesson
     <LessonScreen eyebrow="AMATI REFERENSI" title={`Bentuk huruf ${sign.symbol}`} description={sign.instruction} back={{ href: `/lesson/${lesson.id}`, label: "Pengantar materi" }}>
       <p className="notice">Karakter ini juga tersedia sebagai gambar ringan di halaman praktik. Amati sudut depan sebelum mencoba.</p>
       {pose ? <ReferenceViewer pose={pose} /> : <p role="status">Contoh karakter belum tersedia untuk huruf ini.</p>}
-      <div className="source-note"><p><strong>Sumber:</strong> {source?.publisherOrAuthor} Â· {source?.license}. Acuan pose; karakter dibuat orisinal tanpa memakai piksel foto sumber.</p><p>Sudah dicocokkan dengan sumber Â· region belum diketahui Â· belum diperiksa validator manusia untuk aplikasi ini. Contoh bentuk diam tidak membuktikan gerakan lengkap atau variasi regional.</p><Link href="/credits">Lihat sumber, lisensi, dan batasan â†’</Link></div>
-      <Link className="button primary" href={`/practice/${sign.id}`}>Lanjut ke praktik {sign.symbol} â†’</Link>
+      <div className="source-note"><p><strong>Sumber:</strong> {source?.publisherOrAuthor} · {source?.license}. Acuan pose; karakter dibuat orisinal tanpa memakai piksel foto sumber.</p><p>Sudah dicocokkan dengan sumber · region belum diketahui · belum diperiksa validator manusia untuk aplikasi ini. Contoh bentuk diam tidak membuktikan gerakan lengkap atau variasi regional.</p><Link href="/credits">Lihat sumber, lisensi, dan batasan →</Link></div>
+      <Link className="button primary" href={`/practice/${sign.id}`}>Lanjut ke praktik {sign.symbol} →</Link>
     </LessonScreen>
   );
 }

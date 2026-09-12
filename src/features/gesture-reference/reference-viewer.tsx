@@ -7,9 +7,10 @@ import type { GestureReference } from "./types";
 
 const Scene = dynamic(() => import("./reference-scene"), { ssr: false, loading: () => <p role="status">Menyiapkan karakter 3D…</p> });
 
-class SceneBoundary extends Component<{ children: ReactNode; fallback: ReactNode }, { failed: boolean }> {
+class SceneBoundary extends Component<{ children: ReactNode; fallback: ReactNode; onFailure: () => void }, { failed: boolean }> {
   state = { failed: false };
   static getDerivedStateFromError() { return { failed: true }; }
+  componentDidCatch() { this.props.onFailure(); }
   render() { return this.state.failed ? this.props.fallback : this.props.children; }
 }
 
@@ -30,11 +31,12 @@ export function ReferenceViewer({ pose }: { pose: GestureReference }) {
     const context = canvas.getContext("webgl2");
     if (!context) { setFailed(true); return; }
     context.getExtension("WEBGL_lose_context")?.loseContext();
+    setFailed(false);
     setEnabled(true);
   }
   return <section className="gesture-reference" aria-label={`Contoh karakter huruf ${pose.symbol}`}>
     <div className="gesture-stage">
-      {enabled && !failed ? <SceneBoundary key={revision} fallback={poster}><Scene pose={pose} angle={angle} fail={() => { setFailed(true); setEnabled(false); }} /></SceneBoundary> : poster}
+      {enabled && !failed ? <SceneBoundary key={revision} fallback={poster} onFailure={() => { setFailed(true); setEnabled(false); }}><Scene pose={pose} angle={angle} fail={() => { setFailed(true); setEnabled(false); }} /></SceneBoundary> : poster}
     </div>
     <div className="actions">
       {!enabled ? <button className="button secondary" onClick={start}>Lihat karakter 3D</button> : <>
