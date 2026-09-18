@@ -1,260 +1,414 @@
 # BISINDO Learning Platform
 
-## Implementation status
+An interactive, mobile-first learning platform designed to help beginners learn the foundations of **BISINDO (Bahasa Isyarat Indonesia)** through structured lessons, camera-based practice, and experimental gesture recognition.
 
-Phases 0, 0A, 1, 2, and 3 are complete for local development. Phase 4 now has
-an actual trained C/L/O Random Forest connected to realtime webcam practice.
-Open `/practice/bisindo-c-sanjaya-v1`, start the camera, and use the C/L/O buttons
-to select a target. Use your right hand. The UI shows the recognized letter,
-target match, retry, or uncertain continuously as the pose changes.
-Acceptance events remain one-shot until release. Camera frames stay local. This is an explicitly labeled initial
-user-trial model, not verified new-user accuracy or a completed MVP.
+This project is currently being developed for the **Samsung Solve for Tomorrow semifinal stage**.
 
-The classifier was trained from 60 C/L/O photographs in the user-selected Rhio
-Sutoyo BISINDO dataset. It uses the same pinned Tasks model and 52-value extractor
-at training and runtime. See the [model card](public/models/rhio-clo-v1/README.md)
-and [reproducible training](ml/rhio/README.md). No extra alphabet classes are used.
-Scoring, coaching and persistence remain pending; the challenge is a placeholder.
-Vercel deployment is deferred at the user's request; development continues
-locally. See [task status](docs/TASKS.md) and ADR-017 in docs/DECISIONS.md.
+> BISINDO Learning Platform is designed as a learning tool, not a universal sign-language translator and not a replacement for human interpreters.
 
-Verification includes lint, typecheck, production build, responsive flows, and browser classifier tests; responsive shell and
-learning click-through at 320–1440px with no horizontal overflow. Tests also cover
-reference-image failure and unknown curriculum IDs. See [verification record](docs/IMPLEMENTATION_STATUS.md).
+---
 
-Camera tests cover denied/missing/busy/unsupported devices, late permission after
-cancel/navigation, track cleanup, mirror display, and frame scheduling. Automated
-tests use synthetic camera input only in the test browser. A separate real-device
-check passed on local Chrome 152.0.7977.83: 640×480 video and all tracks ended after
-route exit. No frames were saved. Physical phone behavior and camera-light visual
-inspection remain unverified.
+## About the Project
 
-Tracking uses pinned MediaPipe Tasks Vision 1.0.1 and an official Apache-2.0 model,
-with locally hosted WASM, traceable checksums, ambiguous-hand rejection, and model
-failure/retry. Camera and tracking started on actual local Chrome; this is not a
-live letter-recognition accuracy test. Debug overlay was checked at 360px with a
-licensed reference fixture. A sampled inference took 81ms on this desktop/dev
-run; this is not a phone performance benchmark. Vendor usage telemetry is blocked
-by the enforced same-origin connection policy. See [runtime details](public/models/mediapipe/README.md).
+Learning sign language independently can be difficult when learners can watch examples but have limited opportunities to actively practice and receive feedback.
 
-Phase 4 includes ambiguous-hand rejection, time-based stability, release gating,
-and recovery from failed model downloads. The earlier six-observation reference
-matcher was rejected and is no longer the production inference path. The current
-Random Forest uses its native browser JSON format through ml-random-forest 2.1.0.
-Live user validation is pending; the user explicitly chose to try the classifier
-themselves rather than block its implementation on prior live approval.
-Phases 5–8, 10 and 13 remain required and pending. Phase 9 learned-model work is
-conditional. Phase 11 (3D) and Phase 12 (dynamic gestures) are non-MVP stretch.
-Supabase/RLS, scoring, mastery and the full learning loop are not claimed complete.
+BISINDO Learning Platform explores a more interactive learning experience where learners can gradually move through:
 
-Observe and Practice share the same three unchanged C/L/O reference photographs
-from the Rhio Sutoyo dataset (MIT), with full-size links and right-hand guidance.
-See [image provenance](public/assets/signs/rhio-clo/provenance.json).
-The nine earlier Sanjaya images remain archived with their CC BY 4.0 attribution
-and [content evidence](public/assets/signs/sanjaya-v1/REVIEW.md).
-Existing route IDs are retained for link compatibility; content source IDs identify Rhio.
-SOURCE_VERIFIED records reflect source comparison, not human-validator approval
-or verified realtime recognition accuracy.
+```text
+Learn → Observe → Practice → Camera Feedback → Challenge → Reward → Review
+```
 
-## Run from a fresh clone
+The alphabet is used as a starting foundation rather than the entire scope of the product.
 
-Install **Node.js 24.21.0** (see `.node-version`) and **npm 10.9.4**.
-Verify `node --version` and `npm --version`, then run from the repository root:
+The long-term goal is to expand the learning experience toward vocabulary and simple communication practice.
+
+---
+
+## Core Features
+
+### Structured Learning Path
+
+Learning content is divided into smaller lessons instead of presenting everything at once.
+
+The learning experience is designed around:
+
+- micro-learning,
+- guided observation,
+- camera-based practice,
+- gesture challenges,
+- interactive feedback,
+- gamification,
+- mastery progression,
+- adaptive review.
+
+---
+
+### Camera-Based Practice
+
+Learners can practice BISINDO gestures directly using their camera.
+
+Hand tracking runs locally in the browser using **MediaPipe Tasks Vision**.
+
+The camera experience includes:
+
+- camera permission handling,
+- hand landmark detection,
+- mirrored camera preview,
+- hand tracking visualization,
+- frame processing,
+- model failure handling,
+- camera cleanup when leaving the practice page.
+
+Raw webcam frames are **not uploaded to a backend**.
+
+---
+
+## Experimental Alphabet Recognition
+
+The current prototype includes an experimental **A–Z alphabet recognition system** that runs directly in the browser.
+
+The recognition pipeline combines:
+
+- MediaPipe hand landmarks,
+- feature extraction,
+- an MLP classification model,
+- ONNX WASM browser inference,
+- BISINDO reference material.
+
+The training and runtime pipeline use the same feature representation to reduce inconsistencies between model development and actual browser inference.
+
+The recognition system is still experimental and requires broader testing with different users.
+
+A model prediction should not be interpreted as proof that a gesture is linguistically correct.
+
+---
+
+## Privacy by Design
+
+Privacy is an important part of the camera experience.
+
+The system is designed around several principles:
+
+- webcam processing happens locally in the browser,
+- raw webcam frames are not sent to a backend,
+- camera tracks are stopped after leaving practice,
+- camera mirroring only changes what the learner sees,
+- recognition coordinates remain consistent internally,
+- video frames are not intentionally stored.
+
+This allows learners to use camera-based practice without having to upload recordings of themselves.
+
+---
+
+## Responsible Recognition
+
+BISINDO is a real language used by real communities, so the project avoids making claims that have not been properly validated.
+
+The recognition system follows several principles:
+
+- model confidence is not treated as gesture correctness,
+- recognition and learning feedback are separate concepts,
+- static and dynamic gestures may require different approaches,
+- BISINDO rules should not be invented from developer assumptions,
+- reference materials should come from traceable sources,
+- recognition accuracy should not be claimed without sufficient testing,
+- one variation of BISINDO should not automatically be treated as universal.
+
+The goal is to use computer vision to support learning rather than position AI as an authority on whether someone is signing correctly.
+
+---
+
+## Current Development Status
+
+The project is actively being developed.
+
+### Currently Implemented
+
+- responsive mobile-first interface,
+- structured alphabet lessons,
+- camera-based practice,
+- MediaPipe hand tracking,
+- hand landmark visualization,
+- experimental A–Z recognition,
+- browser-based ONNX inference,
+- reference gesture display,
+- model loading and failure handling,
+- camera lifecycle handling,
+- responsive interface testing,
+- browser-based recognition testing.
+
+### In Development
+
+- corrective learning feedback,
+- challenge mechanics,
+- scoring,
+- mastery progression,
+- learning progress persistence,
+- adaptive review,
+- expanded user validation.
+
+### Future Exploration
+
+After the core learning experience becomes stable, future possibilities include:
+
+- vocabulary learning,
+- dynamic gestures,
+- adaptive lesson recommendations,
+- additional gamification,
+- 3D hand visualization,
+- broader BISINDO learning material.
+
+---
+
+## Learning Experience
+
+The platform is designed around a repeated learning loop:
+
+### 1. Learn
+
+Learners are introduced to a BISINDO sign and its reference.
+
+### 2. Observe
+
+The learner studies how the hand gesture should be formed.
+
+### 3. Practice
+
+The camera is activated so the learner can try the gesture directly.
+
+### 4. Camera Feedback
+
+Computer vision analyzes the detected hand landmarks and produces an experimental recognition result.
+
+### 5. Challenge
+
+Learners practice previously introduced gestures without relying entirely on the reference.
+
+### 6. Reward
+
+Progress and gamification elements help encourage continued practice.
+
+### 7. Review
+
+Previously learned signs can return through review activities to reinforce learning.
+
+---
+
+## Technology Stack
+
+### Frontend
+
+- Next.js 16
+- React 19
+- TypeScript
+- Tailwind CSS
+- shadcn/ui
+- Motion
+
+### Computer Vision & Machine Learning
+
+- MediaPipe Tasks Vision
+- hand landmark extraction
+- MLP classifier
+- ONNX
+- ONNX WASM
+- local browser inference
+
+### Platform
+
+- Supabase
+- Vercel
+
+### Testing
+
+- Playwright
+- responsive testing
+- camera lifecycle testing
+- browser recognition testing
+- linting
+- type checking
+- production build verification
+
+---
+
+## Getting Started
+
+### Requirements
+
+```text
+Node.js 24.21.0
+npm 10.9.4
+```
+
+### Install Dependencies
 
 ```bash
 npm ci
+```
+
+### Start Development Server
+
+```bash
 npm run dev
 ```
 
-Open http://localhost:3000. Phase 0 does not need environment variables or
-external accounts. `.env.example` lists the optional future configuration;
-copy it to `.env.local` when needed, and never commit credentials.
+Open:
 
-Verification:
+```text
+http://localhost:3000
+```
+
+---
+
+## Verification
+
+Run:
 
 ```bash
 npm run lint
 npm run typecheck
 npm run build
+```
+
+Install Playwright Chromium:
+
+```bash
 npx playwright install chromium
+```
+
+Then run:
+
+```bash
 npm test
 ```
 
-Linux CI may need `npx playwright install --with-deps chromium`.
-`npm test` starts the production server on `127.0.0.1:3100`; build first and
-keep that port free. Playwright tests cover responsive shell/404 recovery,
-keyboard navigation, text zoom, privacy headers, and absence of heavy downloads.
+On Linux, Playwright dependencies may require:
 
-Production locally:
+```bash
+npx playwright install --with-deps chromium
+```
+
+---
+
+## Production Build
+
+Build the application:
+
+```bash
+npm run build
+```
+
+Start the production server:
 
 ```bash
 npm run start
 ```
 
-Optional real-camera check (briefly activates the webcam; requires installed
-Google Chrome and the production server above): `npm run test:camera:local`.
-This checks live decoded video and track cleanup without recording pixels.
+---
 
-Vercel: import this repository, select Next.js and Node 24.x, use `npm ci` /
-`npm run build`, then verify the generated HTTPS URL. Account/project access is
-required. See [deployment](docs/DEPLOYMENT.md). No deployment has been claimed.
+## Optional Camera Test
 
-The original `manifest.json` and `SHA256SUMS.txt` describe the input documentation
-pack, not a PWA manifest or integrity manifest for the evolving application.
+A local camera test is available to verify camera initialization and cleanup.
 
-## Source of truth
+After starting the production server:
 
-Dokumentasi ini adalah **source of truth** untuk membangun prototype platform pembelajaran BISINDO yang interaktif, mobile-first, dan menggunakan computer vision lokal di browser.
+```bash
+npm run test:camera:local
+```
 
-Versi ini telah diaudit ulang untuk mengurangi risiko kesalahan eksekusi pada:
+The test briefly activates the webcam to verify that live video is available and camera tracks are correctly released afterward.
 
-- Next.js 16,
-- MediaPipe Tasks Vision,
-- camera/mirroring,
-- feature-schema parity antara training dan runtime,
-- TensorFlow.js/browser model,
-- Supabase Auth + RLS,
-- dataset split dan leakage,
-- dynamic gesture sampling,
-- coaching feedback,
-- performance mobile,
-- lisensi dataset/repository.
+Camera frames are not intentionally persisted by this test.
 
-## Tujuan Produk
+---
 
-Membantu masyarakat umum yang belum mengenal BISINDO mempelajari fondasi bahasa isyarat secara bertahap melalui:
+## Machine Learning Approach
 
-- micro-learning,
-- latihan dengan kamera,
-- feedback gerakan,
-- challenge berbasis gesture,
-- gamification,
-- adaptive review,
-- roadmap menuju kosakata dan komunikasi sederhana.
+The current recognition system uses hand landmarks instead of sending raw camera images directly into the recognition model.
 
-**Alfabet adalah fondasi pembelajaran, bukan keseluruhan produk.**
+The simplified pipeline is:
 
-Produk **bukan** translator BISINDO universal dan **bukan** pengganti interpreter manusia.
+```text
+Camera
+   ↓
+MediaPipe Hand Tracking
+   ↓
+Hand Landmarks
+   ↓
+Feature Extraction
+   ↓
+MLP Classifier
+   ↓
+ONNX WASM
+   ↓
+Recognition Result
+```
 
-## Urutan Dokumen
+This allows the recognition model to run locally inside the browser.
 
-Baca dalam urutan berikut:
+The system intentionally separates:
 
-1. `AGENTS.md`
-2. `docs/PRD.md`
-3. `docs/DECISIONS.md`
-4. `docs/ARCHITECTURE.md`
-5. `docs/CONTRACTS.md`
-6. `docs/CONTENT_SCHEMA.md`
-7. `docs/AI_RECOGNITION.md`
-8. `docs/MODEL_TRAINING.md`
-9. `docs/DATASET.md`
-10. `docs/DESIGN.md`
-11. `docs/CURRICULUM.md`
-12. `docs/GAMIFICATION.md`
-13. `docs/DATABASE.md`
-14. `docs/SECURITY_PRIVACY.md`
-15. `docs/PERFORMANCE.md`
-16. `docs/TESTING.md`
-17. `docs/SETUP.md`
-18. `docs/DEPLOYMENT.md`
-19. `docs/LICENSES.md`
-20. `docs/TASKS.md`
-21. `docs/ROADMAP.md`
-22. `docs/REFERENCES.md`
-23. `docs/AUDIT_REPORT.md`
-24. `docs/CODEX_START_PROMPT.md`
+```text
+Hand Tracking
+      ↓
+Recognition
+      ↓
+Learning Feedback
+      ↓
+Mastery
+```
 
-Jika ada konflik, precedence:
+A successful recognition result does not automatically mean that the learner has mastered the gesture.
 
-`AGENTS.md > PRD.md > DECISIONS.md > ARCHITECTURE.md > CONTRACTS.md > domain docs > TASKS.md > code comments`
+---
 
-## Prinsip yang Tidak Boleh Dilanggar
+## Known Limitations
 
-- Mobile-first.
-- Camera + learning loop harus bekerja sebelum 3D polish.
-- Raw webcam frames tidak dikirim ke backend.
-- Mirroring hanya untuk display; model memakai canonical coordinate convention.
-- Detection array order tidak boleh dianggap sebagai kiri/kanan.
-- Recognition dan coaching adalah sistem berbeda.
-- Confidence model bukan persentase "seberapa benar" gesture user.
-- Gesture statis dan dinamis dipisahkan.
-- Training dan runtime wajib memakai feature schema yang identik.
-- Split dataset berdasarkan signer/source group bila metadata memungkinkan.
-- Augmentation hanya pada training split.
-- Jangan horizontal-flip data bahasa isyarat tanpa validasi semantik.
-- Jangan mengarang rule BISINDO dari asumsi developer.
-- Three.js/React Three Fiber hanya enhancement.
-- Tidak mengklaim akurasi yang belum diuji.
-- Tidak mengklaim satu bentuk BISINDO sebagai universal tanpa sumber/region.
-- External repository adalah referensi, bukan produk yang direbrand.
+The project is still an experimental learning prototype.
 
-## Target MVP
+Current limitations include:
 
-Loop wajib:
+- recognition has not yet been validated across a large population of new users,
+- recognition output should not be interpreted as authoritative BISINDO correctness,
+- mastery scoring is still under development,
+- persistent learning progress is not yet complete,
+- dynamic gestures require additional recognition approaches,
+- broader mobile-device performance testing is still required,
+- BISINDO variations and regional differences require careful consideration.
 
-`Learn → Observe → Practice → Camera Feedback → Challenge → Reward → Review`
+These limitations are documented intentionally instead of presenting experimental machine-learning results as established accuracy.
 
-MVP minimum:
+---
 
-- onboarding BISINDO,
-- learning path,
-- materi alfabet tervalidasi,
-- camera permission + calibration,
-- one/two-hand tracking sesuai requirement sign,
-- recognition untuk subset sign tervalidasi,
-- multi-frame/time stabilization,
-- corrective feedback sederhana,
-- Sign Challenge,
-- XP + mastery,
-- progress persistence,
-- responsive mobile,
-- graceful fallback jika camera/model/3D/backend gagal,
-- credits dataset/model/assets.
+## Product Principles
 
-Full A–Z, dynamic gesture, 3D rigged hand, leaderboard, dan vocabulary hanya masuk setelah core stabil.
+### Learning First
 
-## Stack
+Computer vision exists to support the learning experience, not to become the entire product.
 
-Baseline:
+### Problem Before Technology
 
-- Next.js 16 Active LTS / latest patched 16.3.x at implementation time
-- React 19
-- TypeScript strict
-- Tailwind CSS
-- shadcn/ui
-- Motion (`motion/react`)
-- MediaPipe Tasks Vision (`@mediapipe/tasks-vision`)
-- Supabase
-- Vercel
+Technology is selected based on the learning problem rather than adding features only because they are technically interesting.
 
-Install later only when needed:
+### Privacy First
 
-- TensorFlow.js — only if a learned browser model is required
-- React Three Fiber + Drei + Three.js — only after camera/recognition stable
+Camera processing should remain on the user's device whenever possible.
 
-Lihat `docs/SETUP.md`.
+### Do Not Overclaim AI
 
-### Phase 4 technical experiment — 2026-09-11
+Recognition confidence is not equivalent to correctness.
 
-A source-derived reference matcher was evaluated and rejected for production:
-L-0 remained uncertain in the integrated VIDEO acceptance test, and the repeated
-frame/framing probe showed unstable coverage. The experimental code and source
-measurements are retained outside the production path, with a reproducible
-[reference audit](src/features/recognition/REFERENCE_AUDIT.md). Existing project
-methodologies were reviewed; no external code, ASL rules or model was copied.
-Technical evaluation can continue without waiting for mentor-provided numeric
-thresholds. Reliable new-person recognition is still unverified.
+### Validate Before Expanding
 
+The core learning and camera experience should work reliably before introducing more complex features.
 
+### Mobile First
 
+The platform is designed with mobile learners as a primary use case.
 
-The camera preview displays live hand landmarks and finger connections by default.
-Use **Titik dan garis tangan** to toggle the overlay. Rendering follows the mirror
-setting without changing classifier coordinates; this skeleton indicates tracking,
-not a correctness score.
+---
 
-## Current experimental A–Z implementation
+## Roadmap
 
 The user-approved alphabet extension uses the unchanged MLP via local ONNX WASM,
 26 source-linked original hand characters, four lesson groups, and manual practice
@@ -265,3 +419,54 @@ See [implementation and verification](ALPHABET_IMPLEMENTATION.md),
 [reference audit](public/assets/signs/sinyal-v2/REVIEW.md).
 Earlier C/L/O and tracking-only descriptions above document the implementation
 history; ADR-027 supersedes that scope for this local experimental extension.
+The current priority is completing the core learning loop:
+
+```text
+Structured Lessons
+        ↓
+Observation
+        ↓
+Camera Practice
+        ↓
+Gesture Recognition
+        ↓
+Corrective Feedback
+        ↓
+Challenge
+        ↓
+Progression
+        ↓
+Review
+```
+
+Once this experience becomes reliable, the platform can gradually expand toward:
+
+- vocabulary,
+- dynamic gestures,
+- communication exercises,
+- adaptive learning,
+- additional gamification,
+- richer visual learning experiences.
+
+---
+
+## Samsung Solve for Tomorrow
+
+HANDSIGN is currently being developed for the **Samsung Solve for Tomorrow semifinal stage**.
+
+The project explores how software, computer vision, and interactive learning experiences can be combined to make introductory BISINDO learning more engaging and accessible.
+
+---
+
+## Disclaimer
+
+HANDSIGN is an educational prototype.
+
+It is not:
+
+- a universal BISINDO translator,
+- a replacement for human interpreters,
+- a BISINDO certification system,
+- or an authoritative system for determining whether someone's sign is linguistically correct.
+
+Gesture recognition remains experimental and should be interpreted as part of the learning experience rather than a definitive assessment of a learner's signing ability.
