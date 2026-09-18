@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { CameraPractice } from "@/components/camera-practice";
 import { LearningScreen } from "@/components/learning-screen";
-import { findSign } from "@/features/curriculum/curriculum";
+import { findLessonBySignId, findSign } from "@/features/curriculum/curriculum";
 import { PracticeFeedback } from "@/features/practice/practice-feedback";
 import { PracticeSession } from "@/features/practice/session";
 import type { Assessment } from "@/features/recognition/types";
@@ -40,7 +40,8 @@ function NamePractice({ sequence, onRestart }: { sequence: string[]; onRestart: 
     if (snapshot.phase !== "SUMMARY" || committed.current) return;
     committed.current = true; setSaved("saving");
     const containsSnapshot = sequence.some((symbol) => ["J", "R", "Z"].includes(symbol));
-    void savePracticeSession({ receiptId: crypto.randomUUID(), completedSignIds: [...new Set(snapshot.completedIds)], retryCount: Math.max(snapshot.attempt - snapshot.completedIds.length, 0), mode: "NAME_CHALLENGE" })
+    const completedLessonIds = [...new Set(snapshot.completedIds.map((signId) => findLessonBySignId(signId)?.id).filter((lessonId): lessonId is string => Boolean(lessonId)))];
+    void savePracticeSession({ receiptId: crypto.randomUUID(), completedSignIds: completedLessonIds, retryCount: Math.max(snapshot.attempt - snapshot.completedIds.length, 0), mode: "NAME_CHALLENGE" })
       .then(() => completeNameChallenge(sequence.length, containsSnapshot)).then(() => setSaved("done")).catch(() => setSaved("error"));
   }, [sequence, snapshot.attempt, snapshot.completedIds, snapshot.phase]);
   const receipt = ["CELEBRATING", "AWAITING_CONTINUE", "PREPARING_NEXT"].includes(snapshot.phase);

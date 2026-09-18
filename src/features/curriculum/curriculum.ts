@@ -13,6 +13,7 @@ export const units: readonly Unit[] = ["ABCDEF", "GHIJKL", "MNOPQR", "STUVWXYZ"]
   lessonIds: lessons.filter(lesson => symbols.includes(signs.find(sign => sign.id === lesson.signId)!.symbol)).map(lesson => lesson.id),
 }));
 export const findLesson = (id: string) => lessons.find(lesson => lesson.id === id);
+export const findLessonBySignId = (signId: string) => lessons.find(lesson => lesson.signId === signId);
 export const findSign = (id: string) => signs.find(sign => sign.id === id);
 export const unitForSign = (id: string) => units.find(unit => unit.lessonIds.some(lessonId => findLesson(lessonId)?.signId === id));
 export const findUnit = (id: string): Unit | undefined => id === "alfabet-awal" ? {

@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { lessons } from "../../features/curriculum/curriculum";
+import { findLessonBySignId, lessons } from "../../features/curriculum/curriculum";
 import { completedLevelCount, isLessonUnlocked, isUnitUnlocked, normalizeNameSequence } from "../../features/progress/definitions";
 
 test("level progression follows the four curriculum groups", () => {
@@ -17,6 +17,10 @@ test("a partial first level does not unlock G-L", () => {
   expect(completedLevelCount(incompleteFirstLevel)).toBe(0);
   expect(isUnitUnlocked(1, incompleteFirstLevel)).toBe(false);
   expect(isLessonUnlocked("huruf-g", incompleteFirstLevel)).toBe(false);
+});
+
+test("practice sign IDs resolve to the persisted lesson IDs", () => {
+  for (const lesson of lessons) expect(findLessonBySignId(lesson.signId)?.id).toBe(lesson.id);
 });
 
 test("name challenge normalizes separators without persisting them", () => {

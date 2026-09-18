@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { CameraPractice } from "@/components/camera-practice";
 import { LearningScreen } from "@/components/learning-screen";
-import { findLesson, findSign, unitForSign, units } from "@/features/curriculum/curriculum";
+import { findLesson, findLessonBySignId, findSign, unitForSign, units } from "@/features/curriculum/curriculum";
 import { practiceTiming } from "@/lib/config/gameplay";
 import { PracticeSession } from "./session";
 import { PracticeFeedback } from "./practice-feedback";
@@ -48,7 +48,8 @@ export function PracticeExperience({ initialSign }: { initialSign: SignContent }
     setSaveState("saving");
     receiptId.current ??= crypto.randomUUID();
     try {
-      const result = await savePracticeSession({ receiptId: receiptId.current, completedSignIds: [...new Set(snapshot.completedIds)], retryCount: Math.max(snapshot.attempt - snapshot.completedIds.length, 0) });
+      const completedLessonIds = [...new Set(snapshot.completedIds.map((signId) => findLessonBySignId(signId)?.id).filter((lessonId): lessonId is string => Boolean(lessonId)))];
+      const result = await savePracticeSession({ receiptId: receiptId.current, completedSignIds: completedLessonIds, retryCount: Math.max(snapshot.attempt - snapshot.completedIds.length, 0) });
       if (!result.saved) { setSaveState("signed-out"); return; }
       const progress = await loadLearnerProgress();
       savedSession.current = controller.id;
