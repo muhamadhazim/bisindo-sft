@@ -1,9 +1,10 @@
 export const dynamicParams = false;
 
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { LearningScreen } from "@/components/learning-screen";
-import { units, findLesson, findSign, findUnit } from "@/features/curriculum/curriculum";
+import { units, findUnit } from "@/features/curriculum/curriculum";
+import { LevelGate } from "@/features/progress/level-gate";
+import { UnitLessonGrid } from "@/features/progress/unit-lesson-grid";
 
 export function generateStaticParams() { return [...units.map((unit) => ({ unit: unit.id })), { unit: "alfabet-awal" }]; }
 
@@ -11,17 +12,10 @@ export default async function UnitPage({ params }: { params: Promise<{ unit: str
   const { unit: id } = await params;
   const unit = findUnit(id);
   if (!unit) notFound();
-  return (
-    <LearningScreen eyebrow="UNIT ALFABET AWAL" title={unit.title} description={unit.description} back={{ href: "/learn", label: "Peta belajar" }}>
-      <div className="lesson-grid">
-        {unit.lessonIds.map((id) => {
-          const lesson = findLesson(id);
-          const sign = lesson && findSign(lesson.signId);
-          if (!lesson || !sign) return null;
-          return <Link key={id} className="lesson-card" href={`/lesson/${id}`}><span className="letter-tile" aria-hidden="true">{sign.symbol}</span><h2>{lesson.title}</h2><p>Amati contoh · {sign.requiredHands === "TWO" ? "dua tangan" : "satu tangan"}</p><span className="text-link">Buka materi →</span></Link>;
-        })}
-      </div>
-      <p className="notice">Materi boleh diamati dalam urutan yang Anda pilih. Masuk dengan Google untuk menyimpan progres dan membuka level berikutnya.</p>
-    </LearningScreen>
-  );
+  const content = <LearningScreen eyebrow="UNIT ALFABET AWAL" title={unit.title} description={unit.description} back={{ href: "/learn", label: "Peta belajar" }}>
+    <UnitLessonGrid unit={unit} enforceIndividualAccess={id === "alfabet-awal"} />
+    <p className="notice">{id === "alfabet-awal" ? "Masuk dengan Google untuk mengikuti alur level A–F hingga S–Z." : "Selesaikan seluruh huruf pada kelompok ini agar level berikutnya terbuka."}</p>
+  </LearningScreen>;
+  if (id === "alfabet-awal") return content;
+  return <LevelGate unitIndex={units.indexOf(unit)}>{content}</LevelGate>;
 }

@@ -25,6 +25,15 @@ export function isUnitUnlocked(unitIndex: number, completedLessonIds: ReadonlySe
   return unitIndex <= completedLevelCount(completedLessonIds);
 }
 
+export function unitIndexForLesson(lessonId: string) {
+  return units.findIndex((unit) => unit.lessonIds.includes(lessonId));
+}
+
+export function isLessonUnlocked(lessonId: string, completedLessonIds: ReadonlySet<string>) {
+  const unitIndex = unitIndexForLesson(lessonId);
+  return unitIndex >= 0 && isUnitUnlocked(unitIndex, completedLessonIds);
+}
+
 export function normalizeNameSequence(value: string) {
   return [...value.normalize("NFKC").toUpperCase()].filter((character) => character >= "A" && character <= "Z");
 }
