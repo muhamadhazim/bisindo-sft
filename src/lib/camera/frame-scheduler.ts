@@ -22,7 +22,15 @@ export function scheduleVideoFrames(
 
   async function tick(timestampMs: number, mediaTime: number) {
     if (!active) return;
-    if (video.readyState >= 2 && mediaTime !== lastMediaTime && timestampMs - lastTimestamp >= minIntervalMs) {
+    // `loadedmetadata` can fire before the browser has a drawable decoded frame.
+    // MediaPipe throws for that short window, so only hand a frame to consumers
+    // after video dimensions and current frame data are both available.
+    const hasDrawableFrame = video.readyState >= 2
+      && video.videoWidth > 0
+      && video.videoHeight > 0
+      && !video.paused
+      && !video.ended;
+    if (hasDrawableFrame && mediaTime !== lastMediaTime && timestampMs - lastTimestamp >= minIntervalMs) {
       lastMediaTime = mediaTime;
       lastTimestamp = timestampMs;
       try { await onFrame({ timestampMs, mediaTimeMs: mediaTime * 1000 }); }

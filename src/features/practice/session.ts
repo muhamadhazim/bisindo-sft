@@ -18,9 +18,14 @@ export class PracticeSession {
   private lastFrame = -Infinity;
   private releaseSince: number | null = null;
   private released = true;
-  constructor(readonly id: string, readonly targetIds: readonly string[], startId: string, allowRepeatedTargets = false) {
+  constructor(readonly id: string, readonly targetIds: readonly string[], startId: string, allowRepeatedTargets = false, initialCompletedIds: readonly string[] = []) {
     this.index = targetIds.indexOf(startId);
     if (!targetIds.length || this.index < 0 || (!allowRepeatedTargets && new Set(targetIds).size !== targetIds.length)) throw new Error("Invalid practice sequence");
+    if (!allowRepeatedTargets) {
+      const restored = [...new Set(initialCompletedIds)];
+      if (restored.some((targetId) => !targetIds.includes(targetId))) throw new Error("Invalid restored practice progress");
+      this.completed = restored;
+    }
   }
   snapshot(): SessionSnapshot {
     return { phase: this.phase, targetId: this.targetIds[this.index]!, index: this.index, attempt: this.attempt, completedIds: [...this.completed], acceptanceId: this.acceptanceId };
@@ -38,7 +43,7 @@ export class PracticeSession {
       this.phase = "PRACTICING"; this.attempt++; return true;
     }
     if (this.phase !== "PRACTICING" || !result.accepted || result.status !== "CORRECT" || result.reason !== "MATCH" || result.stableForMs < recognitionTiming.stableMs) return false;
-    this.completed.push(result.targetSignId);
+    if (!this.completed.includes(result.targetSignId)) this.completed.push(result.targetSignId);
     this.acceptanceId = `${this.id}:${result.targetSignId}:${this.attempt}`;
     this.phase = "CELEBRATING"; this.lastAccepted = time; this.released = false; this.releaseSince = null;
     return true;

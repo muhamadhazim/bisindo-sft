@@ -49,7 +49,9 @@ export function useHandTracking(videoRef: RefObject<HTMLVideoElement | null>, en
       cancelFrames = scheduleVideoFrames(video, async ({ timestampMs }) => {
         const target = current();
         if (target.key !== lastKey) { recognition?.reset(); lastKey = target.key; }
-        const { result, latencyMs } = tracker.detect(video, timestampMs);
+        const detected = tracker.detect(video, timestampMs);
+        if (!detected) return;
+        const { result, latencyMs } = detected;
         const status = checkRequiredHands(result, target.sign);
         draw(result.frame);
         let assessment: Assessment | null = null;

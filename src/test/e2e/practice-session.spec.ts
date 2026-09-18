@@ -62,3 +62,10 @@ test("manual selection cancels receipt, timestamp gaps cannot simulate release",
   expect(s.observe(result("b", 10300))).toBe(false);
   expect(s.observe({ ...result("b", 10800), stableForMs: 100 })).toBe(false);
 });
+
+test("restored progress stays marked and does not double-count a practiced letter", () => {
+  const s = new PracticeSession("session", ["a", "b", "c"], "a", false, ["a", "b"]);
+  expect(s.snapshot().completedIds).toEqual(["a", "b"]);
+  s.observe(result("a", 400));
+  expect(s.snapshot().completedIds).toEqual(["a", "b"]);
+});

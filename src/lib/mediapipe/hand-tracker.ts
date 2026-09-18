@@ -18,9 +18,10 @@ export async function createHandTracker() {
   return {
     detect(video: HTMLVideoElement, timestampMs: number) {
       if (closed || !Number.isFinite(timestampMs) || timestampMs <= lastTimestampMs) throw new Error("Invalid tracker lifecycle or timestamp");
-      lastTimestampMs = timestampMs;
+      if (video.readyState < 2 || video.videoWidth <= 0 || video.videoHeight <= 0 || video.paused || video.ended) return null;
       const start = performance.now();
       const result = landmarker.detectForVideo(video, timestampMs);
+      lastTimestampMs = timestampMs;
       return { result: canonicalizeHands(result, timestampMs), latencyMs: performance.now() - start };
     },
     close() { if (!closed) { closed = true; landmarker.close(); } },
