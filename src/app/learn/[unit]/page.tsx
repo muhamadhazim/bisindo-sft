@@ -21,7 +21,7 @@ export default async function UnitPage({ params }: { params: Promise<{ unit: str
           return <Link key={id} className="lesson-card" href={`/lesson/${id}`}><span className="letter-tile" aria-hidden="true">{sign.symbol}</span><h2>{lesson.title}</h2><p>Amati contoh · {sign.requiredHands === "TWO" ? "dua tangan" : "satu tangan"}</p><span className="text-link">Buka materi →</span></Link>;
         })}
       </div>
-      <p className="notice">Materi boleh diamati dalam urutan yang Anda pilih. Penyimpanan progres belum diaktifkan.</p>
+      <p className="notice">Materi boleh diamati dalam urutan yang Anda pilih. Masuk dengan Google untuk menyimpan progres dan membuka level berikutnya.</p>
     </LearningScreen>
   );
 }

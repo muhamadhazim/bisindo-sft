@@ -17,7 +17,7 @@ export default function LearnPage() {
           <nav className="map-stops" aria-label="Pilih huruf di peta">{mapStops.map((stop,index)=><Link key={stop.id} href={stop.href} className={`map-stop map-stop-${index}`} style={{left:`${stop.x}%`,top:`${stop.y}%`}}><span className="map-stop-label"><small>LANGKAH {index+1}</small><strong>{stop.title}</strong></span><span className="map-stop-orb">{stop.symbol}</span><span className="map-stop-caption">Mulai belajar <span>→</span></span></Link>)}</nav>
 
         </div>
-        <div className="map-bottom"><div><strong>Pilih satu huruf. Mulai dari rasa ingin tahu.</strong><p>Semua materi awal bisa dibuka, dalam urutan yang kamu pilih.</p></div>{units.map(unit=><Link className="button secondary" href={`/learn/${unit.id}`} key={unit.id}>{unit.title} <Icon name="arrow" size={17} /></Link>)}</div>
+        <div className="map-bottom"><div><strong>Pilih satu huruf. Mulai dari rasa ingin tahu.</strong><p>Masuk untuk menyimpan progres dan membuka level berikutnya setelah kelompok sebelumnya selesai.</p></div>{units.map(unit=><Link className="button secondary" href={`/learn/${unit.id}`} key={unit.id}>{unit.title} <Icon name="arrow" size={17} /></Link>)}</div>
       </section>
     </div>
   );

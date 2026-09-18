@@ -3,10 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Icon } from "./ui/icon";
+import { AuthStatus } from "./auth-status";
 
 export function SiteHeader() {
   const path = usePathname();
-  const learning = /^(\/learn|\/lesson|\/practice|\/challenge)/.test(path);
+  const learning = /^(\/learn|\/lesson|\/practice|\/challenge|\/profile|\/certificate)/.test(path);
   return <header className="site-header">
     <Link href="/" className="brand" aria-label="Sinyal, beranda"><span className="brand-mark"><Icon name="hand" size={36} /></span><span>Sinyal<span className="brand-caption">bersama, tanpa batas</span></span></Link>
     <nav className="top-nav" aria-label="Navigasi utama">
@@ -15,7 +16,7 @@ export function SiteHeader() {
       {!learning && <Link href="/about-bisindo" aria-current={path === "/about-bisindo" ? "page" : undefined}>Tentang BISINDO</Link>}
       {learning && <PracticeNav active={path.startsWith("/practice/")} />}
     </nav>
-    {learning ? <span className="guest-chip"><span className="guest-dot" />Mode tamu</span> : <Link className="button primary header-cta" href="/about-bisindo">Mulai Belajar <Icon name="arrow" size={17} /></Link>}
+    {learning ? <AuthStatus /> : <Link className="button primary header-cta" href="/about-bisindo">Mulai Belajar <Icon name="arrow" size={17} /></Link>}
   </header>;
 }
 

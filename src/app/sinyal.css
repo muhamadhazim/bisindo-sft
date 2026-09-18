@@ -46,6 +46,22 @@ h1,h2,h3 { font-weight:900; letter-spacing:-.035em; } h3 { line-height:1.35; } b
 .practice-target-heading { margin:0; font-size:clamp(1.5rem,4vw,2rem); }
 .practice-target-heading:focus { outline:2px solid #007857; outline-offset:5px; }
 .session-progress { color:#37594c; }
+.progress-mini { margin-top:9px; color:#007d56; font-size:11px; font-weight:900; }
+.account-card,.certificate-card { max-width:720px; margin:1.4rem auto; padding:clamp(1rem,4vw,2rem); background:#f8fffa; border:1px solid #cce8d8; border-radius:24px; }
+.account-card label { display:block; margin:14px 0 7px; font-size:13px; font-weight:900; color:#315e4d; }
+.account-card input { width:100%; min-height:48px; padding:10px 13px; color:var(--foreground); background:white; border:1px solid #bddbcc; border-radius:12px; }
+.account-card .button { margin-top:16px; }
+.consent { display:flex !important; align-items:flex-start; gap:9px; font-size:12px !important; font-weight:700 !important; color:#526d62 !important; }
+.consent input { width:auto; min-height:0; margin-top:3px; }
+.progress-overview { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:1.4rem 0; }
+.progress-overview article { padding:17px 12px; background:#effaf2; border:1px solid #d6ece0; border-radius:18px; text-align:center; }
+.progress-overview strong { display:block; color:#007d56; font-size:25px; font-weight:1000; }
+.progress-overview span { display:block; margin-top:5px; font-size:11px; color:#526d62; font-weight:800; }
+.achievement-list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin:1.5rem 0; }
+.achievement-list>p,.achievement-list>h2 { grid-column:1/-1; margin:0; }.achievement-list>h2 { font-size:24px; }
+.achievement-list article { padding:14px; background:#f7fbf8; border:1px solid #dcebe2; border-radius:16px; }.achievement-list article[data-earned="true"] { background:#ebfaf0; border-color:#9edab6; }.achievement-list article strong { color:#175942; font-size:13px; }.achievement-list article p { margin-top:5px; color:#5d726b; font-size:11px; }
+.certificate-card h2 { margin:5px 0; color:#007d56; }.certificate-card>p:not(.eyebrow) { font-size:13px; color:#536d62; }
+@media(max-width:600px){.progress-overview{grid-template-columns:repeat(2,minmax(0,1fr));}.achievement-list{grid-template-columns:1fr;}.account-card,.certificate-card{border-radius:18px;}.account-card .button{width:100%;}}
 .practice-success,.practice-release { padding:1.1rem; border-radius:20px; background:#effaf1; border:1px solid #b4dcc4; }
 .practice-success h3 { color:#075d48; font-size:1.8rem; margin:.4rem 0; }
 .success-art { position:relative; height:160px; display:grid; place-items:center; overflow:hidden; }
