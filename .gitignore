@@ -16,6 +16,7 @@ ml/bisindo-dataset-raw-backup/
 ml/bisindo-mlp2-clean-results/
 notebooks/BISINDO_Alphabet_Combined_Colab (1).ipynb
 graphify-out
+.codex/
 supabase/.temp/
 
 __pycache__/
