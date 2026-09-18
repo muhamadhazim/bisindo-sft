@@ -21,7 +21,7 @@ export function NameChallenge() {
   if (sequence) return <NamePractice sequence={sequence} onRestart={() => setSequence(null)} />;
   const normalized = normalizeNameSequence(name);
   return <LearningScreen eyebrow="TANTANGAN AKHIR" title="Eja namamu" description="Masukkan nama, lalu praktikkan hurufnya satu per satu. Nama ini diproses di browser dan tidak disimpan sebagai data latihan." back={{ href: "/profile", label: "Progresku" }}>
-    <section className="account-card"><label htmlFor="name-input">Nama untuk latihan</label><input id="name-input" value={name} onChange={(event) => setName(event.target.value)} maxLength={40} autoComplete="name" placeholder="Contoh: Sinyal" /><p>{normalized.length ? `Urutan latihan: ${normalized.join(" · ")}` : "Gunakan huruf A–Z."}</p><button className="button primary" disabled={normalized.length === 0} onClick={() => setSequence(normalized)}>Mulai latihan nama</button></section>
+    <section className="account-card"><label htmlFor="name-input">Nama untuk latihan</label><input id="name-input" value={name} onChange={(event) => setName(event.target.value)} maxLength={40} autoComplete="name" placeholder="Contoh: HANDSIGN" /><p>{normalized.length ? `Urutan latihan: ${normalized.join(" · ")}` : "Gunakan huruf A–Z."}</p><button className="button primary" disabled={normalized.length === 0} onClick={() => setSequence(normalized)}>Mulai latihan nama</button></section>
   </LearningScreen>;
 }
 

@@ -7,7 +7,7 @@ import "./sinyal.css";
 const nunito = localFont({ src: "../../public/assets/fonts/nunito-variable.ttf", variable: "--font-nunito", display: "swap", weight: "200 1000" });
 
 export const metadata: Metadata = {
-  title: { default: "Sinyal — Bahasa Tanpa Batas", template: "%s | Sinyal" },
+  title: { default: "HANDSIGN — Bahasa Tanpa Batas", template: "%s | HANDSIGN" },
   description: "Belajar alfabet BISINDO melalui referensi yang dapat ditelusuri dan latihan mandiri.",
   robots: { index: false, follow: false },
 };

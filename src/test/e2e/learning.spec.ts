@@ -18,7 +18,7 @@ for (const width of [320, 360, 768, 1440]) {
     await expect(page.getByRole("img")).toHaveCount(1);
     const observedImage = await page.getByRole("img").getAttribute("src");
     expect(new URL(observedImage!, page.url()).pathname).toBe("/assets/signs/sinyal-v2/c.svg");
-    await expect(page.getByRole("img")).toHaveAttribute("alt", /Sinyal/);
+    await expect(page.getByRole("img")).toHaveAttribute("alt", /HANDSIGN/);
     await expect.poll(() => page.getByRole("img").evaluateAll((images) => images.every((image) => image instanceof HTMLImageElement && image.complete && image.naturalWidth > 0))).toBe(true);
     await fits();
     if (width === 360) await page.screenshot({ path: "test-results/observe-360.png", fullPage: true });

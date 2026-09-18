@@ -35,7 +35,7 @@ export default function HomePage() {
       <div><p className="eyebrow">PETUALANGANMU DIMULAI DI SINI</p><h2 id="availability-heading">Mulai dari alfabet</h2><p>Empat kelompok, dari A sampai Z.<br />Kenali bentuknya, amati referensinya, lalu coba sendiri.</p><Link className="back-link" href="/learn">Jelajahi peta belajar <Icon name="arrow" size={18} /></Link></div>
       <div className="alphabet-preview" aria-label="Materi tersedia">{lessons.filter(lesson => ["huruf-c", "huruf-l", "huruf-o"].includes(lesson.id)).map((lesson, index) => <Link href={`/lesson/${lesson.id}`} key={lesson.id} className={`preview-letter preview-${index}`}><span>{findSign(lesson.signId)?.symbol}</span><small>Kenali huruf {findSign(lesson.signId)?.symbol} <Icon name="arrow" size={14} /></small></Link>)}</div>
     </section>
-    <section className="benefits" aria-label="Cara belajar di Sinyal">{benefits.map((item) => <article key={item.title}><span className={`feature-icon ${item.color}`}><Icon name={item.icon} size={25} /></span><h2>{item.title}</h2><p>{item.description}</p></article>)}</section>
+    <section className="benefits" aria-label="Cara belajar di HANDSIGN">{benefits.map((item) => <article key={item.title}><span className={`feature-icon ${item.color}`}><Icon name={item.icon} size={25} /></span><h2>{item.title}</h2><p>{item.description}</p></article>)}</section>
     <section className="home-invitation"><Icon name="heart" size={27} /><h2>Tak perlu sempurna untuk memulai.</h2><p>Satu huruf hari ini, satu langkah lebih dekat untuk saling mengerti.</p><Link href="/learn" className="button secondary">Temukan langkah pertamamu <Icon name="arrow" size={18} /></Link></section>
   </div>;
 }

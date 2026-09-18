@@ -25,7 +25,7 @@ export function ReferenceViewer({ pose }: { pose: GestureReference }) {
     document.addEventListener("visibilitychange", visibility);
     return () => document.removeEventListener("visibilitychange", visibility);
   }, []);
-  const poster = imageFailed ? <p role="status">Contoh belum dapat dimuat. Muat ulang halaman untuk mencoba lagi.</p> : <Image src={pose.posterUrl} alt={`Karakter tangan Sinyal, contoh bentuk ${pose.symbol}`} width={480} height={390} unoptimized onError={() => setImageFailed(true)} />;
+  const poster = imageFailed ? <p role="status">Contoh belum dapat dimuat. Muat ulang halaman untuk mencoba lagi.</p> : <Image src={pose.posterUrl} alt={`Karakter tangan HANDSIGN, contoh bentuk ${pose.symbol}`} width={480} height={390} unoptimized onError={() => setImageFailed(true)} />;
   function start() {
     const canvas = document.createElement("canvas");
     const context = canvas.getContext("webgl2");

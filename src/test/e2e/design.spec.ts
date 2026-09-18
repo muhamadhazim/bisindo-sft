@@ -3,7 +3,7 @@ import { readdirSync,readFileSync } from "node:fs";
 import path from "node:path";
 
 for (const width of [320,360,768,1440]) {
-  test(`Sinyal scenes and layouts at ${width}px`,async({page})=>{
+  test(`HANDSIGN scenes and layouts at ${width}px`,async({page})=>{
     await page.setViewportSize({width,height:960});
     const errors:string[]=[];
     page.on("pageerror",error=>errors.push(error.message));

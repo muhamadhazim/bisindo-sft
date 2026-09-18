@@ -7,5 +7,5 @@ import type { ReferenceAsset } from "@/types/content";
 
 export function ReferencePreview({ asset }: { asset: ReferenceAsset }) {
   const [failed,setFailed]=useState(false);
-  return <span className="intro-thumbnail">{failed?<Icon name="book" size={30} />:<Image src={asset.url} alt="Karakter tangan Sinyal, contoh alfabet BISINDO" width={160} height={120} unoptimized onError={()=>setFailed(true)} />}</span>;
+  return <span className="intro-thumbnail">{failed?<Icon name="book" size={30} />:<Image src={asset.url} alt="Karakter tangan HANDSIGN, contoh alfabet BISINDO" width={160} height={120} unoptimized onError={()=>setFailed(true)} />}</span>;
 }

@@ -1,4 +1,4 @@
-# Sinyal source-linked hand character
+# HANDSIGN source-linked hand character
 
 Original procedural palm/finger geometry and SVG, with a small smiling green
 wrist cuff that does not cover the articulating fingers. C/L/O implemented first.

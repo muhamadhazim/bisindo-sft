@@ -9,7 +9,7 @@ export function SiteHeader() {
   const path = usePathname();
   const learning = /^(\/learn|\/lesson|\/practice|\/challenge|\/profile|\/certificate)/.test(path);
   return <header className="site-header">
-    <Link href="/" className="brand" aria-label="Sinyal, beranda"><span className="brand-mark"><Icon name="hand" size={36} /></span><span>Sinyal<span className="brand-caption">bersama, tanpa batas</span></span></Link>
+    <Link href="/" className="brand" aria-label="HANDSIGN, beranda"><span className="brand-mark"><Icon name="hand" size={36} /></span><span>HANDSIGN<span className="brand-caption">bersama, tanpa batas</span></span></Link>
     <nav className="top-nav" aria-label="Navigasi utama">
       <Link href="/" aria-current={path === "/" ? "page" : undefined}><Icon name="home" size={18} />Beranda</Link>
       <Link href="/learn" aria-current={/^\/(learn|lesson)/.test(path) ? "page" : undefined}><Icon name="book" size={18} />Peta Belajar</Link>
@@ -27,5 +27,5 @@ function PracticeNav({ active }: { active: boolean }) {
 }
 
 export function SiteFooter() {
-  return <footer className="site-footer"><span><strong>Sinyal</strong><span className="footer-divider">·</span>Belajar BISINDO, satu langkah lebih dekat.</span><Link href="/credits">Sumber &amp; lisensi <Icon name="arrow" size={14} /></Link><span className="footer-love">Dibuat untuk saling memahami <Icon name="heart" size={15} /></span></footer>;
+  return <footer className="site-footer"><span><strong>HANDSIGN</strong><span className="footer-divider">·</span>Belajar BISINDO, satu langkah lebih dekat.</span><Link href="/credits">Sumber &amp; lisensi <Icon name="arrow" size={14} /></Link><span className="footer-love">Dibuat untuk saling memahami <Icon name="heart" size={15} /></span></footer>;
 }

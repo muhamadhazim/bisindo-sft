@@ -22,7 +22,7 @@ test("every published character links reviewed evidence and one shared valid pos
 test("character 3D loads on request, can reset, and falls back after context loss", async ({ page }) => {
   await page.setViewportSize({ width: 360, height: 800 });
   await page.goto("/lesson/huruf-c/observe");
-  await expect(page.getByAltText("Karakter tangan Sinyal, contoh bentuk C")).toBeVisible();
+  await expect(page.getByAltText("Karakter tangan HANDSIGN, contoh bentuk C")).toBeVisible();
   expect(await page.locator(".gesture-stage canvas").count()).toBe(0);
   await page.getByRole("button", { name: "Lihat karakter 3D" }).click();
   await expect(page.locator(".gesture-stage canvas")).toBeVisible();
@@ -32,6 +32,6 @@ test("character 3D loads on request, can reset, and falls back after context los
   await page.locator(".gesture-stage").screenshot({ path: ".tools/alphabet-review/character-c.png" });
   await page.locator(".gesture-stage canvas").evaluate(canvas => canvas.dispatchEvent(new Event("webglcontextlost")));
   await expect(page.getByText("3D belum tersedia di perangkat ini.", { exact: false })).toBeVisible();
-  await expect(page.getByAltText("Karakter tangan Sinyal, contoh bentuk C")).toBeVisible();
+  await expect(page.getByAltText("Karakter tangan HANDSIGN, contoh bentuk C")).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 });

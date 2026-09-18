@@ -258,7 +258,7 @@ not a correctness score.
 
 The user-approved alphabet extension uses the unchanged MLP via local ONNX WASM,
 26 source-linked original hand characters, four lesson groups, and manual practice
-sessions with a Sinyal success celebration. Source photographs and human webcam
+sessions with a HANDSIGN success celebration. Source photographs and human webcam
 validation are kept distinct; no mastery/accuracy percentage or persistence.
 See [implementation and verification](ALPHABET_IMPLEMENTATION.md),
 [model reproduction](ml/alphabet-v2/README.md), and

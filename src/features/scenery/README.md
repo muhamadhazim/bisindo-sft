@@ -1,4 +1,4 @@
-# Sinyal decorative scenes
+# HANDSIGN decorative scenes
 
 User-approved presentation change, 2026-09-12 (ADR-026 in local docs).
 This overrides the earlier deferral of decorative Three.js work only. Recognition
@@ -41,7 +41,7 @@ Viewport emulation is not a physical-phone performance benchmark.
 
 ## Completion audit (2026-09-12)
 
-The tracked redesign was checked against the approved plan: shared Sinyal branding,
+The tracked redesign was checked against the approved plan: shared HANDSIGN branding,
 home/map/lesson/camera layouts, original lazy 3D decoration, 2D fallback, source
 preservation, responsive navigation, camera cleanup and renderer isolation.
 The full 68-test regression suite passed. The audit then found low-contrast text

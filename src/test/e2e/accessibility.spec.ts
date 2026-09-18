@@ -3,7 +3,7 @@ import AxeBuilder from "@axe-core/playwright";
 
 for (const width of [360,1440]) {
   for (const route of ["/","/learn","/learn/alfabet-awal","/lesson/huruf-c","/lesson/huruf-c/observe","/practice/bisindo-c-sanjaya-v1","/about-bisindo","/credits","/challenge/alfabet-awal"]) {
-    test(`accessible Sinyal interface ${route} at ${width}px`,async({page})=>{
+    test(`accessible HANDSIGN interface ${route} at ${width}px`,async({page})=>{
       await page.setViewportSize({width,height:960});
       await page.emulateMedia({reducedMotion:"reduce"});
       await page.goto(route);

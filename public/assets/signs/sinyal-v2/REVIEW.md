@@ -1,4 +1,4 @@
-# Sinyal alphabet reference audit — 2026-09-12
+# HANDSIGN alphabet reference audit — 2026-09-12
 
 ## Scope and evidence
 

@@ -24,7 +24,7 @@ test("practice sign IDs resolve to the persisted lesson IDs", () => {
 });
 
 test("name challenge normalizes separators without persisting them", () => {
-  const sequence = normalizeNameSequence("Sinyal-A 12");
+  const sequence = normalizeNameSequence("HANDSIGN-A 12");
   expect(sequence).toEqual(["S", "I", "N", "Y", "A", "L", "A"]);
   const signIds = sequence.map((symbol) => findLesson(`huruf-${symbol.toLowerCase()}`)!.signId);
   expect(signIds.map((signId) => findSign(signId)?.symbol)).toEqual(sequence);
