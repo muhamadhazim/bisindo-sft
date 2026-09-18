@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { findLessonBySignId, lessons } from "../../features/curriculum/curriculum";
+import { findLesson, findLessonBySignId, findSign, lessons } from "../../features/curriculum/curriculum";
 import { completedLevelCount, isLessonUnlocked, isUnitUnlocked, normalizeNameSequence } from "../../features/progress/definitions";
 
 test("level progression follows the four curriculum groups", () => {
@@ -24,5 +24,8 @@ test("practice sign IDs resolve to the persisted lesson IDs", () => {
 });
 
 test("name challenge normalizes separators without persisting them", () => {
-  expect(normalizeNameSequence("Sinyal-A 12")).toEqual(["S", "I", "N", "Y", "A", "L", "A"]);
+  const sequence = normalizeNameSequence("Sinyal-A 12");
+  expect(sequence).toEqual(["S", "I", "N", "Y", "A", "L", "A"]);
+  const signIds = sequence.map((symbol) => findLesson(`huruf-${symbol.toLowerCase()}`)!.signId);
+  expect(signIds.map((signId) => findSign(signId)?.symbol)).toEqual(sequence);
 });

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { CameraPractice } from "@/components/camera-practice";
 import { LearningScreen } from "@/components/learning-screen";
-import { findLessonBySignId, findSign } from "@/features/curriculum/curriculum";
+import { findLesson, findLessonBySignId, findSign } from "@/features/curriculum/curriculum";
 import { PracticeFeedback } from "@/features/practice/practice-feedback";
 import { PracticeSession } from "@/features/practice/session";
 import type { Assessment } from "@/features/recognition/types";
@@ -26,7 +26,9 @@ export function NameChallenge() {
 }
 
 function NamePractice({ sequence, onRestart }: { sequence: string[]; onRestart: () => void }) {
-  const ids = sequence.map((symbol) => `huruf-${symbol.toLowerCase()}`);
+  // PracticeSession and CameraPractice operate on SignContent IDs, while
+  // persistence deliberately uses lesson IDs. Keep that boundary explicit.
+  const ids = sequence.map((symbol) => findLesson(`huruf-${symbol.toLowerCase()}`)!.signId);
   const [controller] = useState(() => new PracticeSession(`name-${crypto.randomUUID()}`, ids, ids[0]!, true));
   const [snapshot, setSnapshot] = useState(() => controller.snapshot());
   const [reducedMotion, setReducedMotion] = useState(false);
